@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DD31FACE-F5F9-4E66-B733-C0A597C5674B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WinWam6</RootNamespace>
+    <AssemblyName>WW6-WPF</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Windows.Shell, Version=3.5.41019.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="RibbonControlsLibrary, Version=4.0.0.11019, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit.Extended">
+      <HintPath>..\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="CBusInsp.cs" />
+    <Compile Include="CConversion.cs" />
+    <Compile Include="CDevice.cs" />
+    <Compile Include="DeviceInspection.cs" />
+    <Compile Include="BusinessDetail.xaml.cs">
+      <DependentUpon>BusinessDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CloseableTab.cs" />
+    <Compile Include="CloseableTabHeader.xaml.cs">
+      <DependentUpon>CloseableTabHeader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomFieldEntry.xaml.cs">
+      <DependentUpon>CustomFieldEntry.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="fWWMain.xaml.cs">
+      <DependentUpon>fWWMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InspectionEdit.xaml.cs">
+      <DependentUpon>InspectionEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="InspectionList.cs" />
+    <Compile Include="IVersion.cs" />
+    <Compile Include="CustomFieldDefinition.xaml.cs">
+      <DependentUpon>CustomFieldDefinition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MapDisplay.xaml.cs">
+      <DependentUpon>MapDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PackageInspection.cs" />
+    <Compile Include="WWData.cs" />
+    <Compile Include="IInspection.cs" />
+    <Compile Include="IInspEdit.cs" />
+    <Compile Include="WWHelper.cs" />
+    <Page Include="CloseableTabHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="fWWMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="InspectionEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CAddress.cs" />
+    <Compile Include="CCustomConcrete.cs" />
+    <Compile Include="CBusiness.cs" />
+    <Compile Include="CInspector.cs" />
+    <Compile Include="CustomFields.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="BusinessDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomFieldEntry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomFieldDefinition.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MapDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="CAddress.cd" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\edit-cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\edit-copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\edit-paste-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\edit-copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\edit-cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\edit-paste-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\24\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\evolution-tasks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\gtk-gnutella-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\kate-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\kthememgr-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\packagekit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\utilities-file-archiver-3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\roll-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\edit-group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\emblem-package.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\barcode-icon.png" />
+    <Resource Include="Images\32\gas-icon.png" />
+    <Resource Include="Images\32\justice-balance-icon.png" />
+    <Resource Include="Images\32\Scale-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\barcode-icon-16.png" />
+    <Resource Include="Images\16\gas-icon-16.png" />
+    <Resource Include="Images\16\justice-balance-icon-16.png" />
+    <Resource Include="Images\16\Scale-icon-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\emblem-package.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\kate-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\edit-find-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\edit-find-4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\edit-clear-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\edit-clear-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\edit-group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\bookmark-5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\bookmark-5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\building-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\building-icon-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\accessories-calculator-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\accessories-calculator-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\roll-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\roll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\roll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\view-refresh-6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\view-refresh-6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\emblem-office.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\emblem-office.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

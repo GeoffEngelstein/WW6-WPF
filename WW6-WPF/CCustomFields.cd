@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WinWam6.CCustomFields">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAgIAAAAAAAQAAAAAEAAAACABAAAACIBABAAAAAAA=</HashCode>
+      <FileName>CustomFields.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="CustomLines" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="WinWam6.CCustomLine" Collapsed="true">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAABAIAAAgAAIDBBAAAACAEAAAAKAAxAAAQAAI=</HashCode>
+      <FileName>CustomFields.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinWam6.CInsrCustom">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CInsrCustom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinWam6.CBusCustom">
+    <Position X="2.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CBusCustom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinWam6.CBusiness">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAiIAAEAAAgAAAAAAAAAQAAAgACAIAAAAFAAAQABA=</HashCode>
+      <FileName>CBusiness.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WinWam6.CAddress">
+    <Position X="8.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAACAAAAAwAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>CAddress.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
