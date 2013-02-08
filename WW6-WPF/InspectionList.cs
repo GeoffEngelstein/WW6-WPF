@@ -188,6 +188,45 @@ namespace WinWam6
 
         }
 
+        public string TooltipText
+        {
+            get {
+
+                string s = "";
+
+                switch (this.InspType)
+                {
+                    case "P": 
+                        s = "Package Checking";
+                        break;
+
+                    case "D":
+                        s = "Device";
+                        break;
+
+                    case "U":
+                        s = "UPC";
+                        break;
+
+                    case "Q":
+                        s = "Questionnaire Classic";
+                        break;
+
+                    case "R":
+                        s = "Questionnaire Deluxe";
+                        break;
+
+                    default:
+                        s = "Unknown";
+                        break;
+                }
+
+                return s + " Inspection ID " + this.Insp_ID;
+            }
+            
+        
+        }
+
         //Constructors
         public InspectionHeader(string InspID, string inspectionType )
         {

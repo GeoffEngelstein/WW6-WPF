@@ -15,6 +15,11 @@
                 <TextBlock Padding="3,0" Text="{Binding Path=Bus_ID}" />
                 <TextBlock Padding="3,0" Text="{Binding Path=Insp_Date}" />
                 <TextBlock Padding="3,0" Text="{Binding Path=Insr_ID}" />
+                <StackPanel.ToolTip>
+                    <ToolTip>
+                        <TextBlock Padding="3,0" Text="{Binding Path=TooltipText}" />
+                    </ToolTip>
+                </StackPanel.ToolTip>
             </StackPanel>
         </DataTemplate>
 
