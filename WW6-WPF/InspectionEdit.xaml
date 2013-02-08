@@ -8,7 +8,7 @@
              d:DesignWidth="300"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <HierarchicalDataTemplate DataType="{x:Type local:InspectionHeader}">
+        <DataTemplate DataType="{x:Type local:InspectionHeader}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Padding="3,0" Text="{Binding Path=InspType}" />
                 <TextBlock Padding="3,0" Text="{Binding Path=Insp_ID}" />
@@ -16,17 +16,17 @@
                 <TextBlock Padding="3,0" Text="{Binding Path=Insp_Date}" />
                 <TextBlock Padding="3,0" Text="{Binding Path=Insr_ID}" />
             </StackPanel>
-        </HierarchicalDataTemplate>
+        </DataTemplate>
 
 
 
     </UserControl.Resources>
     <Grid>
-        <TreeView Name="tvInspEdit"
-                  Width="Auto"
-                  Height="Auto"
-                  Margin="6"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="stretch" />
+        <ListBox Name="tvInspEdit"
+                 Width="Auto"
+                 Height="Auto"
+                 Margin="6"
+                 HorizontalAlignment="Stretch"
+                 VerticalAlignment="stretch" />
     </Grid>
 </UserControl>
