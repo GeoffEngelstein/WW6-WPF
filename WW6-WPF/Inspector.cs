@@ -1,141 +1,124 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.OleDb;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-
+using System.Data.Common;
 
 namespace WinWam6
 {
-    public partial class Inspector : Form
+    class Inspector
     {
-        CInspector lInsr = new CInspector();
-        List<CInspector> lInsrs;
-        PropertyManager pm;
+
+        private string m_ID;
+        private InspectorCustom m_custom;
+        private TableWrapper liw;
+
+        public string FirstName
+        {
+            get
+            {
+                return liw["Insr_First"].ToString();
+            }
+
+            set
+            {
+                liw["Insr_First"] = value;
+            }
+        }
+
+        public string LastName
+        {
+            get
+            {
+                return liw["Insr_Last"].ToString();
+            }
+
+            set
+            {
+                liw["Insr_Last"] = value;
+            }
+        }
+
+        public string ID_User
+        {
+            get
+            {
+                return liw["Insr_ID_User"].ToString();
+            }
+
+            set
+            {
+                liw["Insr_ID_User"] = value;
+            }
+        }
+
+        public string ID { get { return m_ID; } }      //Main Key - Readonly
+        public InspectorCustom CustomFields { get { return m_custom; } }
+        
+        public bool IsDirty
+        {
+            get
+            {
+                return (liw.IsDirty || m_custom.IsDirty);   //if either the wrapper or the custom fields have changed we have changed.
+            }
+        }
 
         public Inspector()
         {
-            InitializeComponent();
+            m_custom = new InspectorCustom();
+            m_custom.Initialize();
+            liw = new TableWrapper("Inspector");
         }
 
-
-        private void SetBindings()
+        public Inspector(string ID) 
         {
-            pm = null;
-            lblFirst.DataBindings.Clear();
-            lblLast.DataBindings.Clear();
-            lblFirst.DataBindings.Add("Text", lInsr, "FirstName");
-            lblLast.DataBindings.Add("Text", lInsr, "LastName");
+            m_ID = ID;
+            liw = new TableWrapper("Inspector");
+            liw["Insr_ID"] = m_ID;
+            liw.Load();
 
-        	pm = (PropertyManager)this.BindingContext[lInsr];
+            m_custom = new InspectorCustom();
+            m_custom.Initialize();
+            m_custom.Load(m_ID);
         }
 
-        private void Inspector_Load(object sender, EventArgs e)
+        public bool Save()
         {
+            string sql;
+            DbCommand cmd;
             
-            LoadInsrs();
-            LoadInsrGrid();
+            if (m_ID == "")
+            {
+                m_ID = System.Guid.NewGuid().ToString();
+                sql = liw.Insert();
+            }
+            else
+            {
+                sql = liw.Update();
+            }
+
+            try
+            {
+
+                //TODO Maybe wrap this in a transaction?
+                cmd = WWD.GetCommand(sql);
+                cmd.ExecuteNonQuery();
+
+                m_custom.Save();
+
+            }
+            catch
+            {
+                //TODO Some kind of error code here?
+                return false;
+            }
+
+            return true;
+
+        }
+
         
-        }
 
-        private void LoadInsrs()
-        {
-            OleDbCommand cmd = new OleDbCommand("select insr_id from inspector order by insr_id", WWD.gCn);
-            OleDbDataReader rdr = cmd.ExecuteReader();
-            string sID;
-
-            lInsrs = new List<CInspector>();
-
-            while (rdr.Read())
-            {
-                sID = rdr.GetString(0);
-                lInsrs.Add(new CInspector(sID));
-            }
-        }
-
-        private void LoadInsrGrid()
-        {
-            int i;
-
-            grdInsr.Rows.Count = lInsrs.Count+1;
-            i = 1;
-
-            foreach (CInspector mInsr in lInsrs)
-            {
-                grdInsr.SetData(i, 0, mInsr.ID);
-                grdInsr.SetData(i, 1, mInsr.LastName + ", " + mInsr.FirstName);
-                i++;
-            }
-            grdInsr.AutoResize = true;
-        }
-
-        private void lblFirst_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void grdInsr_RowColChange(object sender, EventArgs e)
-        {
-            if ((grdInsr.Row > 0) && (grdInsr.GetData(grdInsr.Row, 0) != null))
-            {
-                lInsr = GetInspector(grdInsr.GetData(grdInsr.Row, 0).ToString());
-                //lblFirst.Text = lInsr.FirstName;
-                //lblLast.Text = lInsr.LastName;
-                SetBindings();
-
-                label1.Text = lInsr.CustomFields.CustomLines[0].Caption;
-
-                ctlCustom.CustomFields = lInsr.CustomFields;
-                
-            }
-        }
-
-        private void grdInsr_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            var fBus = new Business();
-            fBus.Show();
-        }
-
-        private void toolStripButton2_Click(object sender, EventArgs e)
-        {
-            DisplayGInspectors();
-        }
-
-        private void DisplayGInspectors()
-        {
-            grdInsr.Rows.Count = 1; // Delete the old data
-
-            int i;
-
-            i = 1;
-
-            IEnumerable<CInspector> filteredInspectors = System.Linq.Enumerable.Where(lInsrs, n => n.LastName.Contains("e"));
-            foreach (CInspector ci in filteredInspectors)
-            {
-                grdInsr.Rows.Count = i+1;
-                grdInsr.SetData(i, 0, ci.ID);
-                grdInsr.SetData(i, 1, ci.LastName + ", " + ci.FirstName);
-                i++;
-            }
-            grdInsr.AutoResize = true;
-
-        }
-
-        private CInspector GetInspector(string ID)
-        {
-            CInspector FindInsr = System.Linq.Enumerable.Where(lInsrs, n => n.ID.Equals(ID)).First();
-
-            return FindInsr;
-
-        }
+        
     }
 }

@@ -24,8 +24,8 @@ namespace WinWam6
         string Notes { get; set; }
         DateTime NextInspDate { get; set; }
         DateTime AutoNextInspDate();
-        CInspector Inspector { get; set; }
-        CBusiness Business { get; set; }
+        Inspector Inspector { get; set; }
+        Business Business { get; set; }
         string Reason { get; set; }
         DateTime InspDate { get; set; }
         string Insp_ID { get; set; }

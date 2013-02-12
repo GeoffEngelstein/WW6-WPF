@@ -1,0 +1,300 @@
+﻿<ribbon:RibbonWindow x:Class="WinWam6.WWMain"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:ribbon="clr-namespace:Microsoft.Windows.Controls.Ribbon;assembly=RibbonControlsLibrary"
+                     x:Name="Window"
+                     Title="WinWam"
+                     Width="1233"
+                     Height="480">
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ribbon:Ribbon x:Name="Ribbon">
+            <ribbon:RibbonTab x:Name="HomeTab" Header="Inspection">
+                <ribbon:RibbonGroup x:Name="Group1" Header="Clipboard">
+                    <ribbon:RibbonButton Name="cmdCut"
+                                         Command="ApplicationCommands.Cut"
+                                         Content="Cut"
+                                         Label="Cut"
+                                         LargeImageSource="/Images/32/edit-cut.png"
+                                         SmallImageSource="/Images/16/edit-cut.png" />
+                    <ribbon:RibbonButton Name="cmdCopy"
+                                         Command="ApplicationCommands.Copy"
+                                         Content="Copy"
+                                         Label="Copy"
+                                         LargeImageSource="/Images/32/edit-copy.png"
+                                         SmallImageSource="/Images/16/edit-copy.png" />
+                    <ribbon:RibbonButton Name="cmdPaste"
+                                         Command="ApplicationCommands.Paste"
+                                         Content="Pase"
+                                         Label="Paste"
+                                         LargeImageSource="/Images/32/edit-paste-4.png"
+                                         SmallImageSource="/Images/16/edit-paste-4.png" />
+                </ribbon:RibbonGroup>
+                <ribbon:RibbonGroup x:Name="Group2" Header="New Inspection">
+                    <ribbon:RibbonButton Name="cmdPCS"
+                                         Label="Net Contents"
+                                         LargeImageSource="/Images/32/emblem-package.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-package.png" />
+                    <ribbon:RibbonButton Name="cmdDEV"
+                                         Label="Device Inspection"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/justice-balance-icon.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/justice-balance-icon-16.png" />
+                    <ribbon:RibbonButton Name="cmdQST"
+                                         Label="Questionnaire"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/kate-4.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/kate-4.png" />
+                    <ribbon:RibbonButton Name="cmdUPC"
+                                         Label="Price Verification"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/barcode-icon.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/barcode-icon-16.png" />
+                </ribbon:RibbonGroup>
+                <ribbon:RibbonGroup x:Name="Group3" Header="Find Inspections">
+                    <ribbon:RibbonButton Name="cmdFindInsp"
+                                         Click="cmdFindInsp_Click"
+                                         Label="Search Inspections"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/edit-find-4.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/edit-find-4.png" />
+                    <ribbon:RibbonButton Name="cmdFindInspsByTag"
+                                         Label="Search by Tag"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/bookmark-5.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/bookmark-5.png"
+                                         ToolTipDescription="Find Questionnaire Inspection by Tag" />
+                </ribbon:RibbonGroup>
+                <ribbon:RibbonGroup x:Name="Group5" Header="Support">
+                    <ribbon:RibbonButton Name="cmdBusiness"
+                                         Click="cmdBusiness_Click"
+                                         Label="Businesses"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/building-icon.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/building-icon-16.png" />
+                    <ribbon:RibbonButton Name="cmdInspector"
+                                         Click="cmdInspector_Click"
+                                         Label="Inspectors"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/edit-group.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/edit-group.png" />
+                </ribbon:RibbonGroup>
+                <ribbon:RibbonGroup x:Name="Group4" Header="Tools">
+                    <ribbon:RibbonButton Name="cmdCalculator"
+                                         Click="cmdCalculator_Click"
+                                         Label="Calculator"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/accessories-calculator-2.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/accessories-calculator-2.png" />
+                    <ribbon:RibbonButton Name="cmdRandomGenerator"
+                                         Label="Random Numbers"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/roll.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/roll.png" />
+                    <ribbon:RibbonButton Name="cmdUnitConversion"
+                                         Label="Unit Conversion"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/view-refresh-6.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/view-refresh-6.png" />
+                    <ribbon:RibbonButton Name="cmdHypertextHandbooks"
+                                         Label="Hypertext Handbooks"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                </ribbon:RibbonGroup>
+            </ribbon:RibbonTab>
+            <ribbon:RibbonTab x:Name="ReportsTab" Header="Reports">
+                <ribbon:RibbonGroup x:Name="GroupR1" Header="Print">
+                    <ribbon:RibbonButton Name="cmdPrintReports"
+                                         Label="Report Selector"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdPrintDeviceWorksheet"
+                                         Label="Device Worksheet"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdPrintFavorite"
+                                         Label="Favorite Reports"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                </ribbon:RibbonGroup>
+                <ribbon:RibbonGroup x:Name="GroupR2" Header="Report Maintenance">
+                    <ribbon:RibbonButton Name="cmdRegisterReports"
+                                         Label="Register Reports"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdSelectPrinter"
+                                         Label="Select Printer"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdPrintMargins"
+                                         Label="Report Margins"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                </ribbon:RibbonGroup>
+            </ribbon:RibbonTab>
+
+            <ribbon:RibbonTab x:Name="SetupTab" Header="Setup">
+                <ribbon:RibbonGroup x:Name="GroupS1" Header="Options and Definitions">
+                    <ribbon:RibbonButton Name="cmdSystemDefaults"
+                                         Label="Options"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdDeviceSpec"
+                                         Label="Device Type Definitions"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdSyncSetup"
+                                         Label="Synchronization Setup"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdQSTDesigner"
+                                         Label="Questionnaire Designer"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdBusCustom"
+                                         Label="Business Custom Fields"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdInsrCustom"
+                                         Label="Inspector Custom Fields"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdCommodityClasses"
+                                         Label="Commodity Classes"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                </ribbon:RibbonGroup>
+                <ribbon:RibbonGroup x:Name="GroupS2" Header="Transfer">
+                    <ribbon:RibbonButton Name="cmdWriteConfig"
+                                         Label="Export Configuration"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdReadConfig"
+                                         Label="Import Configuration"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdWriteSingleDev"
+                                         Label="Export Single Device Type"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdReadSingleDev"
+                                         Label="Import Single Device Type"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdWriteSingleQST"
+                                         Label="Export Single Questionnaire"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdReadSingleQST"
+                                         Label="Import Single Questionnaire"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                </ribbon:RibbonGroup>
+                <ribbon:RibbonGroup x:Name="GroupS3" Header="Auxilliary Equipment">
+                    <ribbon:RibbonButton Name="cmdScaleSetup"
+                                         Label="Set up Scale"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdScannerSetup"
+                                         Label="Set up Scanner"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdThermometerSetup"
+                                         Label="Set up USB Thermostat"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdLPGProverSetup"
+                                         Label="Set up LPG Provers"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                </ribbon:RibbonGroup>
+            </ribbon:RibbonTab>
+            <ribbon:RibbonTab x:Name="DatabaseTab" Header="Database">
+                <ribbon:RibbonGroup x:Name="GroupD1" Header="Connect">
+                    <ribbon:RibbonButton Name="cmdCreateDatabase"
+                                         Label="Create Database"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdOpenDatabase"
+                                         Label="Open Database"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdSQLConnect"
+                                         Label="Connect to SQL Server"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdTransferAccessToSQL"
+                                         Label="Move Access MDB to SQL Server"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                </ribbon:RibbonGroup>
+                <ribbon:RibbonGroup x:Name="GroupD2" Header="Transfer">
+                    <ribbon:RibbonButton Name="cmdSync"
+                                         Label="Synchronize"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdWriteTransfer"
+                                         Label="Export Data"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdReadTransfer"
+                                         Label="Import Data"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                </ribbon:RibbonGroup>
+                <ribbon:RibbonGroup x:Name="GroupD3" Header="Maintain">
+                    <ribbon:RibbonButton Name="cmdRepairCompact"
+                                         Label="Repair and Compact Database"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                    <ribbon:RibbonButton Name="cmdReloadData"
+                                         Label="Reload Database"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-office.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
+                </ribbon:RibbonGroup>
+            </ribbon:RibbonTab>
+            <ribbon:RibbonTab x:Name="UtilityTab" Header="Utilities" />
+        </ribbon:Ribbon>
+
+        <Grid Name="grdLower" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Name="grdSidePanels" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0">Action Pane</TextBlock>
+                <GridSplitter Grid.Row="1"
+                              Height="3"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Center"
+                              ShowsPreview="False" />
+                <TextBlock Grid.Row="2">Tree Pane</TextBlock>
+            </Grid>
+
+            <GridSplitter Grid.Column="1"
+                          Width="3"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Stretch"
+                          ShowsPreview="False" />
+
+            <TabControl Name="MasterTabs" Grid.Column="2">
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Business 1" />
+                            <Button Content="X" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid Name="TabGrid1" SizeChanged="TabGrid1_SizeChanged" />
+                </TabItem>
+                <TabItem Header="Page 2">
+                    <Frame Name="Frame2"
+                           Grid.Row="2"
+                           BorderBrush="Black"
+                           BorderThickness="1" />
+                </TabItem>
+
+            </TabControl>
+        </Grid>
+    </Grid>
+</ribbon:RibbonWindow>

@@ -22,7 +22,7 @@ namespace WinWam6
     /// </summary>
     public partial class InspectionEdit : UserControl
     {
-        public ObservableCollection<InspectionHeader> inspectionList;
+        public ObservableCollection<InspectionBase> inspectionList;
 
         public InspectionEdit()
         {
@@ -31,17 +31,50 @@ namespace WinWam6
             tvInspEdit.ItemsSource = inspectionList;
         }
 
-        private ObservableCollection<InspectionHeader> GetAllInspectionHeaders()
+        private ObservableCollection<InspectionBase> GetAllInspectionHeaders()
         {
-            var inspList = new ObservableCollection<InspectionHeader>();
-            InspectionHeader inspHeader;
+            var inspList = new ObservableCollection<InspectionBase>();
+            InspectionBase inspectionBase;
 
             DbDataReader dr = WWD.GetReader("select insp_id, insptype from insph order by insp_date");
 
             while (dr.Read())
             {
-                inspHeader = new InspectionHeader(dr[0].ToString(), dr[1].ToString());
-                inspList.Add(inspHeader);
+                switch (dr[1].ToString())
+                {
+                    case "P": 
+                        inspectionBase = new PackageInspection();
+                        inspectionBase.Load(dr[0].ToString());
+                        break;
+
+                    case "D":
+                        inspectionBase = new DeviceInspection();
+                        inspectionBase.Load(dr[0].ToString());
+                        break;
+
+                    case "U":
+                        inspectionBase = new UPCInspection();
+                        inspectionBase.Load(dr[0].ToString());
+                        break;
+
+                    case "Q":
+                        inspectionBase = new QSTInspection();
+                        inspectionBase.Load(dr[0].ToString());
+                        break;
+
+                    case "R":
+                        inspectionBase = new QSTDInspection();
+                        inspectionBase.Load(dr[0].ToString());
+                        break;
+
+                    default:
+                        inspectionBase = new PackageInspection();
+                        inspectionBase.Load(dr[0].ToString());
+                        break;
+                }
+                
+                inspList.Add(inspectionBase);
+
             }
             dr.Dispose();
 

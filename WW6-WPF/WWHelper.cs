@@ -37,23 +37,23 @@ namespace WinWam6
             return s.Replace("'","''");
         }
 
-        static public string InspectionCode(InspectionHeader.InspectionType inspectionType)
+        static public string InspectionCode(InspectionBase.InspectionType inspectionType)
         {
             switch (inspectionType)
             {
-                case InspectionHeader.InspectionType.PCS:
+                case InspectionBase.InspectionType.PCS:
                     return "P";
 
-                case InspectionHeader.InspectionType.DEV:
+                case InspectionBase.InspectionType.DEV:
                     return "D";
 
-                case InspectionHeader.InspectionType.UPC:
+                case InspectionBase.InspectionType.UPC:
                     return "U";
 
-                case InspectionHeader.InspectionType.QST:
+                case InspectionBase.InspectionType.QST:
                     return "Q";
 
-                case InspectionHeader.InspectionType.QSTD:
+                case InspectionBase.InspectionType.QSTD:
                     return "D";
 
                 default: return "";

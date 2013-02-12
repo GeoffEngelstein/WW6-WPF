@@ -19,14 +19,14 @@ namespace WinWam6
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class BusinessDetail : UserControl
+    public partial class BusinessDetailView : UserControl
     {
-        public CBusiness curBus {get; set;}
-        private CBusiness lBus;
+        public Business curBus {get; set;}
+        private Business lBus;
 
-        public BusinessDetail()
+        public BusinessDetailView()
         {
-            lBus = new CBusiness("000050");
+            lBus = new Business("000050");
             curBus = lBus;
             DataContext = this;
             InitializeComponent();
@@ -50,7 +50,7 @@ namespace WinWam6
         {
             string s = lstBusID.SelectedItem.ToString();
 
-            lBus = new CBusiness(s);
+            lBus = new Business(s);
             curBus = lBus;
             DataContext = null;     //Refresh all the bindings to match the new object
             DataContext = this;

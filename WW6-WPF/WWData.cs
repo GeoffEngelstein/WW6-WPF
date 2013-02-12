@@ -10,12 +10,20 @@ namespace WinWam6
 {
 	static class WWD
 	{
+
+        static public DateTime NullDate
+        {
+            get { return nullDate; }
+        }
+
 		static private OleDbConnection gCn;
 		static private OleDbConnection gSysCn;
 		static private Dictionary<string, TableWrapper> TableWrapperCache = new Dictionary<string,TableWrapper>();
+        static private DateTime nullDate = new DateTime(1800, 1, 1);
 
 		static public void OpenDatabase()
 		{
+
 			gCn = new OleDbConnection();
 			gCn.ConnectionString = "Provider=Microsoft.Jet.OleDb.4.0;Data Source=C:\\users\\geoff\\My Documents\\Visual Studio 2010\\Projects\\WW6-WPF\\ww6.mdb;Persist Security Info=False";
 			gCn.Open();
@@ -198,11 +206,28 @@ namespace WinWam6
 			}
 		}
 
+        public static DateTime ParseNoNull(this DateTime datetime, string s)
+        {
+            DateTime d;
+            if (DateTime.TryParse(s, out d))
+            {
+                return d;
+            }
+            else
+            {
+                return new DateTime(1900, 1, 1);
+            }
+        }
+
+
+
 		//Factory that returns a TableWrapper object. Keeps track of objects that have been created already
 		// and will return the old object if it exists
 		//NOTE: This may not be threadsafe, if more than one thread tries to access the same Wrapper
 
-		public static TableWrapper GetTableWrapper(string TableName)
+        // REALLY IMPORTANT NOTE: This function needs to return a COPY of the cached Wrapper - Need to change.
+
+/*		public static TableWrapper GetTableWrapper(string TableName)
 		{
 			TableWrapper returnWrapper;
 
@@ -217,6 +242,7 @@ namespace WinWam6
 				return returnWrapper;
 			}   
 		}
+        */
 
 		//WrapField - This function puts the delimiters around the field value
 		//  based on the type of database we are connected to. Also escapes any values
@@ -227,7 +253,12 @@ namespace WinWam6
 			string s;
 			
 			//TODO - Add differences based on type of database
-		   
+
+            if (null == field.Value)
+            {
+                return "null";
+            }
+
 			switch (field.DataType)
 			{
 				case "System.String":
@@ -580,28 +611,39 @@ namespace WinWam6
 
 			string output = "";
 			string sType = "";  //Datatype string
- 
+            string nullable = "";   //set to ? if Type needs to be marked as Nullable
+
 			foreach (System.Collections.Generic.KeyValuePair<string, Field> kv in this.Fields)
 			{
 				sType = kv.Value.DataType.Substring(7); //Strip System. from start of string
 				if (sType == "Boolean") sType = "bool";  //correct datatype for Boolean
 
-				output += "public " + sType + " " + kv.Value.Name + "\n\r{";
+                if (sType == "DateTime")
+                    { nullable = "?"; }  //allow for nullable
+                else
+                { nullable = ""; }
 
-				switch (sType)
-				{
-					case "String":
-						{
-							output += "\tget { return lObj[\"" + kv.Value.Name + "\"].ToString(); }";
-							break;
-						}
-					default:
-						{
-							output += "\tget { return " + sType + ".Parse(lObj[\"" + kv.Value.Name + "\"].ToString()); }";
-							break;
-						}
-				}
-				output += "\tset { lObj[\"" + kv.Value.Name + "\"] = value; NotifyPropertyChanged(\"" + kv.Value.Name + "\"); } \n\r}";
+                output += "public " + sType + nullable + " " + kv.Value.Name + "\n\r{\n\r";
+
+                switch (sType)
+                {
+                    case "String":
+                        {
+                            output += "\tget { return lObj[\"" + kv.Value.Name + "\"].ToString(); }\n\r";
+                            break;
+                        }
+                    case "DateTime":
+                        {
+                            output += "\tget { DateTime d; if (DateTime.TryParse(lObj[\"" + kv.Value.Name + "\"].ToString(), out d)) { return d; } else {return null;} }\n\r";
+                            break;
+                        }
+                    default:
+                        {
+                            output += "\tget { return " + sType + ".Parse(lObj[\"" + kv.Value.Name + "\"].ToString()); }\n\r";
+                            break;
+                        }
+                }
+                output += "\tset { lObj[\"" + kv.Value.Name + "\"] = value; NotifyPropertyChanged(\"" + kv.Value.Name + "\"); } \n\r\n\r}";
 			}
 
 			return output;  

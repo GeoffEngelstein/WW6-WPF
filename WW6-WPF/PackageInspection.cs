@@ -7,56 +7,30 @@ using System.ComponentModel;
 
 namespace WinWam6
 {
-    class PackageInspection : IInspection
+    class PackageInspection : InspectionBase
     {
         private TableWrapper lObj;
 
-        // IInspection Properties and Methods
-
-        public bool ReadOnly { get; set; }
-        public bool Locked { get { return false; } }
-        public bool LockOverride { get; set; }
-        //TODO
-        //public CTimeInTimeOuts TimeInTimeOuts {get; set;}
-        public DateTime OpenTime { get; set; }
-        public bool NextInspDateOverride { get; set; }
-        public string PrintedName { get; set; }
-        public DateTime CreateDate { get; set; }
-        //TODO
-        //public eInspType InspType {get; set;}
-        public string InspCode { get { return "P"; } }
-        public System.Drawing.Bitmap BusSig { get; set; }
-        public System.Drawing.Bitmap InspSig { get; set; }
-        public string Notes { get; set; }
-        public DateTime NextInspDate { get; set; }
-        public DateTime AutoNextInspDate() { return System.DateTime.Now; }
-        public CInspector Inspector { get; set; }
-        public CBusiness Business { get; set; }
-        public string Reason { get; set; }
-        public DateTime InspDate { get; set; }
-        public string Insp_ID { get; set; }
-        public bool Save() { return true; }
-        
-        public bool Load(string InspID) 
-        {
-            lObj = new TableWrapper("InspH");
-
-            lObj["InspID"] = InspID;
-            lObj["InspType"] = "P";
-            lObj.Load();
-
-            //TODO
-            //LoadPackDCollection
-            
-            return true;
-        }
 
         // Package Checking Specific Properties and Methods
 
+        public override string TooltipText
+        {
+            get
+            {
+
+                return "Package Inspection" + " Inspection ID " + this.Insp_ID;
+            }
+        }
 
 
         // Constructor
+        public PackageInspection() : base() { }
 
+        public override void Load(string InspID)
+        {
+            base.LoadPrivate(InspID, "P");
+        }
     }
 
     class PackD : INotifyPropertyChanged
