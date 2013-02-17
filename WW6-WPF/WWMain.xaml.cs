@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Windows.Controls.Ribbon;
+using WinWam6.Business;
 
 namespace WinWam6
 {
@@ -90,49 +91,38 @@ namespace WinWam6
 
         private void cmdCalculator_Click(object sender, RoutedEventArgs e)
         {
-            TableWrapper ltw = new TableWrapper("InspH");
+            TableWrapper ltw = new TableWrapper("UPCD");
             Clipboard.SetText(ltw.GenerateClass());
         }
 
         private void cmdFindInsp_Click(object sender, RoutedEventArgs e)
         {
-            /* InspectionEdit fbd = new InspectionEdit();
-            TabGrid1.Children.Add(fbd);
-            fbd.Height = TabGrid1.ActualHeight;
-            fbd.Width = TabGrid1.ActualWidth;
-            */
+            InspectionEdit fie = new InspectionEdit();
+            InitalizeTab(fie);
+        }
+
+        private void cmdPCS_Click(object sender, RoutedEventArgs e)
+        {
+            PCSInspectionView fie = new PCSInspectionView();
+            InitalizeTab(fie);
+        }
+
+        private void InitalizeTab(UIElement content)
+        {
             CloseableTab myTab = new CloseableTab();
             int newTab = MasterTabs.Items.Count + 1;
 
-            myTab.Title = "Tab " + newTab.ToString();
+            myTab.Title = ((IMainTab)content).TabCaption;
 
-            if (newTab % 2 > 0)
-            {
-                myTab.Picture = new BitmapImage(new Uri("pack://application:,,,/WW6-WPF;component/Images/16/emblem-package.png"));
-            }
-            else
-            {
-
-            }
-
-//            StackPanel sp = new StackPanel();
-//            sp.Orientation = Orientation.Horizontal;
-//            sp.SizeChanged += StackPanel_SizeChanged;
+            myTab.Picture = new BitmapImage(new Uri(((IMainTab)content).TabIcon));
 
             Grid sp = new Grid();
             sp.SizeChanged += Grid_SizeChanged;
-            InspectionEdit fie = new InspectionEdit();
-            sp.Children.Add(fie);
-
-            
-            
-            
+            sp.Children.Add(content);
 
             myTab.Content = sp;
 
-
             MasterTabs.Items.Add(myTab);
-    
         }
     }
 }

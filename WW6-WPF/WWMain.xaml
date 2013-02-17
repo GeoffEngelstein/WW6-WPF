@@ -36,6 +36,7 @@
                 </ribbon:RibbonGroup>
                 <ribbon:RibbonGroup x:Name="Group2" Header="New Inspection">
                     <ribbon:RibbonButton Name="cmdPCS"
+                                         Click="cmdPCS_Click"
                                          Label="Net Contents"
                                          LargeImageSource="/Images/32/emblem-package.png"
                                          SmallImageSource="/WW6-WPF;component/Images/16/emblem-package.png" />

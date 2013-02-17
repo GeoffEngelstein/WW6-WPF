@@ -5,7 +5,7 @@ using System.Text;
 using System.Data.Common;
 using System.ComponentModel;
 
-namespace WinWam6
+namespace WinWam6.Inspection.QSTD
 {
     class QSTDInspection : InspectionBase
     {

@@ -9,19 +9,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data;
 using System.Data.Common;
 using System.Xml.Linq;
 
-namespace WinWam6
+namespace WinWam6.Business
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for BusinessDetailView.xaml
     /// </summary>
     public partial class BusinessDetailView : UserControl
     {
-        public Business curBus {get; set;}
+        public Business curBus { get; set; }
         private Business lBus;
 
         public BusinessDetailView()
@@ -54,10 +55,10 @@ namespace WinWam6
             curBus = lBus;
             DataContext = null;     //Refresh all the bindings to match the new object
             DataContext = this;
-            
+
 
             string location = curBus.PhysicalAddress.LocationString;
-            string geocodeURL  = @"http://maps.googleapis.com/maps/api/geocode/xml?address=" + location + "&sensor=false";
+            string geocodeURL = @"http://maps.googleapis.com/maps/api/geocode/xml?address=" + location + "&sensor=false";
             XDocument geoDoc = XDocument.Load(geocodeURL);
             string ss = geoDoc.ToString();
             string responseStatus = geoDoc.Element("GeocodeResponse").Element("status").Value;
@@ -94,7 +95,7 @@ namespace WinWam6
         private void cmdMapPhys_Click(object sender, RoutedEventArgs e)
         {
             //Display the Map
-            
+
         }
 
         public void ShowMapImage(string MyLoc)
@@ -119,3 +120,4 @@ namespace WinWam6
 
     }
 }
+

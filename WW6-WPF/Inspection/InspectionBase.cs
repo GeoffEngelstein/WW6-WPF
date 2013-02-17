@@ -21,12 +21,8 @@ namespace WinWam6
 
         public Decimal AmtPaid
         {
-
             get { return Decimal.Parse(lObj["AmtPaid"].ToString()); }
-
             set { lObj["AmtPaid"] = value; NotifyPropertyChanged("AmtPaid"); }
-
-
         }
         public String Bus_ID
         {

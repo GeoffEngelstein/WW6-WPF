@@ -4,39 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Data.Common;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
-namespace WinWam6
+namespace WinWam6.Inspection.PCS
 {
-    class PackageInspection : InspectionBase
+    public class PCSDetail : INotifyPropertyChanged
     {
         private TableWrapper lObj;
+        private bool pcsTestLoaded = false;
+        private ObservableCollection<PCSTest> pcsTests;
 
 
-        // Package Checking Specific Properties and Methods
-
-        public override string TooltipText
+        public ObservableCollection<PCSTest> PCSTests
         {
             get
             {
-
-                return "Package Inspection" + " Inspection ID " + this.Insp_ID;
+                if (!pcsTestLoaded)
+                {
+                    LoadPackTests();
+                }
+                return PCSTests;
             }
         }
-
-
-        // Constructor
-        public PackageInspection() : base() { }
-
-        public override void Load(string InspID)
-        {
-            base.LoadPrivate(InspID, "P");
-        }
-    }
-
-    class PackD : INotifyPropertyChanged
-    {
-        private TableWrapper lObj;
-
         public Double AvgErr
         {
             get { return Double.Parse(lObj["AvgErr"].ToString()); }
@@ -247,74 +236,40 @@ namespace WinWam6
             set { lObj["VolTemp"] = value; NotifyPropertyChanged("VolTemp"); }
         }
 
-        private void NotifyPropertyChanged(string propertyName)
+        public PCSDetail()
         {
-            if (PropertyChanged != null)
+            lObj = new TableWrapper("PackD");
+        }
+
+        public PCSDetail(string insp_ID, int pack_ID)
+        {
+            lObj = new TableWrapper("PackD");
+            Load(insp_ID, pack_ID);
+        }
+
+        public void Load(string insp_ID, int pack_ID)
+        {
+            lObj["Insp_ID"] = insp_ID;
+            lObj["Pack_ID"] = pack_ID;
+            lObj.Load();
+        }
+
+        private void LoadPackTests()
+        {
+            PCSTest pcsTest;
+
+            pcsTests = new ObservableCollection<PCSTest>();
+
+            string sql = "Select Pack_ID, Test from PackTest where insp_id ='" + this.Insp_ID + "' and Pack_ID = "+ this.Pack_ID + " order by Pack_ID";
+            DbDataReader rdr = WWD.GetReader(sql);
+
+            while (rdr.Read())
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                pcsTest = new PCSTest();
+                pcsTest.Load(this.Insp_ID, rdr.GetInt16NoNull(0), rdr.GetInt16NoNull(1));
+                pcsTests.Add(pcsTest);
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-    }
-
-    class PackTest : INotifyPropertyChanged
-    {
-        private TableWrapper lObj;
-
-        public Single Gross
-        {
-            get { return Single.Parse(lObj["Gross"].ToString()); }
-            set { lObj["Gross"] = value; NotifyPropertyChanged("Gross"); }
-        }
-
-        public String Insp_ID
-        {
-            get { return lObj["Insp_ID"].ToString(); }
-            set { lObj["Insp_ID"] = value; NotifyPropertyChanged("Insp_ID"); }
-        }
-
-        public Single MAV
-        {
-            get { return Single.Parse(lObj["MAV"].ToString()); }
-            set { lObj["MAV"] = value; NotifyPropertyChanged("MAV"); }
-        }
-
-        public Double MWeight
-        {
-            get { return Double.Parse(lObj["MWeight"].ToString()); }
-            set { lObj["MWeight"] = value; NotifyPropertyChanged("MWeight"); }
-        }
-
-        public Int16 Pack_ID
-        {
-            get { return Int16.Parse(lObj["Pack_ID"].ToString()); }
-            set { lObj["Pack_ID"] = value; NotifyPropertyChanged("Pack_ID"); }
-        }
-
-        public Double PWeight
-        {
-            get { return Double.Parse(lObj["PWeight"].ToString()); }
-            set { lObj["PWeight"] = value; NotifyPropertyChanged("PWeight"); }
-        }
-
-        public Single Tare
-        {
-            get { return Single.Parse(lObj["Tare"].ToString()); }
-            set { lObj["Tare"] = value; NotifyPropertyChanged("Tare"); }
-        }
-
-        public Int16 Test
-        {
-            get { return Int16.Parse(lObj["Test"].ToString()); }
-            set { lObj["Test"] = value; NotifyPropertyChanged("Test"); }
-        }
-
-        public Single Volume
-        {
-            get { return Single.Parse(lObj["Volume"].ToString()); }
-            set { lObj["Volume"] = value; NotifyPropertyChanged("Volume"); }
+            pcsTestLoaded = true;
         }
 
         private void NotifyPropertyChanged(string propertyName)
@@ -326,5 +281,6 @@ namespace WinWam6
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
     }
 }

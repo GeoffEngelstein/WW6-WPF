@@ -14,13 +14,19 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.Common;
+using WinWam6.Inspection.PCS;
+using WinWam6.Inspection.DEV;
+using WinWam6.Inspection.UPC;
+using WinWam6.Inspection.QST;
+using WinWam6.Inspection.QSTD;
+
 
 namespace WinWam6
 {
     /// <summary>
     /// Interaction logic for InspectionEdit.xaml
     /// </summary>
-    public partial class InspectionEdit : UserControl
+    public partial class InspectionEdit : UserControl, IMainTab 
     {
         public ObservableCollection<InspectionBase> inspectionList;
 
@@ -43,12 +49,12 @@ namespace WinWam6
                 switch (dr[1].ToString())
                 {
                     case "P": 
-                        inspectionBase = new PackageInspection();
+                        inspectionBase = new PCSInspection();
                         inspectionBase.Load(dr[0].ToString());
                         break;
 
                     case "D":
-                        inspectionBase = new DeviceInspection();
+                        inspectionBase = new DEVInspection();
                         inspectionBase.Load(dr[0].ToString());
                         break;
 
@@ -68,7 +74,7 @@ namespace WinWam6
                         break;
 
                     default:
-                        inspectionBase = new PackageInspection();
+                        inspectionBase = new PCSInspection();
                         inspectionBase.Load(dr[0].ToString());
                         break;
                 }
@@ -81,6 +87,17 @@ namespace WinWam6
             return inspList;
 
         }
+
+        public string TabIcon
+        {
+            get { return "pack://application:,,,/WW6-WPF;component/Images/16/edit-find-4.png"; }
+        }
+        public string TabCaption
+        {
+            get { return "Search Inspections"; }
+        }
+        public object TreePaneContent { get { return null; } }
+        public object ActionPaneContent { get { return null; } }
 
     }
 }

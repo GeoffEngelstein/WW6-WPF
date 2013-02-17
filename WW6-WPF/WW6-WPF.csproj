@@ -64,14 +64,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BusinessDetail.xaml.cs">
-      <DependentUpon>BusinessDetailView</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="BusinessInspection.cs" />
-    <Compile Include="Conversion.cs" />
+    <Compile Include="Business\BusinessDetailView.xaml.cs">
+      <DependentUpon>BusinessDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="IMainTab.cs" />
+    <Compile Include="Inspection\InspectionHeaderView.xaml.cs">
+      <DependentUpon>InspectionHeaderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Inspection\PCS\PCSInspectionView.xaml.cs">
+      <DependentUpon>PCSInspectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\Conversion.cs" />
     <Compile Include="Device.cs" />
-    <Compile Include="DeviceInspection.cs" />
+    <Compile Include="Inspection\DEV\DEVAttribute.cs" />
+    <Compile Include="Inspection\DEV\DEVDetail.cs" />
+    <Compile Include="Inspection\DEV\DEVInspection.cs" />
     <Compile Include="CloseableTab.cs" />
     <Compile Include="CloseableTabHeader.xaml.cs">
       <DependentUpon>CloseableTabHeader.xaml</DependentUpon>
@@ -79,17 +87,21 @@
     <Compile Include="CustomFieldEntry.xaml.cs">
       <DependentUpon>CustomFieldEntry.xaml</DependentUpon>
     </Compile>
-    <Compile Include="QSTDInspection.cs" />
-    <Compile Include="QSTInspection.cs" />
-    <Compile Include="UPCInspection.cs" />
-    <Compile Include="ValueConverters.cs" />
+    <Compile Include="Inspection\DEV\DEVTest.cs" />
+    <Compile Include="Inspection\PCS\PCSDetail.cs" />
+    <Compile Include="Inspection\PCS\PCSTest.cs" />
+    <Compile Include="Inspection\QSTD\QSTDInspection.cs" />
+    <Compile Include="Inspection\QST\QSTInspection.cs" />
+    <Compile Include="Inspection\UPC\UPCDetail.cs" />
+    <Compile Include="Inspection\UPC\UPCInspection.cs" />
+    <Compile Include="Utility\ValueConverters.cs" />
     <Compile Include="WWMain.xaml.cs">
       <DependentUpon>WWMain.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InspectionEdit.xaml.cs">
+    <Compile Include="Inspection\InspectionEdit.xaml.cs">
       <DependentUpon>InspectionEdit.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InspectionBase.cs" />
+    <Compile Include="Inspection\InspectionBase.cs" />
     <Compile Include="IVersion.cs" />
     <Compile Include="CustomFieldDefinition.xaml.cs">
       <DependentUpon>CustomFieldDefinition.xaml</DependentUpon>
@@ -97,16 +109,23 @@
     <Compile Include="MapDisplay.xaml.cs">
       <DependentUpon>MapDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PackageInspection.cs" />
-    <Compile Include="WWData.cs" />
-    <Compile Include="IInspection.cs" />
+    <Compile Include="Inspection\PCS\PCSInspection.cs" />
+    <Compile Include="Data\WWData.cs" />
     <Compile Include="IInspEdit.cs" />
-    <Compile Include="WWHelper.cs" />
-    <Page Include="BusinessDetailView.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Compile Include="Utility\WWHelper.cs" />
+    <Page Include="Business\BusinessDetailView.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CloseableTabHeader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Inspection\InspectionHeaderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Inspection\PCS\PCSInspectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -114,7 +133,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="InspectionEdit.xaml">
+    <Page Include="Inspection\InspectionEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -122,10 +141,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Address.cs" />
+    <Compile Include="Business\Address.cs" />
     <Compile Include="CustomConcrete.cs" />
-    <Compile Include="Business.cs" />
-    <Compile Include="Inspector.cs" />
+    <Compile Include="Business\Business.cs" />
+    <Compile Include="Inspector\Inspector.cs" />
     <Compile Include="CustomFields.cs" />
     <Page Include="CustomFieldEntry.xaml">
       <SubType>Designer</SubType>
@@ -159,11 +178,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="BusinessDetailView">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-    <None Include="Address.cd" />
+    <None Include="Business\Address.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

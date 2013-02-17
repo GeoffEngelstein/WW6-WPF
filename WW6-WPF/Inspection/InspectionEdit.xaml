@@ -27,7 +27,13 @@
 
     </UserControl.Resources>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Button Name="cmdView">View</Button>
         <DataGrid Name="tvInspEdit"
+                  Grid.Row="1"
                   Width="Auto"
                   Height="Auto"
                   Margin="6"
