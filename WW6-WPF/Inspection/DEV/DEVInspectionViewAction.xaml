@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="WinWam6.Inspection.DEV.DEVInspectionViewAction"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WinWam6.Inspection.DEV"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <HierarchicalDataTemplate DataType="{x:Type local:DEVDetail}" ItemsSource="{Binding Path=DEVTests}">
+            <TextBlock Text="{Binding Path=Ref}" />
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type local:DeviceTest}">
+            <TextBlock Text="{Binding Path=Test}" />
+        </HierarchicalDataTemplate>
+        <Style TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="TextBlock.FontFamily" Value="Segoe UI" />
+                <Setter Property="TextBlock.FontSize" Value="10" />
+                <Setter Property="TextBlock.Foreground" Value="Blue" />
+                <Setter Property="Margin" Value="3" />
+                <Setter Property="Padding" Value="3,0,0,0" />
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="Background" Value="Yellow" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <StackPanel>
+        <TextBlock MouseDown="TextBlock_MouseDown">Save Inspection</TextBlock>
+        <TextBlock>Print Inspection</TextBlock>
+        <TextBlock>Add new Device</TextBlock>
+        <TextBlock>Add existing Devices</TextBlock>
+        <TextBlock>Device Wizard</TextBlock>
+        <TextBlock>Time In / Time Out</TextBlock>
+        <TextBlock>Inspection Notes</TextBlock>
+        <TextBlock>Attach Media</TextBlock>
+        <TextBlock>Sign Inspection</TextBlock>
+        <TextBlock>Unlock Inspection</TextBlock>
+        <TextBlock>Delete Device</TextBlock>
+        <TreeView Name="DEVTree"
+                  Margin="3,15,0,0"
+                  BorderThickness="0" />
+    </StackPanel>
+</UserControl>

@@ -60,6 +60,21 @@ namespace WinWam6
             }
         }
 
-    }
+ /*       static public List<Inspector> Inspectors()
+        {
+            DbDataReader dr = WWD.GetReader("Select insr_id from inspector order by insr_id_user");
+            
+            var inspectors = new List<Inspector>();
 
+            while (dr.Read())
+            {
+                Inspector inspector = new Inspector(dr[0].ToString());
+                inspectors.Add(inspector);
+            }
+
+            return inspectors;
+        }
+        */
+    }
+       
 }

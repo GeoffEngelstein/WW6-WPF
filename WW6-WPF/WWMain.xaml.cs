@@ -12,6 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Windows.Controls.Ribbon;
 using WinWam6.Business;
+using WinWam6.Inspection.DEV;
+using WinWam6.Utility;
 
 namespace WinWam6
 {
@@ -37,9 +39,25 @@ namespace WinWam6
         private void cmdBusiness_Click(object sender, RoutedEventArgs e)
         {
             BusinessDetailView fbd = new BusinessDetailView();
-            TabGrid1.Children.Add(fbd);
-            fbd.Height = TabGrid1.ActualHeight;
-            fbd.Width = TabGrid1.ActualWidth;
+            InitalizeTab(fbd);
+        }
+
+        public void ShowBusiness(string BusinessID)
+        {
+            BusinessDetailView fbd = new BusinessDetailView(BusinessID);
+            InitalizeTab(fbd);
+        }
+
+        public void ShowPCS(string InspID)
+        {
+            var fbd = new PCSInspectionView(InspID);
+            InitalizeTab(fbd);
+        }
+
+        public void ShowDEV(string InspID)
+        {
+            var fbd = new DEVInspectionView(InspID);
+            InitalizeTab(fbd);
         }
 
         private void cmdInspector_Click(object sender, RoutedEventArgs e)
@@ -60,25 +78,6 @@ namespace WinWam6
             MasterTabs.Items.Add(myTab) ;
         }
 
-        private void TabGrid1_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            foreach (UserControl uc in TabGrid1.Children)
-            {
-                uc.Height = TabGrid1.ActualHeight;
-                uc.Width = TabGrid1.ActualWidth;
-            }
-        }
-
-        private void StackPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            StackPanel sp = (StackPanel)sender;
-            foreach (UserControl uc in sp.Children)
-            {
-                uc.Height = TabGrid1.ActualHeight;
-                uc.Width = TabGrid1.ActualWidth;
-            }
-        }
-
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Grid grid = (Grid)sender;
@@ -91,8 +90,10 @@ namespace WinWam6
 
         private void cmdCalculator_Click(object sender, RoutedEventArgs e)
         {
-            TableWrapper ltw = new TableWrapper("UPCD");
+            TableWrapper ltw = new TableWrapper("Inspector");
             Clipboard.SetText(ltw.GenerateClass());
+            InspectionReasons inspectors = new InspectionReasons();
+            int i = 0;
         }
 
         private void cmdFindInsp_Click(object sender, RoutedEventArgs e)
@@ -103,8 +104,47 @@ namespace WinWam6
 
         private void cmdPCS_Click(object sender, RoutedEventArgs e)
         {
-            PCSInspectionView fie = new PCSInspectionView();
+            ShowPCS("AA000089");
+            //PCSInspectionView fie = new PCSInspectionView();
+            //InitalizeTab(fie);
+        }
+
+        private void TabRequested(object sender, MainTabEventArgs e)
+        {
+            switch (e.TabStyle)
+            {
+                case MainTabEventArgs.TabType.Business:
+                    {
+                        ShowBusiness(e.Index);
+                        break;
+                    }
+
+                case MainTabEventArgs.TabType.PCS:
+                    {
+                        ShowPCS(e.Index);
+                        break;
+                    }
+
+                case MainTabEventArgs.TabType.DEV:
+                    {
+                        ShowDEV(e.Index);
+                        break;
+                    }
+            }
+        }
+
+        private void cmdDEV_Click(object sender, RoutedEventArgs e)
+        {
+            DEVInspectionView fie = new DEVInspectionView();
             InitalizeTab(fie);
+        }
+
+        private void cmdUnitConversion_Click(object sender, RoutedEventArgs e)
+        {
+            var unitConversionView = new UnitConversion();
+            var unitConversionViewModel = new UnitConversionViewModel();
+            InitalizeTab(unitConversionView);
+
         }
 
         private void InitalizeTab(UIElement content)
@@ -116,6 +156,8 @@ namespace WinWam6
 
             myTab.Picture = new BitmapImage(new Uri(((IMainTab)content).TabIcon));
 
+            AttachEventHandlersToTab((IMainTab)content);
+
             Grid sp = new Grid();
             sp.SizeChanged += Grid_SizeChanged;
             sp.Children.Add(content);
@@ -123,6 +165,45 @@ namespace WinWam6
             myTab.Content = sp;
 
             MasterTabs.Items.Add(myTab);
+            MasterTabs.SelectedIndex = MasterTabs.Items.Count-1;
+
+            InitializeSidePanels();
+            //ActionPaneDock.Children.Add(((IMainTab)content).ActionPaneContent);
+            //TreePaneDock.Children.Add(((IMainTab)content).TreePaneContent);
         }
+
+        private void AttachEventHandlersToTab(IMainTab mainTab)
+        {
+            mainTab.CreateNewTab += TabRequested;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.WindowState = System.Windows.WindowState.Maximized;
+            DashboardView dbv = new DashboardView();
+            InitalizeTab(dbv);
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            InitializeSidePanels();
+        }
+        private void InitializeSidePanels() {
+
+            ActionPaneDock.Children.Clear();
+
+            
+            //Set up Action Panel
+            if (MasterTabs.SelectedIndex > -1)
+            {
+                TabItem myTab = (TabItem)MasterTabs.Items.GetItemAt(MasterTabs.SelectedIndex);
+                Grid myGrid = (Grid)myTab.Content;
+                System.Windows.UIElement content = new System.Windows.UIElement();
+                content = myGrid.Children[0];
+                ActionPaneDock.Children.Add(((IMainTab)content).ActionPaneContent);
+            }
+        }
+
+
     }
 }

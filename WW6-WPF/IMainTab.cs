@@ -10,7 +10,7 @@ namespace WinWam6
     {
         string TabIcon { get; }
         string TabCaption { get; }
-        object TreePaneContent { get; }
-        object ActionPaneContent { get; }
+        System.Windows.UIElement ActionPaneContent { get; }
+        event EventHandler<MainTabEventArgs> CreateNewTab;
     }
 }

@@ -2,10 +2,17 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             xmlns:local="clr-namespace:WinWam6"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="80"
              d:DesignWidth="800"
              mc:Ignorable="d">
+    <UserControl.Resources>
+        <local:Inspectors x:Key="InspectorList" />
+        <local:InspectionReasons x:Key="Reasons" />
+
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -61,7 +68,11 @@
                       Width="120"
                       Height="25"
                       Margin="3"
-                      VerticalAlignment="Center" />
+                      VerticalAlignment="Center"
+                      DisplayMemberPath="Value"
+                      ItemsSource="{StaticResource Reasons}"
+                      SelectedValue="{Binding Path=Insp_Reason}"
+                      SelectedValuePath="Key" />
         </StackPanel>
         <StackPanel Grid.Row="0"
                     Grid.Column="3"
@@ -76,7 +87,8 @@
                         Height="25"
                         Margin="3"
                         HorizontalAlignment="Left"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        SelectedDate="{Binding Path=NextInsp}" />
             <Button Name="cmdAutoNextInspectionDate"
                     Height="25"
                     VerticalAlignment="Center">
@@ -96,13 +108,15 @@
             <Button Name="cmdSearchBusiness"
                     Width="20"
                     Height="25"
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Center"
+                    Click="cmdSearchBusiness_Click">
                 ?
             </Button>
             <Button Name="cmdViewBusiness"
                     Width="20"
                     Height="25"
-                    VerticalAlignment="Center">
+                    VerticalAlignment="Center"
+                    Click="cmdViewBusiness_Click">
                 V
             </Button>
         </StackPanel>
@@ -126,7 +140,21 @@
                       Width="200"
                       Height="25"
                       Margin="3"
-                      VerticalAlignment="Center" />
+                      VerticalAlignment="Center"
+                      diag:PresentationTraceSources.TraceLevel="High"
+                      ItemsSource="{StaticResource InspectorList}"
+                      SelectedValue="{Binding Path=Insr_ID}"
+                      SelectedValuePath="Key">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel DataContext="{Binding}" Orientation="Horizontal">
+                            <TextBlock Width="50" Text="{Binding Path=Value.Insr_ID_User}" />
+                            <TextBlock Width="50" Text="{Binding Path=Value.Insr_First}" />
+                            <TextBlock Width="50" Text="{Binding Path=Value.Insr_Last}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
     </Grid>
 </UserControl>

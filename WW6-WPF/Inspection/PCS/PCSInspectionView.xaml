@@ -4,14 +4,306 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WinWam6"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              d:DesignHeight="300"
              d:DesignWidth="800"
              mc:Ignorable="d">
+    <UserControl.Resources>
+
+        <local:PCSResultsToColorConverter x:Key="PCSResultsToColorConverter" />
+        <local:PCSResultsToTextConverter x:Key="PCSResultsToTextConverter" />
+        <local:EnumMatchToBooleanConverter x:Key="EnumConverter" />
+        <local:CommodityCategories x:Key="CommodityCats" />
+        <local:TareStateToColor x:Key="TareStateToColor" />
+        <local:TareStateToImage x:Key="TareStateToImage" />
+        <local:TareStateToToolTip x:Key="TareStateToToolTip" />
+    </UserControl.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="75"
+                           MinHeight="75"
+                           MaxHeight="75" />
             <RowDefinition />
-            <RowDefinition />
+
         </Grid.RowDefinitions>
-        <local:InspectionHeaderView Grid.Row="0" Grid.Column="0" />
+
+        <local:InspectionHeaderView x:Name="InspHeader"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2" />
+        <Grid Name="grdDetail"
+              Grid.Row="1"
+              Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="25" MaxHeight="25" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock Margin="6,3,0,0">Current Commodity</TextBlock>
+                <Button Name="cmdCommodityDown"
+                        Margin="6,3,0,3"
+                        Click="cmdCommodityDown_Click"
+                        Content="&lt;" />
+                <Button Name="cmdCommodityUp"
+                        Margin="0,3,0,3"
+                        Click="cmdCommodityUp_Click"
+                        Content="&gt;" />
+                <TextBlock MinWidth="150"
+                           MaxWidth="150"
+                           Margin="6,0,0,0"
+                           Background="#FF15BFD1"
+                           Text="{Binding Path=Commodity}" />
+                <TextBlock Margin="6,3,6,0">1 of 1</TextBlock>
+            </StackPanel>
+            <StackPanel Grid.Row="0"
+                        Grid.Column="1"
+                        Orientation="Horizontal">
+                <TextBlock Margin="0,3,6,0">Result:</TextBlock>
+                <TextBlock MinWidth="50"
+                           HorizontalAlignment="Left"
+                           Background="{Binding Path=Result,
+                                                Converter={StaticResource PCSResultsToColorConverter}}"
+                           Padding="0,3,0,0"
+                           Text="{Binding Path=Result,
+                                          Converter={StaticResource PCSResultsToTextConverter}}"
+                           TextAlignment="Center" />
+            </StackPanel>
+            <TabControl Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="6">
+                <TabItem Header="Commodity">
+                    <Grid Name="grdCommodity">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Grid.Column="0">
+                            <TextBlock>Commodity:</TextBlock>
+                            <TextBox Name="txtCommodity" Text="{Binding Path=Commodity}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="0">
+                            <TextBlock>Brand:</TextBlock>
+                            <TextBox Name="txtBrand"
+                                     Height="28"
+                                     Text="{Binding Path=Brand}">
+                                <local:WatermarkService.Watermark>
+                                    <Label BorderBrush="Red"
+                                           BorderThickness="1"
+                                           Content="Enter Brand"
+                                           FontStyle="Italic" />
+                                </local:WatermarkService.Watermark>
+                            </TextBox>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="0">
+                            <TextBlock>Class:</TextBlock>
+                            <ComboBox Name="cboClass"
+                                      DisplayMemberPath="Value"
+                                      ItemsSource="{StaticResource CommodityCats}"
+                                      SelectedValue="{Binding Path=CommClass}"
+                                      SelectedValuePath="Key" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="0" Grid.Column="1">
+                            <TextBlock>Units:</TextBlock>
+                            <TextBox Name="cboUnits" Text="{Binding Path=NUnit}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Grid.Column="1">
+                            <TextBlock>Lotsize:</TextBlock>
+                            <TextBox Name="txtLotSize" Text="{Binding Path=LotSize}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Grid.Column="1">
+                            <TextBlock>Lot Code:</TextBlock>
+                            <TextBox Name="txtLotCode" Text="{Binding Path=LotCode}" />
+                        </StackPanel>
+                        <GroupBox Grid.Row="0"
+                                  Grid.RowSpan="2"
+                                  Grid.Column="2"
+                                  BorderBrush="Black"
+                                  BorderThickness="1"
+                                  Header="Package Type">
+                            <StackPanel Orientation="Vertical">
+                                <RadioButton Content="Standard Pack"
+                                             GroupName="Pack1"
+                                             IsChecked="{Binding Path=PackType,
+                                                                 Mode=TwoWay,
+                                                                 Converter={StaticResource EnumConverter},
+                                                                 ConverterParameter=Standard}" />
+                                <RadioButton Content="Random Pack"
+                                             GroupName="Pack2"
+                                             IsChecked="{Binding Path=PackType,
+                                                                 Mode=TwoWay,
+                                                                 Converter={StaticResource EnumConverter},
+                                                                 ConverterParameter=Random}" />
+                                <xctk:WatermarkTextBox Watermark="Enter Info Here..." />
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Vol/Count" />
+                <TabItem Header="Inspection">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="28" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="28" />
+                        </Grid.RowDefinitions>
+                        <DataGrid Name="grdTest"
+                                  Grid.Row="2"
+                                  Width="Auto"
+                                  Height="Auto"
+                                  Margin="6"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalAlignment="stretch"
+                                  AlternatingRowBackground="#FFF0F0F0"
+                                  AutoGenerateColumns="False"
+                                  BorderThickness="1"
+                                  CanUserAddRows="False"
+                                  GridLinesVisibility="Vertical"
+                                  ItemsSource="{Binding Path=PCSTests}">
+                            <DataGrid.ColumnHeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                </Style>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn MinWidth="15">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <DockPanel>
+                                                <Image Source="{Binding Path=TareType, Converter={StaticResource TareStateToImage}}" ToolTip="{Binding Path=TareType, Converter={StaticResource TareStateToToolTip}}" />
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Binding="{Binding Path=Test}" Header="Test #">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalAlignment" Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn MinWidth="75"
+                                                    Binding="{Binding Path=MarkedWeight,
+                                                                      StringFormat={}{0:F3}}"
+                                                    Header="Marked">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn MinWidth="75"
+                                                    Binding="{Binding Path=GrossWeight,
+                                                                      StringFormat={}{0:F3}}"
+                                                    Header="Gross Wt">
+                                    <DataGridTextColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="Gross Wt" />
+                                                <Button Name="cmdGetGrossWt"
+                                                        Click="cmdGetGrossWt_Click"
+                                                        Content="Retrieve"
+                                                        ToolTip="Click to retrieve weight from scale." />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTextColumn.HeaderTemplate>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn MinWidth="75"
+                                                    Binding="{Binding Path=Tare,
+                                                                      StringFormat={}{0:F3}}"
+                                                    Header="Tare">
+                                    <DataGridTextColumn.HeaderTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock HorizontalAlignment="Center" Text="Tare" />
+                                                <Button Name="cmdGetTare"
+                                                        Click="cmdGetTare_Click"
+                                                        Content="Retrieve"
+                                                        ToolTip="Click to retrieve weight from scale." />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </DataGridTextColumn.HeaderTemplate>
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn MinWidth="75"
+                                                    Binding="{Binding Path=NetWeight,
+                                                                      StringFormat={}{0:F3}}"
+                                                    Header="Net Wt">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn MinWidth="75"
+                                                    Binding="{Binding Path=Error,
+                                                                      StringFormat={}{0:F3}}"
+                                                    Header="Error">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn MinWidth="75"
+                                                    Binding="{Binding Path=MAV,
+                                                                      StringFormat={}{0:F3}}"
+                                                    Header="MAV">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn MinWidth="75"
+                                                    Binding="{Binding Path=CostError,
+                                                                      StringFormat={}{0:C}}"
+                                                    Header="Cost Error">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style>
+                                            <Setter Property="Control.HorizontalAlignment" Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Notes and Fees" />
+            </TabControl>
+        </Grid>
     </Grid>
 </UserControl>

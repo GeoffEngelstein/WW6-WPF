@@ -55,8 +55,11 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="WPFToolkit.Extended">
-      <HintPath>..\WPFToolkit.Extended.dll</HintPath>
+    <Reference Include="Xceed.Wpf.DataGrid">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.1.9.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.1.9.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -68,13 +71,33 @@
     <Compile Include="Business\BusinessDetailView.xaml.cs">
       <DependentUpon>BusinessDetailView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DashboardView.xaml.cs">
+      <DependentUpon>DashboardView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EventArgs.cs" />
     <Compile Include="IMainTab.cs" />
+    <Compile Include="Inspection\DEV\DEVInspectionView.xaml.cs">
+      <DependentUpon>DEVInspectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Inspection\DEV\DEVInspectionViewAction.xaml.cs">
+      <DependentUpon>DEVInspectionViewAction.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Inspection\InspectionHeaderView.xaml.cs">
       <DependentUpon>InspectionHeaderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Inspection\PCS\PCSInpsectionViewModel.cs" />
     <Compile Include="Inspection\PCS\PCSInspectionView.xaml.cs">
       <DependentUpon>PCSInspectionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Inspection\PCS\PCSInspectionViewAction.xaml.cs">
+      <DependentUpon>PCSInspectionViewAction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\PCSValueConverters.cs" />
+    <Compile Include="Utility\UnitConversion.xaml.cs">
+      <DependentUpon>UnitConversion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\UnitConversionViewModel.cs" />
+    <Compile Include="Utility\Units.cs" />
     <Compile Include="Utility\Conversion.cs" />
     <Compile Include="Device.cs" />
     <Compile Include="Inspection\DEV\DEVAttribute.cs" />
@@ -87,14 +110,16 @@
     <Compile Include="CustomFieldEntry.xaml.cs">
       <DependentUpon>CustomFieldEntry.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Inspection\DEV\DEVTest.cs" />
+    <Compile Include="Inspection\DEV\DeviceTest.cs" />
     <Compile Include="Inspection\PCS\PCSDetail.cs" />
     <Compile Include="Inspection\PCS\PCSTest.cs" />
     <Compile Include="Inspection\QSTD\QSTDInspection.cs" />
     <Compile Include="Inspection\QST\QSTInspection.cs" />
     <Compile Include="Inspection\UPC\UPCDetail.cs" />
     <Compile Include="Inspection\UPC\UPCInspection.cs" />
+    <Compile Include="Utility\ListGenerators.cs" />
     <Compile Include="Utility\ValueConverters.cs" />
+    <Compile Include="Utility\Watermark.cs" />
     <Compile Include="WWMain.xaml.cs">
       <DependentUpon>WWMain.xaml</DependentUpon>
     </Compile>
@@ -121,11 +146,31 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DashboardView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Inspection\DEV\DEVInspectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Inspection\DEV\DEVInspectionViewAction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Inspection\InspectionHeaderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Inspection\PCS\PCSInspectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Inspection\PCS\PCSInspectionViewAction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility\UnitConversion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,6 +224,7 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Business\Address.cd" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -205,6 +251,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Images\24\" />
+    <Folder Include="Themes\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\32\evolution-tasks.png" />
@@ -304,6 +351,20 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\16\emblem-office.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\emblem-default.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\emblem-brackets.png" />
+    <Resource Include="Images\16\emblem-important-2.png" />
+    <Resource Include="Images\16\emblem-unreadable-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\clear-thumb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\search-thumb.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -10,7 +10,7 @@ namespace WinWam6.Inspection.DEV
 {
     public class DEVInspection : InspectionBase
     {
-        private ObservableCollection<DevDetail> devDetails;
+        private ObservableCollection<DEVDetail> devDetails;
         private bool devDLoaded;
 
         public override string TooltipText
@@ -18,8 +18,8 @@ namespace WinWam6.Inspection.DEV
             get
             {
                 string s = "Device Inspection" + " Inspection ID " + this.Insp_ID;
-                s += "\nLine Item Count: " + this.DevDs.Count.ToString() + "\n";
-                foreach (DevDetail devD in this.DevDs)
+                s += "\nLine Item Count: " + this.DevDetails.Count.ToString() + "\n";
+                foreach (DEVDetail devD in this.DevDetails)
                 {
                     s += devD.Ref.ToString() + "\n";
                 }
@@ -27,7 +27,7 @@ namespace WinWam6.Inspection.DEV
             }
         }
 
-        public ObservableCollection<DevDetail> DevDs
+        public ObservableCollection<DEVDetail> DevDetails
         {
             get
             {
@@ -51,19 +51,25 @@ namespace WinWam6.Inspection.DEV
             base.LoadPrivate(InspID, "D");
         }
 
+        public DEVInspection(string InspID)
+            : base()
+        {
+            this.Load(InspID);
+        }
+
         //Methods
         private void LoadDevDetails()
         {
-            DevDetail devDetail;
+            DEVDetail devDetail;
 
-            devDetails = new ObservableCollection<DevDetail>();
+            devDetails = new ObservableCollection<DEVDetail>();
 
             string sql = "Select Dev_ID from DevD where insp_id ='" + this.Insp_ID + "' order by Dev_ID";
             DbDataReader rdr = WWD.GetReader(sql);
 
             while (rdr.Read())
             {
-                devDetail = new DevDetail();
+                devDetail = new DEVDetail();
                 devDetail.Load(this.Insp_ID, rdr.GetInt16NoNull(0));
                 devDetails.Add(devDetail);
             }

@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="WinWam6.Inspection.PCS.PCSInspectionViewAction"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WinWam6.Inspection.PCS"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ww="clr-namespace:WinWam6"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <LinearGradientBrush x:Key="ActionBackground">
+            <GradientStop Offset="0.0" Color="#F0F0F0" />
+            <GradientStop Offset="0.7" Color="#C0C0C0" />
+            <GradientStop Offset="1.0" Color="#D0D0D0" />
+        </LinearGradientBrush>
+        <ww:PCSResultsToImageConverter x:Key="PCSResultsToImageConverter" />
+
+        <HierarchicalDataTemplate DataType="{x:Type local:PCSDetail}" ItemsSource="{Binding Path=PCSTests}">
+            <StackPanel Orientation="Horizontal">
+                <Image Width="16"
+                       Height="16"
+                       Margin="3"
+                       Source="{Binding Path=Result,
+                                        Converter={StaticResource PCSResultsToImageConverter}}" />
+                <TextBlock Text="{Binding Path=Commodity}" />
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate DataType="{x:Type local:PCSTest}">
+            <TextBlock Text="{Binding Path=MarkedWeight}" />
+        </HierarchicalDataTemplate>
+        <Style TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="TextBlock.FontFamily" Value="Segoe UI" />
+                <Setter Property="TextBlock.FontSize" Value="10" />
+                <Setter Property="TextBlock.Foreground" Value="Blue" />
+                <Setter Property="Margin" Value="3" />
+                <Setter Property="Padding" Value="3,0,0,0" />
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="Background" Value="{StaticResource ActionBackground}" />
+                    <Setter Property="FontWeight" Value="Bold" />
+
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="180" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock MouseDown="TextBlock_MouseDown">Save Inspection</TextBlock>
+            <TextBlock MouseDown="TextBlock_MouseDown">Print Inspection</TextBlock>
+            <TextBlock MouseDown="TextBlock_MouseDown">Add new Commodity</TextBlock>
+            <TextBlock MouseDown="TextBlock_MouseDown">Time In / Time Out</TextBlock>
+            <TextBlock MouseDown="TextBlock_MouseDown">Inspection Notes</TextBlock>
+            <TextBlock MouseDown="TextBlock_MouseDown">Attach Media</TextBlock>
+            <TextBlock MouseDown="TextBlock_MouseDown">Sign Inspection</TextBlock>
+            <TextBlock>Unlock Inspection</TextBlock>
+            <TextBlock>Delete Commodity</TextBlock>
+        </StackPanel>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <TreeView Name="PCSTree"
+                      Margin="3,15,0,0"
+                      BorderThickness="0"
+                      SelectedItemChanged="PCSTree_SelectedItemChanged" />
+        </ScrollViewer>
+    </Grid>
+</UserControl>

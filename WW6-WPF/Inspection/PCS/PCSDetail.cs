@@ -8,12 +8,24 @@ using System.Collections.ObjectModel;
 
 namespace WinWam6.Inspection.PCS
 {
-    public class PCSDetail : INotifyPropertyChanged
+    public class PCSDetail : INotifyPropertyChanged, IDisposable
     {
+        // private variables
         private TableWrapper lObj;
         private bool pcsTestLoaded = false;
         private ObservableCollection<PCSTest> pcsTests;
+        private double volumeMultiple=1;
+        private int mavError=0;
+        private int tareSampleSize=0;
+        private int finalTareSampleSize = 0;
 
+        // Enumerations
+        public enum PackageType {Standard, Random}
+        public enum PCSResults {Pass=1, Fail, Gray, PkgFail, Audit, SingleComm}
+        public enum PCSInspectionCategory {CatA, CatB, Audit, SingleComm}
+        public enum PCSMAVType {Normal, USDAStd, USDAFluid, Mulch, PE}
+
+        // Properties
 
         public ObservableCollection<PCSTest> PCSTests
         {
@@ -23,7 +35,7 @@ namespace WinWam6.Inspection.PCS
                 {
                     LoadPackTests();
                 }
-                return PCSTests;
+                return pcsTests;
             }
         }
         public Double AvgErr
@@ -98,6 +110,15 @@ namespace WinWam6.Inspection.PCS
             set { lObj["DZip"] = value; NotifyPropertyChanged("DZip"); }
         }
 
+        public int FinalTareSize
+        {
+            get 
+            { 
+                //TODO Tie into finalTareSize
+                return (2*InitialTareSize);
+            }
+        }
+
         public bool ForceActTare
         {
             get { return bool.Parse(lObj["ForceActTare"].ToString()); }
@@ -116,16 +137,71 @@ namespace WinWam6.Inspection.PCS
             set { lObj["GrayPct"] = value; NotifyPropertyChanged("GrayPct"); }
         }
 
-        public String Insp_ID
+        public int InitialTareSize
+        {
+            get
+            {
+                return tareSampleSize;
+            }
+        }
+
+        public String InspId
         {
             get { return lObj["Insp_ID"].ToString(); }
             set { lObj["Insp_ID"] = value; NotifyPropertyChanged("Insp_ID"); }
         }
 
-        public String InspCat
+        public PCSInspectionCategory InspCat
         {
-            get { return lObj["InspCat"].ToString(); }
-            set { lObj["InspCat"] = value; NotifyPropertyChanged("InspCat"); }
+            get
+            {
+                switch (lObj["InspCat"].ToString())
+                {
+                    case "A":
+                        return PCSInspectionCategory.CatA;
+                    case "B":
+                        return PCSInspectionCategory.CatB;
+                    case "U":
+                        return PCSInspectionCategory.Audit;
+                    case "S":
+                        return PCSInspectionCategory.SingleComm;
+                    default:
+                        return PCSInspectionCategory.CatA;
+                }
+            }
+            set
+            {
+                switch (value)
+                {
+                    case PCSInspectionCategory.CatA:
+                        {
+                            lObj["InspCat"] = "A";
+                            break;
+                        }
+                    case PCSInspectionCategory.CatB:
+                        {
+                            lObj["InspCat"] = "B";
+                            break;
+                        }
+                    case PCSInspectionCategory.Audit:
+                        {
+                            lObj["InspCat"] = "U";
+                            break;
+                        }
+                    case PCSInspectionCategory.SingleComm:
+                        {
+                            lObj["InspCat"] = "S";
+                            break;
+                        }
+                    default:
+                        {
+                            lObj["InspCat"] = "A";
+                            break;
+                        }
+                }
+                
+                NotifyPropertyChanged("InspCat");
+            }
         }
 
         public String LotCode
@@ -137,20 +213,74 @@ namespace WinWam6.Inspection.PCS
         public Int16 LotSize
         {
             get { return Int16.Parse(lObj["LotSize"].ToString()); }
-            set { lObj["LotSize"] = value; NotifyPropertyChanged("LotSize"); }
+            set
+            {
+                lObj["LotSize"] = value;
+                CalcSampleSize();
+                NotifyPropertyChanged("LotSize");
+            }
         }
 
-        public String MAVType
-        {
-            get { return lObj["MAVType"].ToString(); }
-            set { lObj["MAVType"] = value; NotifyPropertyChanged("MAVType"); }
-        }
-
-        public Double NetWt
+        public Double Marked
         {
             get { return Double.Parse(lObj["NetWt"].ToString()); }
-            set { lObj["NetWt"] = value; NotifyPropertyChanged("NetWt"); }
+            set
+            {
+                lObj["NetWt"] = value;
+                if (this.PackType == PackageType.Standard)
+                    foreach (var pcsTest in PCSTests)
+                        pcsTest.MarkedWeight = value;
+
+                NotifyPropertyChanged("NetWt");
+            }
         }
+        
+        public PCSMAVType MavType
+        {
+            get
+            {
+                switch (lObj["MAVType"].ToString())
+                {
+                    case "N":
+                        return PCSMAVType.Normal;
+                    case "M":
+                        return PCSMAVType.Mulch;
+                    case "U":
+                        return PCSMAVType.USDAStd;
+                    case "F":
+                        return PCSMAVType.USDAFluid;
+                    case "P":
+                        return PCSMAVType.PE;
+                    default:
+                        return PCSMAVType.Normal;
+                }
+            }
+            set
+            {
+                switch (value)
+                {
+                    case PCSMAVType.Normal:
+                        lObj["MAVType"] = "N";
+                        break;
+                    case PCSMAVType.Mulch:
+                        lObj["MAVType"] = "M";
+                        break;
+                    case PCSMAVType.USDAStd:
+                        lObj["MAVType"] = "U";
+                        break;
+                    case PCSMAVType.USDAFluid:
+                        lObj["MAVType"] = "F";
+                        break;
+                    case PCSMAVType.PE:
+                        lObj["MAVType"] = "P";
+                        break;
+                }
+                lObj["MAVType"] = value;
+                NotifyPropertyChanged("MavType");
+            }
+        }
+
+
 
         public String Notes
         {
@@ -170,16 +300,53 @@ namespace WinWam6.Inspection.PCS
             set { lObj["Pack_ID"] = value; NotifyPropertyChanged("Pack_ID"); }
         }
 
-        public Int16 PackType
+        public PackageType PackType
         {
-            get { return Int16.Parse(lObj["PackType"].ToString()); }
-            set { lObj["PackType"] = value; NotifyPropertyChanged("PackType"); }
+            get 
+            { 
+
+                switch (Int16.Parse(lObj["PackType"].ToString()))
+                {
+                    case 1:
+                        return PackageType.Standard;
+
+                    case 2:
+                        return PackageType.Random;
+
+                    default:
+                        //TODO raise an error perhaps?
+                        return PackageType.Standard;
+                }
+            }
+
+            set 
+            {   
+                int packageType = 0;
+                switch (value)
+                {
+                    case PackageType.Standard:
+                        packageType = 1;
+                        break;
+                    case PackageType.Random:
+                        packageType = 2;
+                        break;
+                }
+                lObj["PackType"] = packageType; 
+                NotifyPropertyChanged("PackType"); 
+            }
         }
 
-        public Int16 Res
+        public PCSResults Result
         {
-            get { return Int16.Parse(lObj["Res"].ToString()); }
-            set { lObj["Res"] = value; NotifyPropertyChanged("Res"); }
+            get
+            {
+                return (PCSResults)Int16.Parse(lObj["Res"].ToString()); 
+            }
+            set
+            {
+                lObj["Res"] = (int)value; 
+                NotifyPropertyChanged("Result");
+            }
         }
 
         public Int16 SampleSize
@@ -236,6 +403,8 @@ namespace WinWam6.Inspection.PCS
             set { lObj["VolTemp"] = value; NotifyPropertyChanged("VolTemp"); }
         }
 
+        // Constructors
+
         public PCSDetail()
         {
             lObj = new TableWrapper("PackD");
@@ -247,11 +416,14 @@ namespace WinWam6.Inspection.PCS
             Load(insp_ID, pack_ID);
         }
 
+        // Methods
+
         public void Load(string insp_ID, int pack_ID)
         {
             lObj["Insp_ID"] = insp_ID;
             lObj["Pack_ID"] = pack_ID;
             lObj.Load();
+            CalcSampleSize();
         }
 
         private void LoadPackTests()
@@ -260,16 +432,165 @@ namespace WinWam6.Inspection.PCS
 
             pcsTests = new ObservableCollection<PCSTest>();
 
-            string sql = "Select Pack_ID, Test from PackTest where insp_id ='" + this.Insp_ID + "' and Pack_ID = "+ this.Pack_ID + " order by Pack_ID";
+            string sql = "Select Pack_ID, Test from PackTest where insp_id ='" + this.InspId + "' and Pack_ID = "+ this.Pack_ID + " order by Pack_ID, Test";
             DbDataReader rdr = WWD.GetReader(sql);
 
             while (rdr.Read())
             {
                 pcsTest = new PCSTest();
-                pcsTest.Load(this.Insp_ID, rdr.GetInt16NoNull(0), rdr.GetInt16NoNull(1));
+                pcsTest.Load(this.InspId, rdr.GetInt16NoNull(0), rdr.GetInt16NoNull(1));
+                pcsTest.Parent = this;
                 pcsTests.Add(pcsTest);
             }
             pcsTestLoaded = true;
+        }
+
+        // Inspection Calculation Section
+
+        private void CalcSampleSize()
+        {
+            int oldSampleSize = this.SampleSize;
+
+            switch (this.InspCat)
+            {
+                case PCSInspectionCategory.CatB:
+                    {
+                        mavError = 0;
+                        if (LotSize < 10)
+                        {
+                            SampleSize = LotSize;
+                            tareSampleSize = 2;
+                            break;
+                        }
+
+                        if (LotSize < 251)
+                        {
+                            SampleSize = 10;
+                            tareSampleSize = 2;
+                            break;
+                        }
+
+                        SampleSize = 30;
+                        tareSampleSize = 5;
+                        break;
+                    }
+
+                case PCSInspectionCategory.CatA:
+                    {
+                        tareSampleSize = 2;
+
+                        if (Glass && (LotSize > 250))
+                            tareSampleSize = 3;
+
+                        if (LotSize < 12)
+                        {
+                            SampleSize = LotSize;
+                            mavError = 0;
+                            break;
+                        }
+
+                        if (LotSize < 251)
+                        {
+                            SampleSize = 12;
+                            mavError = 0;
+                            break;
+                        }
+
+                        SampleSize = 48;
+                        mavError = 1;
+
+                        if (MavType == PCSMAVType.Mulch)
+                        {
+                            mavError = SampleSize/12;
+                        }
+                        
+                        break;
+                    }
+
+
+                case PCSInspectionCategory.Audit:
+                    {
+                        if (LotSize > 48)
+                        {
+                            //ToDo MessageBox alerting user that size > 48
+                            SampleSize = 48;
+                        }
+                        else
+                        {
+                            SampleSize = LotSize;
+                        }
+                        break;
+                    }
+
+                case PCSInspectionCategory.SingleComm:
+                    {
+                        if (LotSize > 200)
+                        {
+                            //ToDo Error Messagebox -- set size to 200 max
+                            SampleSize = 200;
+                        }
+                        else
+                        {
+                            SampleSize = LotSize;
+                        }
+                        break;
+                    }
+            }
+
+            AdjustTestCount();
+
+            // Adjust Tare Sample Size if Sample Size is very low, or for mulch
+            if (SampleSize < 2) tareSampleSize = SampleSize;
+            
+            if (MavType == PCSMAVType.Mulch) tareSampleSize = 0;
+        
+        
+        }
+
+        private void AdjustTestCount()
+        {
+            // Do we now have too many tests? If so, chop off the extras
+            while (PCSTests.Count > SampleSize)
+            {
+                PCSTests.RemoveAt(PCSTests.Count - 1);
+            }
+
+            // Not enough tests? Add more
+            while (PCSTests.Count < SampleSize)
+            {
+                var pcsTest = new PCSTest();
+                if (PackageType.Standard == PackType)
+                {
+                    pcsTest.MarkedWeight = Marked;
+                }
+                pcsTest.Pack_ID = this.Pack_ID;
+                pcsTest.Test = (short)(pcsTests.Count + 1);
+                pcsTest.Parent = this;
+                PCSTests.Add(pcsTest);
+            }
+        }
+
+        private double CorrectionFactor(int sampleSize)
+        {
+            if (SampleSize < 2) return -99.0;
+            if (SampleSize == 2) return -8.984;
+            if (SampleSize == 3) return -2.484;
+            if (SampleSize == 4) return -1.591;
+            if (SampleSize == 5) return -1.241;
+            if (SampleSize == 6) return -1.05;
+            if (SampleSize == 7) return -0.925;
+            if (SampleSize == 8) return -0.836;
+            if (SampleSize == 9) return -0.769;
+            if (SampleSize== 10) return -0.715;
+            if (SampleSize == 11) return -0.672;
+            if (SampleSize == 12) return -0.635;
+            if (SampleSize == 24) return -0.422;
+            return -0.291;
+        }
+
+        private bool Use2002Tables()
+        {
+            return true;
         }
 
         private void NotifyPropertyChanged(string propertyName)
@@ -282,5 +603,12 @@ namespace WinWam6.Inspection.PCS
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public void Dispose()
+        {
+            foreach (PCSTest pcsTest in this.PCSTests)
+            {
+                pcsTest.Parent = null;
+            }
+        }
     }
 }

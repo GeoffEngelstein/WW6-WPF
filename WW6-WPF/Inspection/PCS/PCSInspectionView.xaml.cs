@@ -21,14 +21,44 @@ namespace WinWam6
     public partial class PCSInspectionView : UserControl, IMainTab
     {
         private PCSInspection pcsInspection;
+        private PCSInspectionViewAction pcsAction = new PCSInspectionViewAction();
+        private int currentDetailIndex=0;
+        public event EventHandler<MainTabEventArgs> CreateNewTab;
 
-        public PCSInspectionView()
+        public PCSInspectionView(string InspID)
         {
-            pcsInspection = new PCSInspection("AI980003");
+            if ("" == InspID)
+            {
+                pcsInspection = new PCSInspection();
+            }
+            else
+            {
+                pcsInspection = new PCSInspection(InspID);
+            }
+
+            pcsAction.PCSTree.ItemsSource = this.pcsInspection.PCSDetails;
+            pcsAction.ActionSelected += ActionSelected;
+            pcsAction.PCSDetailChange += DetailChanged;
+
             
+
             this.DataContext = pcsInspection;
 
             InitializeComponent();
+            grdDetail.DataContext = this.ActiveDetail;
+            this.InspHeader.CreateNewTab += TabRequested;
+
+        }
+
+        public PCSDetail ActiveDetail
+        {
+            get {
+                if (0 == pcsInspection.PCSDetails.Count)
+                {
+                    pcsInspection.PCSDetails.Add(new PCSDetail());
+                }
+                return pcsInspection.PCSDetails[currentDetailIndex]; 
+            }
         }
 
         //IMainTab Interface
@@ -40,12 +70,61 @@ namespace WinWam6
         {
            get { return "PCS " + pcsInspection.Insp_ID; }
         }
-        public object TreePaneContent {
-            get 
-            { 
-                return new StackPanel(); 
-            } 
+        public System.Windows.UIElement ActionPaneContent { get { return pcsAction; } }
+
+        private void ActionSelected(object sender, ActionEventArgs e)
+        {
+            string s = e.Action;
         }
-        public object ActionPaneContent { get { return new StackPanel(); } }
+
+        private void DetailChanged(object sender, PCSDetailChangeArgs e)
+        {
+            if (currentDetailIndex != e.DetailIndex - 1)
+            {
+                currentDetailIndex = e.DetailIndex - 1;
+                grdDetail.DataContext = null;
+                grdDetail.DataContext = this.ActiveDetail;
+            }
+        }
+
+        public void TabRequested(object sender, MainTabEventArgs e)
+        {
+            CreateNewTab(this, e);
+        }
+
+        private void cmdCommodityUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentDetailIndex < pcsInspection.PCSDetails.Count - 1)
+            {
+                ChangeCommodity(currentDetailIndex + 1);
+            }
+        }
+        
+        private void cmdCommodityDown_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentDetailIndex > 0)
+            {
+                ChangeCommodity(currentDetailIndex - 1);
+            }
+        }
+
+        private void ChangeCommodity(int newIndex)
+        {
+            if (newIndex > -1 && newIndex < pcsInspection.PCSDetails.Count)
+            {
+                DetailChanged(this, new PCSDetailChangeArgs(newIndex+1));
+            }
+        }
+
+        private void cmdGetTare_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cmdGetGrossWt_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    
     }
 }

@@ -19,14 +19,14 @@ namespace WinWam6
         //Constructor
         public CloseableTab()
         {
-            CloseableTabHeader myHeader = new CloseableTabHeader();
+            var myHeader = new CloseableTabHeader();
             this.Header = myHeader;
+            //this.MaxWidth = 150;
 
             //Events to control the coloring on MouseOver, etc
             myHeader.button_close.MouseEnter += new MouseEventHandler(button_close_MouseEnter);
             myHeader.button_close.MouseLeave += new MouseEventHandler(button_close_MouseLeave);
             myHeader.button_close.Click += new RoutedEventHandler(button_close_Click);
-            myHeader.label_TabTitle.SizeChanged += new SizeChangedEventHandler(label_TabTitle_SizeChanged);
         }
 
         public string Title
@@ -62,13 +62,7 @@ namespace WinWam6
         {
             ((TabControl)this.Parent).Items.Remove(this);
         }
-        // Label SizeChanged - When the Size of the Label changes
-        // (due to setting the Title) set position of button properly
-        void label_TabTitle_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            ((CloseableTabHeader)this.Header).button_close.Margin = new Thickness(
-               ((CloseableTabHeader)this.Header).label_TabTitle.ActualWidth + 5, 3, 4, 0);
-        }
+       
         
     }
 }

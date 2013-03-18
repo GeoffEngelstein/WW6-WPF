@@ -29,6 +29,7 @@ namespace WinWam6
     public partial class InspectionEdit : UserControl, IMainTab 
     {
         public ObservableCollection<InspectionBase> inspectionList;
+        public event EventHandler<MainTabEventArgs> CreateNewTab;
 
         public InspectionEdit()
         {
@@ -96,8 +97,31 @@ namespace WinWam6
         {
             get { return "Search Inspections"; }
         }
-        public object TreePaneContent { get { return null; } }
-        public object ActionPaneContent { get { return null; } }
+        public System.Windows.UIElement ActionPaneContent { get { return new StackPanel(); } }
+
+        public void TabRequested(object sender, MainTabEventArgs e)
+        {
+            CreateNewTab(this, e);
+        }
+
+        private void cmdView_Click(object sender, RoutedEventArgs e)
+        {
+            InspectionBase curInspection = (InspectionBase)tvInspEdit.SelectedItem;
+
+            switch (curInspection.InspType)
+            {
+                case "P":
+                    {
+                        CreateNewTab(this, new MainTabEventArgs(MainTabEventArgs.TabType.PCS, curInspection.Insp_ID));
+                        break;
+                    }
+                case "D":
+                    {
+                        CreateNewTab(this, new MainTabEventArgs(MainTabEventArgs.TabType.PCS, curInspection.Insp_ID));
+                        break;
+                    }
+            }
+        }
 
     }
 }

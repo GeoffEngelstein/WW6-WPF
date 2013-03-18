@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="WinWam6.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="402"
+             d:DesignWidth="552"
+             mc:Ignorable="d">
+    <Grid>
+        <StackPanel>
+            <TextBlock Name="tbDate"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Foreground="Blue">
+                Today is Tuesday Feb 19, 2013
+            </TextBlock>
+            <TextBlock Margin="0,10,0,0"
+                       Background="Blue"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Foreground="White">
+                Inspection Status
+            </TextBlock>
+            <TextBlock Margin="0,10,0,0"
+                       FontSize="14"
+                       FontWeight="Bold"
+                       Foreground="Red">
+                Overdue
+            </TextBlock>
+            <TextBlock Name="tbOverdueInspections" Margin="0,10,0,10" />
+            <TextBlock Margin="0,10,0,0"
+                       FontSize="14"
+                       FontWeight="Bold"
+                       Foreground="DarkSalmon">
+                This Week
+            </TextBlock>
+            <TextBlock Name="tbCurrentInspections" Margin="0,10,0,10" />
+            <TextBlock Margin="0,10,0,0"
+                       FontSize="14"
+                       FontWeight="Bold"
+                       Foreground="Green">
+                Next Week
+            </TextBlock>
+            <TextBlock Name="tbFutureInspections" Margin="0,10,0,10" />
+            <TextBlock Margin="0,10,0,0"
+                       Background="Blue"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Foreground="White">
+                Sync Status
+            </TextBlock>
+            <TextBlock Name="tbSyncStatus"
+                       Margin="0,10,0,0"
+                       FontWeight="Bold">
+                Last Sync: February 12, 2013
+            </TextBlock>
+            <TextBlock Name="tbSync" Margin="0,10,0,10" />
+        </StackPanel>
+
+    </Grid>
+</UserControl>

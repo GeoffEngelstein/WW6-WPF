@@ -5,7 +5,8 @@
                      x:Name="Window"
                      Title="WinWam"
                      Width="1233"
-                     Height="480">
+                     Height="480"
+                     Loaded="Window_Loaded">
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -41,6 +42,7 @@
                                          LargeImageSource="/Images/32/emblem-package.png"
                                          SmallImageSource="/WW6-WPF;component/Images/16/emblem-package.png" />
                     <ribbon:RibbonButton Name="cmdDEV"
+                                         Click="cmdDEV_Click"
                                          Label="Device Inspection"
                                          LargeImageSource="/WW6-WPF;component/Images/32/justice-balance-icon.png"
                                          SmallImageSource="/WW6-WPF;component/Images/16/justice-balance-icon-16.png" />
@@ -88,6 +90,7 @@
                                          LargeImageSource="/WW6-WPF;component/Images/32/roll.png"
                                          SmallImageSource="/WW6-WPF;component/Images/16/roll.png" />
                     <ribbon:RibbonButton Name="cmdUnitConversion"
+                                         Click="cmdUnitConversion_Click"
                                          Label="Unit Conversion"
                                          LargeImageSource="/WW6-WPF;component/Images/32/view-refresh-6.png"
                                          SmallImageSource="/WW6-WPF;component/Images/16/view-refresh-6.png" />
@@ -258,18 +261,9 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid Name="grdSidePanels" Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="200" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0">Action Pane</TextBlock>
-                <GridSplitter Grid.Row="1"
-                              Height="3"
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Center"
-                              ShowsPreview="False" />
-                <TextBlock Grid.Row="2">Tree Pane</TextBlock>
+
+                <DockPanel Name="ActionPaneDock" Grid.Row="0" />
+
             </Grid>
 
             <GridSplitter Grid.Column="1"
@@ -278,24 +272,9 @@
                           VerticalAlignment="Stretch"
                           ShowsPreview="False" />
 
-            <TabControl Name="MasterTabs" Grid.Column="2">
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Business 1" />
-                            <Button Content="X" />
-                        </StackPanel>
-                    </TabItem.Header>
-                    <Grid Name="TabGrid1" SizeChanged="TabGrid1_SizeChanged" />
-                </TabItem>
-                <TabItem Header="Page 2">
-                    <Frame Name="Frame2"
-                           Grid.Row="2"
-                           BorderBrush="Black"
-                           BorderThickness="1" />
-                </TabItem>
-
-            </TabControl>
+            <TabControl Name="MasterTabs"
+                        Grid.Column="2"
+                        SelectionChanged="TabControl_SelectionChanged" />
         </Grid>
     </Grid>
 </ribbon:RibbonWindow>

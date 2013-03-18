@@ -10,8 +10,8 @@ namespace WinWam6.Inspection.PCS
 {
     class PCSInspection : InspectionBase
     {
-        private TableWrapper lObj;
-        private ObservableCollection<PCSDetail> pcsDetails;
+
+        private ObservableCollection<PCSDetail> pcsDetails = new ObservableCollection<PCSDetail>();
         private bool pcsDetailLoaded = false;
 
         // Package Checking Specific Properties and Methods
@@ -66,7 +66,7 @@ namespace WinWam6.Inspection.PCS
         {
             PCSDetail pcsDetail;
 
-            pcsDetails = new ObservableCollection<PCSDetail>();
+            //pcsDetails.Clear();
 
             string sql = "Select Pack_ID from PackD where insp_id ='" + this.Insp_ID + "' order by Pack_ID";
             DbDataReader rdr = WWD.GetReader(sql);

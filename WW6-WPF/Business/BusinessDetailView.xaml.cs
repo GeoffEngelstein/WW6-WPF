@@ -20,36 +20,32 @@ namespace WinWam6.Business
     /// <summary>
     /// Interaction logic for BusinessDetailView.xaml
     /// </summary>
-    public partial class BusinessDetailView : UserControl
+    public partial class BusinessDetailView : UserControl, IMainTab
     {
         public Business curBus { get; set; }
         private Business lBus;
+        public event EventHandler<MainTabEventArgs> CreateNewTab;
 
         public BusinessDetailView()
         {
-            lBus = new Business("000050");
+            lBus = new Business();
             curBus = lBus;
             DataContext = this;
             InitializeComponent();
         }
 
 
-
-        private void fBusinessDetail_Loaded(object sender, RoutedEventArgs e)
+        public BusinessDetailView(string BusinessID)
         {
-            lstBusID.Items.Clear();
-            DbDataReader dr = WWD.GetReader("select bus_id, bus_name from business order by bus_id");
-            while (dr.Read())
-            {
-                lstBusID.Items.Add(dr[0].ToString()); //+ " " + dr[1].ToString());
-            }
-            dr.Dispose();
-
+            lBus = new Business(BusinessID);
+            curBus = lBus;
+            DataContext = this;
+            InitializeComponent();
         }
 
         private void lstBusID_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string s = lstBusID.SelectedItem.ToString();
+            string s = curBus.Bus_ID;
 
             lBus = new Business(s);
             curBus = lBus;
@@ -113,11 +109,28 @@ namespace WinWam6.Business
 
         }
 
-        private void tabControl1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //IMainTab Interface
+        public string TabIcon
         {
-
+            get { return "pack://application:,,,/WW6-WPF;component/Images/16/building-icon-16.png"; }
         }
+        public string TabCaption
+        {
+            get { return "Bus "+ this.curBus.Bus_ID; }
+        }
+        public System.Windows.UIElement TreePaneContent
+        {
+            get
+            {
+                return new StackPanel();
+            }
+        }
+        public System.Windows.UIElement ActionPaneContent { get { return new StackPanel(); } }
 
+        public void TabRequested(object sender, MainTabEventArgs e)
+        {
+            CreateNewTab(this, e);
+        }
     }
 }
 

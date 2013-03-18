@@ -7,11 +7,20 @@ using System.ComponentModel;
 
 namespace WinWam6.Inspection.PCS
 {
-    public class PCSTest : INotifyPropertyChanged
+    public class PCSTest : INotifyPropertyChanged, IDisposable
     {
+        public enum PCSTareType
+        {
+            None,
+            Initial,
+            Final
+        }
+
         private TableWrapper lObj;
 
-        public Single Gross
+        public PCSDetail Parent { get; set; }
+
+        public Single GrossWeight
         {
             get { return Single.Parse(lObj["Gross"].ToString()); }
             set { lObj["Gross"] = value; NotifyPropertyChanged("Gross"); }
@@ -29,7 +38,7 @@ namespace WinWam6.Inspection.PCS
             set { lObj["MAV"] = value; NotifyPropertyChanged("MAV"); }
         }
 
-        public Double MWeight
+        public Double NetWeight
         {
             get { return Double.Parse(lObj["MWeight"].ToString()); }
             set { lObj["MWeight"] = value; NotifyPropertyChanged("MWeight"); }
@@ -41,7 +50,7 @@ namespace WinWam6.Inspection.PCS
             set { lObj["Pack_ID"] = value; NotifyPropertyChanged("Pack_ID"); }
         }
 
-        public Double PWeight
+        public Double MarkedWeight
         {
             get { return Double.Parse(lObj["PWeight"].ToString()); }
             set { lObj["PWeight"] = value; NotifyPropertyChanged("PWeight"); }
@@ -64,6 +73,27 @@ namespace WinWam6.Inspection.PCS
             get { return Single.Parse(lObj["Volume"].ToString()); }
             set { lObj["Volume"] = value; NotifyPropertyChanged("Volume"); }
         }
+
+        public double Error
+        {
+            get { return (this.NetWeight - this.MarkedWeight); }
+        }
+
+        public decimal CostError
+        {
+            get { return ((decimal)this.Error * this.Parent.CostPer); }
+        }
+
+        public PCSTareType TareType
+        {
+            get
+            {
+                if (Test > Parent.FinalTareSize) return PCSTareType.None;
+                if (Test > Parent.InitialTareSize) return PCSTareType.Final;
+                return PCSTareType.Initial;
+            }
+        }
+
 
         private void NotifyPropertyChanged(string propertyName)
         {
@@ -92,6 +122,11 @@ namespace WinWam6.Inspection.PCS
             lObj["Pack_ID"] = pack_ID;
             lObj["Test"] = test_id;
             lObj.Load();
+        }
+
+        public void Dispose()
+        {
+            this.Parent = null;
         }
 
     }

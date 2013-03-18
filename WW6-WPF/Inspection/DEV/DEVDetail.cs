@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace WinWam6.Inspection.DEV
 {
-    public class DevDetail : INotifyPropertyChanged
+    public class DEVDetail : INotifyPropertyChanged
     {
         Dictionary<string, DEVAttribute> attributes = new Dictionary<string, DEVAttribute>();
         DeviceInspectionCustom custom = new DeviceInspectionCustom();
@@ -124,12 +124,12 @@ namespace WinWam6.Inspection.DEV
         }
 
 
-        public DevDetail()
+        public DEVDetail()
         {
             lObj = new TableWrapper("DevD");
         }
 
-        public DevDetail(string insp_ID, int dev_ID)
+        public DEVDetail(string insp_ID, int dev_ID)
         {
             lObj = new TableWrapper("DevD");
             Load(insp_ID, dev_ID);

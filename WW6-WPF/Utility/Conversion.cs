@@ -114,11 +114,8 @@ namespace WinWam6
 
         public Double Convert(string Category, string SrcUnit, string DestUnit, double InputValue)
         {
-            double SrcConvFactor;
-            double DestConvFactor;
-
-            SrcConvFactor = m_list.Where(p => p.Category.Equals(Category)).Where(p => p.Unit.Equals(SrcUnit)).Select(p => p.ConversionFactor).First();
-            DestConvFactor = m_list.Where(p => p.Category.Equals(Category)).Where(p => p.Unit.Equals(DestUnit)).Select(p => p.ConversionFactor).First();
+            double SrcConvFactor = m_list.Where(p => p.Category.Equals(Category)).Where(p => p.Unit.Equals(SrcUnit)).Select(p => p.ConversionFactor).First();
+            double DestConvFactor = m_list.Where(p => p.Category.Equals(Category)).Where(p => p.Unit.Equals(DestUnit)).Select(p => p.ConversionFactor).First();
 
             return InputValue * DestConvFactor / SrcConvFactor;
         }

@@ -8,6 +8,7 @@
              d:DesignWidth="300"
              mc:Ignorable="d">
     <UserControl.Resources>
+        <local:InspectionTypeToImageConverter x:Key="InspectionTypeToImageConverter" />
         <DataTemplate DataType="{x:Type local:InspectionBase}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Padding="3,0" Text="{Binding Path=InspType}" />
@@ -17,7 +18,9 @@
                 <TextBlock Padding="3,0" Text="{Binding Path=Insr_ID}" />
                 <StackPanel.ToolTip>
                     <ToolTip>
-                        <TextBlock Padding="3,0" Text="{Binding Path=TooltipText}" />
+                        <TextBlock Background="#FFB0B0B0"
+                                   Padding="3,0"
+                                   Text="{Binding Path=TooltipText}" />
                     </ToolTip>
                 </StackPanel.ToolTip>
             </StackPanel>
@@ -31,7 +34,7 @@
             <RowDefinition Height="25" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Button Name="cmdView">View</Button>
+        <Button Name="cmdView" Click="cmdView_Click">View</Button>
         <DataGrid Name="tvInspEdit"
                   Grid.Row="1"
                   Width="Auto"
@@ -39,9 +42,18 @@
                   Margin="6"
                   HorizontalAlignment="Stretch"
                   VerticalAlignment="stretch"
-                  AutoGenerateColumns="False">
+                  AlternatingRowBackground="#FFF0F0F0"
+                  AutoGenerateColumns="False"
+                  BorderThickness="1"
+                  GridLinesVisibility="Vertical">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Path=InspType}" Header="Type" />
+                <DataGridTemplateColumn Header="Type">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Path=InspType, Converter={StaticResource InspectionTypeToImageConverter}}" Stretch="None" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn Binding="{Binding Path=Insp_ID}" Header="ID" />
                 <DataGridTextColumn Binding="{Binding Path=Bus_ID}" Header="Bus_ID" />
                 <DataGridTextColumn Binding="{Binding Path=Insp_Date}" Header="Date" />

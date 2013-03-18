@@ -19,9 +19,23 @@ namespace WinWam6
     /// </summary>
     public partial class InspectionHeaderView : UserControl
     {
+        public event EventHandler<MainTabEventArgs> CreateNewTab;
+
+        private List<Inspector> inspectors;
+
         public InspectionHeaderView()
         {
             InitializeComponent();
+        }
+
+        private void cmdViewBusiness_Click(object sender, RoutedEventArgs e)
+        {
+            CreateNewTab(this, new MainTabEventArgs(MainTabEventArgs.TabType.Business, txtBusiness.Text.Trim()));
+        }
+
+        private void cmdSearchBusiness_Click(object sender, RoutedEventArgs e)
+        {
+            int i = 0;
         }
     }
 }
