@@ -9,6 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
@@ -61,6 +62,15 @@ namespace WinWam6
         void button_close_Click(object sender, RoutedEventArgs e)
         {
             ((TabControl)this.Parent).Items.Remove(this);
+        }
+
+        public void Animate()
+        {
+            DoubleAnimation fadeInAnimation = new DoubleAnimation();
+            fadeInAnimation.To = 1;
+            fadeInAnimation.From = 0;
+            fadeInAnimation.Duration = TimeSpan.FromSeconds(0.5);
+            this.BeginAnimation(CloseableTab.OpacityProperty, fadeInAnimation);
         }
        
         

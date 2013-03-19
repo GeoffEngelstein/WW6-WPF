@@ -40,27 +40,27 @@ namespace WinWam6.Business
             lObj.Load();
 
             PhysicalAddress = new Address(
-                lObj["Addr1"].ToString(),
-                lObj["Addr2"].ToString(),
-                lObj["City"].ToString(),
-                lObj["State"].ToString(),
-                lObj["Zip"].ToString()
+                lObj.Fields["Addr1"],
+                lObj.Fields["Addr2"],
+                lObj.Fields["City"],
+                lObj.Fields["State"],
+                lObj.Fields["Zip"]
                 );
 
             MailingAddress = new Address(
-                lObj["BAddr1"].ToString(),
-                lObj["BAddr2"].ToString(),
-                lObj["B_City"].ToString(),
-                lObj["B_State"].ToString(),
-                lObj["B_Zip"].ToString()
+                lObj.Fields["BAddr1"],
+                lObj.Fields["BAddr2"],
+                lObj.Fields["B_City"],
+                lObj.Fields["B_State"],
+                lObj.Fields["B_Zip"]
                 );
 
             BillingAddress = new Address(
-                lObj["MAddr1"].ToString(),
-                lObj["MAddr2"].ToString(),
-                lObj["M_City"].ToString(),
-                lObj["M_State"].ToString(),
-                lObj["M_Zip"].ToString()
+                lObj.Fields["MAddr1"],
+                lObj.Fields["MAddr2"],
+                lObj.Fields["M_City"],
+                lObj.Fields["M_State"],
+                lObj.Fields["M_Zip"]
                 );
 
             m_custom = new BusinessCustom();
@@ -575,8 +575,9 @@ namespace WinWam6.Business
         
         public bool Save()
         {
-            bool rtn;
 
+            bool rtn;
+            /*
             //REMAP THE ADDRESS OBJECTS INTO THE WRAPPER
             if (PhysicalAddress.IsDirty) {
                 lObj["Addr1"] = PhysicalAddress.Street1;
@@ -603,6 +604,7 @@ namespace WinWam6.Business
                 lObj["B_State"] = BillingAddress.State;
                 lObj["B_Zip"] = BillingAddress.Zip;
             }
+            */
 
             rtn = lObj.Save();
 

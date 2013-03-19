@@ -92,6 +92,9 @@
     <Compile Include="Inspection\PCS\PCSInspectionViewAction.xaml.cs">
       <DependentUpon>PCSInspectionViewAction.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utility\MapControl.xaml.cs">
+      <DependentUpon>MapControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\PCSValueConverters.cs" />
     <Compile Include="Utility\UnitConversion.xaml.cs">
       <DependentUpon>UnitConversion.xaml</DependentUpon>
@@ -131,9 +134,6 @@
     <Compile Include="CustomFieldDefinition.xaml.cs">
       <DependentUpon>CustomFieldDefinition.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MapDisplay.xaml.cs">
-      <DependentUpon>MapDisplay.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Inspection\PCS\PCSInspection.cs" />
     <Compile Include="Data\WWData.cs" />
     <Compile Include="IInspEdit.cs" />
@@ -170,6 +170,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Utility\MapControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Utility\UnitConversion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -196,10 +200,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomFieldDefinition.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MapDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -117,7 +117,7 @@ namespace WinWam6
                     }
                 case "D":
                     {
-                        CreateNewTab(this, new MainTabEventArgs(MainTabEventArgs.TabType.PCS, curInspection.Insp_ID));
+                        CreateNewTab(this, new MainTabEventArgs(MainTabEventArgs.TabType.DEV, curInspection.Insp_ID));
                         break;
                     }
             }

@@ -1,18 +1,13 @@
-﻿<Window x:Class="WinWam6.MapDisplay"
+﻿<UserControl x:Class="WinWam6.MapDisplay"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Name="MapTest"
-        Title="WinWam Map"
         Width="534"
         Height="534"
-        AllowsTransparency="True"
         Background="{x:Null}"
-        WindowStartupLocation="CenterScreen"
-        WindowStyle="None"
         mc:Ignorable="d">
-    <Window.Resources>
+    <UserControl.Resources>
         <Style x:Key="CloseButtonStyle"
                BasedOn="{x:Null}"
                TargetType="{x:Type Button}">
@@ -556,7 +551,7 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
-    </Window.Resources>
+    </UserControl.Resources>
     <Grid>
         <Rectangle x:Name="BgndRectangle"
                    Fill="#FFFFFFFF"
@@ -805,4 +800,4 @@
                 Template="{DynamicResource ShowButtonControlTemplate}" />
 
     </Grid>
-</Window>
+</UserControl>

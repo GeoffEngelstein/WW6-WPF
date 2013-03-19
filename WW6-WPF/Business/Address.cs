@@ -13,6 +13,12 @@ namespace WinWam6
         private string m_State;
         private string m_Zip;
         private bool m_IsDirty;
+        private bool fieldMode = false;
+        private Field street1Field;
+        private Field street2Field;
+        private Field cityField;
+        private Field stateField;
+        private Field zipField;
     
         public Address(string Street1, string Street2, string City, string State, string Zip)
         {
@@ -32,6 +38,27 @@ namespace WinWam6
             m_State = "";
             m_Zip = "";
             m_IsDirty = false;
+            fieldMode = false;
+        }
+
+        public Address(Field street1, Field street2, Field city, Field state, Field zip)
+        {
+            street1Field = street1;
+            m_Street1 = street1.Value.ToString();
+            
+            street2Field = street2;
+            m_Street2 = street2.Value.ToString();
+
+            cityField = city;
+            m_City = city.Value.ToString();
+
+            stateField = state;
+            m_State = state.Value.ToString();
+
+            zipField = zip;
+            m_Zip = zip.Value.ToString();
+
+            fieldMode = true;
         }
 
         public string Street1
@@ -43,6 +70,7 @@ namespace WinWam6
             set
             {
                 m_Street1 = value;
+                if (fieldMode) street1Field.Value = value;
                 m_IsDirty = true;
 
             }
@@ -57,6 +85,7 @@ namespace WinWam6
             set
             {
                 m_Street2 = value;
+                if (fieldMode) street2Field.Value = value;
                 m_IsDirty = true;   
             }
         }
@@ -70,6 +99,7 @@ namespace WinWam6
             set
             {
                 m_City = value;
+                if (fieldMode) cityField.Value = value;
                 m_IsDirty = true;
             }
         }
@@ -83,6 +113,7 @@ namespace WinWam6
             set
             {
                 m_State = value;
+                if (fieldMode) stateField.Value = value;
                 m_IsDirty = true;
             }
         }
@@ -96,6 +127,7 @@ namespace WinWam6
             set
             {
                 m_Zip = value;
+                if (fieldMode) zipField.Value = value;
                 m_IsDirty = true;
             }
         }

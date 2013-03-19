@@ -23,7 +23,7 @@ namespace WinWam6
     /// <summary>
     /// Interaction logic for Window1.xaml
     /// </summary>
-    public partial class MapDisplay : Window
+    public partial class MapDisplay : UserControl
     {
         public MapDisplay()
         {

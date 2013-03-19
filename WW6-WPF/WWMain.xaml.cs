@@ -8,6 +8,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Windows.Controls.Ribbon;
@@ -38,7 +39,7 @@ namespace WinWam6
 
         private void cmdBusiness_Click(object sender, RoutedEventArgs e)
         {
-            BusinessDetailView fbd = new BusinessDetailView();
+            BusinessDetailView fbd = new BusinessDetailView("000009");
             InitalizeTab(fbd);
         }
 
@@ -158,14 +159,22 @@ namespace WinWam6
 
             AttachEventHandlersToTab((IMainTab)content);
 
-            Grid sp = new Grid();
-            sp.SizeChanged += Grid_SizeChanged;
-            sp.Children.Add(content);
+            Grid tabGrid = new Grid();
+            tabGrid.SizeChanged += Grid_SizeChanged;
+            tabGrid.Children.Add(content);
 
-            myTab.Content = sp;
+            //Fade in the Grid Content
+            DoubleAnimation fadeInAnimation = new DoubleAnimation();
+            fadeInAnimation.To = 1;
+            fadeInAnimation.From = 0;
+            fadeInAnimation.EasingFunction = new CubicEase();
+            fadeInAnimation.Duration = TimeSpan.FromSeconds(0.5);
+
+            myTab.Content = tabGrid;
 
             MasterTabs.Items.Add(myTab);
             MasterTabs.SelectedIndex = MasterTabs.Items.Count-1;
+            tabGrid.BeginAnimation(Grid.OpacityProperty, fadeInAnimation);
 
             InitializeSidePanels();
             //ActionPaneDock.Children.Add(((IMainTab)content).ActionPaneContent);

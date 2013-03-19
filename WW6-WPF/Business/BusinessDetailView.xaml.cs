@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Data;
 using System.Data.Common;
 using System.Xml.Linq;
+using WinWam6.Utility;
 
 namespace WinWam6.Business
 {
@@ -41,6 +42,7 @@ namespace WinWam6.Business
             curBus = lBus;
             DataContext = this;
             InitializeComponent();
+            mapPhysical.ShowMapFromAddress(curBus.PhysicalAddress.LocationString);
         }
 
         private void lstBusID_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -51,34 +53,11 @@ namespace WinWam6.Business
             curBus = lBus;
             DataContext = null;     //Refresh all the bindings to match the new object
             DataContext = this;
-
-
-            string location = curBus.PhysicalAddress.LocationString;
-            string geocodeURL = @"http://maps.googleapis.com/maps/api/geocode/xml?address=" + location + "&sensor=false";
-            XDocument geoDoc = XDocument.Load(geocodeURL);
-            string ss = geoDoc.ToString();
-            string responseStatus = geoDoc.Element("GeocodeResponse").Element("status").Value;
-            if (responseStatus == "OK")
-            {
-                string formattedAddress = (string)geoDoc.Element("GeocodeResponse").Element("result").Element("formatted_address").Value;
-                string latitude = (string)geoDoc.Element("GeocodeResponse").Element("result").Element("geometry").Element("location").Element("lat").Value;
-                string longitude = (string)geoDoc.Element("GeocodeResponse").Element("result").Element("geometry").Element("location").Element("lng").Value;
-
-                double d = 0;
-                if (double.TryParse(latitude, out d))
-                {
-                    curBus.Latitude = d;
-                }
-                if (double.TryParse(longitude, out d))
-                {
-                    curBus.Longitude = d;
-                }
-
-                string locationType = (string)geoDoc.Element("GeocodeResponse").Element("result").Element("geometry").Element("location_type").Value;
-            }
-            ShowMapImage(curBus.PhysicalAddress.LocationString);
+            mapPhysical.ShowMapFromAddress(curBus.PhysicalAddress.LocationString);
 
         }
+
+
 
         private void cmdSave_Click(object sender, RoutedEventArgs e)
         {
@@ -94,20 +73,7 @@ namespace WinWam6.Business
 
         }
 
-        public void ShowMapImage(string MyLoc)
-        {
-            BitmapImage bmpImage = new BitmapImage();
-            string MapType = "roadmap";
-            int zoom = 15;
-            string mapURL = "http://maps.googleapis.com/maps/api/staticmap?size=500x400&markers=size:mid%7Ccolor:red%7C" + MyLoc + "&zoom=" + zoom.ToString() + "&maptype=" + MapType + "&sensor=false";
 
-            bmpImage.BeginInit();
-            bmpImage.UriSource = new Uri(mapURL);
-            bmpImage.EndInit();
-
-            imgMap.Source = bmpImage;
-
-        }
 
         //IMainTab Interface
         public string TabIcon
