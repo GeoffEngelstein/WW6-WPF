@@ -26,13 +26,17 @@ namespace WinWam6.Business
         public Business curBus { get; set; }
         private Business lBus;
         public event EventHandler<MainTabEventArgs> CreateNewTab;
+        private BusinessDetailViewAction businessDetailViewAction = new BusinessDetailViewAction();
 
         public BusinessDetailView()
         {
             lBus = new Business();
             curBus = lBus;
             DataContext = this;
+            businessDetailViewAction.ActionSelected += ActionSelected;
+
             InitializeComponent();
+
         }
 
 
@@ -41,37 +45,13 @@ namespace WinWam6.Business
             lBus = new Business(BusinessID);
             curBus = lBus;
             DataContext = this;
+            businessDetailViewAction.ActionSelected += ActionSelected;
+
             InitializeComponent();
-            mapPhysical.ShowMapFromAddress(curBus.PhysicalAddress.LocationString);
+            
+            //mapPhysical.ShowMapFromAddress(curBus.PhysicalAddress.LocationString);
         }
 
-        private void lstBusID_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string s = curBus.Bus_ID;
-
-            lBus = new Business(s);
-            curBus = lBus;
-            DataContext = null;     //Refresh all the bindings to match the new object
-            DataContext = this;
-            mapPhysical.ShowMapFromAddress(curBus.PhysicalAddress.LocationString);
-
-        }
-
-
-
-        private void cmdSave_Click(object sender, RoutedEventArgs e)
-        {
-            if (curBus.IsDirty)
-            {
-                curBus.Save();
-            }
-        }
-
-        private void cmdMapPhys_Click(object sender, RoutedEventArgs e)
-        {
-            //Display the Map
-
-        }
 
 
 
@@ -84,14 +64,14 @@ namespace WinWam6.Business
         {
             get { return "Bus "+ this.curBus.Bus_ID; }
         }
-        public System.Windows.UIElement TreePaneContent
+
+        private void ActionSelected(object sender, ActionEventArgs e)
         {
-            get
-            {
-                return new StackPanel();
-            }
+            string s = e.Action;
+            if ("Save" == s) curBus.Save();
         }
-        public System.Windows.UIElement ActionPaneContent { get { return new StackPanel(); } }
+
+        public System.Windows.UIElement ActionPaneContent { get { return businessDetailViewAction; } }
 
         public void TabRequested(object sender, MainTabEventArgs e)
         {

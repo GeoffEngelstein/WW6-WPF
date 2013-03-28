@@ -44,7 +44,8 @@ namespace WinWam6.Business
                 lObj.Fields["Addr2"],
                 lObj.Fields["City"],
                 lObj.Fields["State"],
-                lObj.Fields["Zip"]
+                lObj.Fields["Zip"],
+                lObj.Fields["Contact"]
                 );
 
             MailingAddress = new Address(
@@ -52,7 +53,8 @@ namespace WinWam6.Business
                 lObj.Fields["BAddr2"],
                 lObj.Fields["B_City"],
                 lObj.Fields["B_State"],
-                lObj.Fields["B_Zip"]
+                lObj.Fields["B_Zip"],
+                lObj.Fields["BContact"]
                 );
 
             BillingAddress = new Address(
@@ -60,7 +62,8 @@ namespace WinWam6.Business
                 lObj.Fields["MAddr2"],
                 lObj.Fields["M_City"],
                 lObj.Fields["M_State"],
-                lObj.Fields["M_Zip"]
+                lObj.Fields["M_Zip"],
+                lObj.Fields["MContact"]
                 );
 
             m_custom = new BusinessCustom();
@@ -577,34 +580,8 @@ namespace WinWam6.Business
         {
 
             bool rtn;
-            /*
-            //REMAP THE ADDRESS OBJECTS INTO THE WRAPPER
-            if (PhysicalAddress.IsDirty) {
-                lObj["Addr1"] = PhysicalAddress.Street1;
-                lObj["Addr1"] = PhysicalAddress.Street2;
-                lObj["City"] = PhysicalAddress.City;
-                lObj["State"] = PhysicalAddress.State;
-                lObj["Zip"] = PhysicalAddress.Zip;
-            }
 
-            if (MailingAddress.IsDirty)
-            {
-                lObj["MAddr1"] = MailingAddress.Street1;
-                lObj["MAddr1"] = MailingAddress.Street2;
-                lObj["M_City"] = MailingAddress.City;
-                lObj["M_State"] = MailingAddress.State;
-                lObj["M_Zip"] = MailingAddress.Zip;
-            }
-
-            if (BillingAddress.IsDirty)
-            {
-                lObj["BAddr1"] = BillingAddress.Street1;
-                lObj["BAddr1"] = BillingAddress.Street2;
-                lObj["B_City"] = BillingAddress.City;
-                lObj["B_State"] = BillingAddress.State;
-                lObj["B_Zip"] = BillingAddress.Zip;
-            }
-            */
+            if (!IsDirty) return true;
 
             rtn = lObj.Save();
 

@@ -116,163 +116,52 @@
             <TabItem Name="tabItem1" Header="Location">
                 <TabControl Name="tabcontrol2">
                     <TabItem Header="Street Address">
-                        <StackPanel Orientation="Vertical">
-                            <Grid Name="grdPhysical" Height="150">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Label Margin="3"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       HorizontalContentAlignment="Right"
-                                       VerticalContentAlignment="Center"
-                                       Content="Name" />
-                                <TextBox Name="txtPhysName"
-                                         Grid.Column="1"
-                                         Grid.ColumnSpan="5"
-                                         Height="23"
-                                         Margin="3"
-                                         HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Center"
-                                         Text="{Binding Path=curBus.Bus_Name}" />
-                                <Label Grid.Row="1"
-                                       Margin="3"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       HorizontalContentAlignment="Right"
-                                       VerticalContentAlignment="Center"
-                                       Content="Address 1" />
-                                <TextBox Name="txtPhysAddr1"
-                                         Grid.Row="1"
-                                         Grid.Column="1"
-                                         Grid.ColumnSpan="5"
-                                         Height="23"
-                                         Margin="3"
-                                         HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Center"
-                                         Text="{Binding Path=curBus.PhysicalAddress.Street1}" />
-                                <Label Grid.Row="2"
-                                       Margin="3"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       HorizontalContentAlignment="Right"
-                                       VerticalContentAlignment="Center"
-                                       Content="Address 2" />
-                                <TextBox Name="txtPhysAddr2"
-                                         Grid.Row="2"
-                                         Grid.Column="1"
-                                         Grid.ColumnSpan="5"
-                                         Height="23"
-                                         Margin="3"
-                                         HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Center"
-                                         Text="{Binding Path=curBus.PhysicalAddress.Street2}" />
-                                <Label Grid.Row="3"
-                                       Margin="3"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       HorizontalContentAlignment="Right"
-                                       VerticalContentAlignment="Center"
-                                       Content="City" />
-                                <TextBox Name="txtPhysCity"
-                                         Grid.Row="3"
-                                         Grid.Column="1"
-                                         Grid.ColumnSpan="1"
-                                         Height="23"
-                                         Margin="3"
-                                         HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Center"
-                                         Text="{Binding Path=curBus.PhysicalAddress.City}" />
-                                <Label Grid.Row="3"
-                                       Grid.Column="2"
-                                       Margin="3"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       HorizontalContentAlignment="Right"
-                                       VerticalContentAlignment="Center"
-                                       Content="State" />
-                                <TextBox Name="txtPhysState"
-                                         Grid.Row="3"
-                                         Grid.Column="3"
-                                         Grid.ColumnSpan="1"
-                                         Height="23"
-                                         Margin="3"
-                                         HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Center"
-                                         Text="{Binding Path=curBus.PhysicalAddress.State}" />
-                                <Label Grid.Row="3"
-                                       Grid.Column="4"
-                                       Margin="3"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       HorizontalContentAlignment="Right"
-                                       VerticalContentAlignment="Center"
-                                       Content="Zip" />
-                                <TextBox Name="txtPhysZip"
-                                         Grid.Row="3"
-                                         Grid.Column="5"
-                                         Grid.ColumnSpan="1"
-                                         Height="23"
-                                         Margin="3"
-                                         HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Center"
-                                         Text="{Binding Path=curBus.PhysicalAddress.Zip}" />
-                                <Label Grid.Row="4"
-                                       Margin="3"
-                                       HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Stretch"
-                                       HorizontalContentAlignment="Right"
-                                       VerticalContentAlignment="Center"
-                                       Content="Contact" />
-                                <TextBox Name="txtPhysContact"
-                                         Grid.Row="4"
-                                         Grid.Column="1"
-                                         Grid.ColumnSpan="5"
-                                         Height="23"
-                                         Margin="3"
-                                         HorizontalAlignment="Stretch"
-                                         VerticalAlignment="Center" />
-                                <Button Name="cmdMapPhys"
-                                        Height="23"
-                                        Margin="3"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        Click="cmdMapPhys_Click"
-                                        Content="Map" />
-                            </Grid>
-                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                                <my:MapControl x:Name="mapPhysical" MinHeight="500" />
-                            </ScrollViewer>
-                        </StackPanel>
-                    </TabItem>
-                    <TabItem Header="Mailing Address">
-                        <Grid Name="grdMailing" Height="150">
+                        <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Label Margin="3"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   HorizontalContentAlignment="Right"
+                                   VerticalContentAlignment="Center"
+                                   Content="Name" />
+                            <TextBox Name="txtPhysName"
+                                     Grid.Column="1"
+                                     Grid.ColumnSpan="5"
+                                     Height="23"
+                                     Margin="3"
+                                     HorizontalAlignment="Stretch"
+                                     VerticalAlignment="Center"
+                                     Text="{Binding Path=curBus.Bus_Name}" />
+                            <my:AddressView x:Name="AddressPhysical"
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
+                                            DataContext="{Binding Path=curBus.PhysicalAddress}" />
+                            <my:MapControl x:Name="mapPhysical"
+                                           Grid.RowSpan="2"
+                                           Grid.Column="2"
+                                           Location="{Binding Path=curBus.PhysicalAddress.LocationString}" />
+                        </Grid>
+
+                    </TabItem>
+                    <TabItem Header="Mailing Address">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <Label Margin="3"
                                    HorizontalAlignment="Stretch"
@@ -286,128 +175,29 @@
                                      Height="23"
                                      Margin="3"
                                      HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Center" />
-                            <Label Grid.Row="1"
-                                   Margin="3"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="Address 1" />
-                            <TextBox Name="txtMailAddr1"
-                                     Grid.Row="1"
-                                     Grid.Column="1"
-                                     Grid.ColumnSpan="5"
-                                     Height="23"
-                                     Margin="3"
-                                     HorizontalAlignment="Stretch"
                                      VerticalAlignment="Center"
-                                     Text="{Binding Path=curBus.MailingAddress.Street1}" />
-                            <Label Grid.Row="2"
-                                   Margin="3"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="Address 2" />
-                            <TextBox Name="txtMailAddr2"
-                                     Grid.Row="2"
-                                     Grid.Column="1"
-                                     Grid.ColumnSpan="5"
-                                     Height="23"
-                                     Margin="3"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Center"
-                                     Text="{Binding Path=curBus.MailingAddress.Street2}" />
-                            <Label Grid.Row="3"
-                                   Margin="3"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="City" />
-                            <TextBox Name="txtMailCity"
-                                     Grid.Row="3"
-                                     Grid.Column="1"
-                                     Grid.ColumnSpan="1"
-                                     Height="23"
-                                     Margin="3"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Center"
-                                     Text="{Binding Path=curBus.MailingAddress.City}" />
-                            <Label Grid.Row="3"
-                                   Grid.Column="2"
-                                   Margin="3"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="State" />
-                            <TextBox Name="txtMailState"
-                                     Grid.Row="3"
-                                     Grid.Column="3"
-                                     Grid.ColumnSpan="1"
-                                     Height="23"
-                                     Margin="3"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Center"
-                                     Text="{Binding Path=curBus.MailingAddress.State}" />
-                            <Label Grid.Row="3"
-                                   Grid.Column="4"
-                                   Margin="3"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="Zip" />
-                            <TextBox Name="txtMailZip"
-                                     Grid.Row="3"
-                                     Grid.Column="5"
-                                     Grid.ColumnSpan="1"
-                                     Height="23"
-                                     Margin="3"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Center"
-                                     Text="{Binding Path=curBus.MailingAddress.Zip}" />
-                            <Label Grid.Row="4"
-                                   Margin="3"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="Contact" />
-                            <TextBox Name="txtMailContact"
-                                     Grid.Row="4"
-                                     Grid.Column="1"
-                                     Grid.ColumnSpan="5"
-                                     Height="23"
-                                     Margin="3"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Center" />
-                            <Button Name="cmdMapMail"
-                                    Height="23"
-                                    Margin="3"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Content="Map" />
+                                     Text="{Binding Path=curBus.MName}" />
+                            <my:AddressView x:Name="AddressMail"
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
+                                            DataContext="{Binding Path=curBus.MailingAddress}" />
+                            <my:MapControl x:Name="mapMailing"
+                                           Grid.RowSpan="2"
+                                           Grid.Column="2"
+                                           Location="{Binding Path=curBus.MailingAddress.LocationString}" />
                         </Grid>
                     </TabItem>
                     <TabItem Name="expander3" Header="Billing Address">
-                        <Grid Name="grdBilling" Height="150">
+                        <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="70" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
-                                <RowDefinition />
+                                <RowDefinition Height="30" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <Label Margin="3"
                                    HorizontalAlignment="Stretch"
@@ -421,111 +211,18 @@
                                      Height="23"
                                      Margin="3"
                                      HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Center" />
-                            <Label Grid.Row="1"
-                                   Margin="3"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="Address 1" />
-                            <TextBox Name="txtBillAddr1"
-                                     Grid.Row="1"
-                                     Grid.Column="1"
-                                     Grid.ColumnSpan="5"
-                                     Height="23"
-                                     Margin="3"
-                                     HorizontalAlignment="Stretch"
                                      VerticalAlignment="Center"
-                                     Text="{Binding Path=curBus.BillingAddress.Street1}" />
-                            <Label Grid.Row="2"
-                                   Margin="3"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="Address 2" />
-                            <TextBox Name="txtBillAddr2"
-                                     Grid.Row="2"
-                                     Grid.Column="1"
-                                     Grid.ColumnSpan="5"
-                                     Height="23"
-                                     Margin="3"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Center"
-                                     Text="{Binding Path=curBus.BillingAddress.Street2}" />
-                            <Label Grid.Row="3"
-                                   Margin="3"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="City" />
-                            <TextBox Name="txtBillCity"
-                                     Grid.Row="3"
-                                     Grid.Column="1"
-                                     Grid.ColumnSpan="1"
-                                     Height="23"
-                                     Margin="3"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Center"
-                                     Text="{Binding Path=curBus.BillingAddress.City}" />
-                            <Label Grid.Row="3"
-                                   Grid.Column="2"
-                                   Margin="3"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="State" />
-                            <TextBox Name="txtBillState"
-                                     Grid.Row="3"
-                                     Grid.Column="3"
-                                     Grid.ColumnSpan="1"
-                                     Height="23"
-                                     Margin="3"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Center"
-                                     Text="{Binding Path=curBus.BillingAddress.State}" />
-                            <Label Grid.Row="3"
-                                   Grid.Column="4"
-                                   Margin="3"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="Zip" />
-                            <TextBox Name="txtBillZip"
-                                     Grid.Row="3"
-                                     Grid.Column="5"
-                                     Grid.ColumnSpan="1"
-                                     Height="23"
-                                     Margin="3"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Center"
-                                     Text="{Binding Path=curBus.BillingAddress.Zip}" />
-                            <Label Grid.Row="4"
-                                   Margin="3"
-                                   HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   HorizontalContentAlignment="Right"
-                                   VerticalContentAlignment="Center"
-                                   Content="Contact" />
-                            <TextBox Name="txtBillContact"
-                                     Grid.Row="4"
-                                     Grid.Column="1"
-                                     Grid.ColumnSpan="5"
-                                     Height="23"
-                                     Margin="3"
-                                     HorizontalAlignment="Stretch"
-                                     VerticalAlignment="Center" />
-                            <Button Name="cmdMapBill"
-                                    Height="23"
-                                    Margin="3"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Center"
-                                    Content="Map" />
+                                     Text="{Binding Path=curBus.BName}" />
+                            <my:AddressView Grid.Row="1"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="2"
+                                            DataContext="{Binding Path=curBus.BillingAddress}" />
+                            <my:MapControl x:Name="mapBilling"
+                                           Grid.RowSpan="2"
+                                           Grid.Column="2"
+                                           Location="{Binding Path=curBus.BillingAddress.LocationString}" />
                         </Grid>
+
                     </TabItem>
                 </TabControl>
             </TabItem>

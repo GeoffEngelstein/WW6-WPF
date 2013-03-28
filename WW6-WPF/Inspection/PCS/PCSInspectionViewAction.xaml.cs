@@ -31,7 +31,7 @@ namespace WinWam6.Inspection.PCS
         private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e)
         {
             string msg = ((TextBlock)sender).Text;
-            ActionSelected(this, new ActionEventArgs(msg));
+            if (ActionSelected != null) ActionSelected(this, new ActionEventArgs(msg));
         }
 
         protected virtual void OnActionSelected (ActionEventArgs e)

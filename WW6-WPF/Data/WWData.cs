@@ -549,6 +549,8 @@ namespace WinWam6
 		//If the row exists, does an UPDATE, otherwise does an INSERT
 		public bool Save()
 		{
+		    if (!IsDirty) return true;
+
 			//First check to see if the row exists
 			string where = this.Where();
 			if (where.Length == 0)

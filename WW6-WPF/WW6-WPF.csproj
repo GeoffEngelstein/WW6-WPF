@@ -68,8 +68,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BusinessInspection.cs" />
+    <Compile Include="Business\AddressView.xaml.cs">
+      <DependentUpon>AddressView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Business\BusinessDetailView.xaml.cs">
       <DependentUpon>BusinessDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Business\BusinessDetailViewAction.xaml.cs">
+      <DependentUpon>BusinessDetailViewAction.xaml</DependentUpon>
     </Compile>
     <Compile Include="DashboardView.xaml.cs">
       <DependentUpon>DashboardView.xaml</DependentUpon>
@@ -138,7 +144,15 @@
     <Compile Include="Data\WWData.cs" />
     <Compile Include="IInspEdit.cs" />
     <Compile Include="Utility\WWHelper.cs" />
+    <Page Include="Business\AddressView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Business\BusinessDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Business\BusinessDetailViewAction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
