@@ -10,7 +10,7 @@ namespace WinWam6.Business
     public class Business : INotifyPropertyChanged
     {
         private TableWrapper lObj;
-        private BusinessCustom m_custom;
+        private BusinessCustom m_custom = new BusinessCustom();
 
 
         public bool IsDirty

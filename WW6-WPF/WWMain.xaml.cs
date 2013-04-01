@@ -13,8 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Microsoft.Windows.Controls.Ribbon;
 using WinWam6.Business;
+using WinWam6.Inspection;
 using WinWam6.Inspection.DEV;
 using WinWam6.Utility;
+
 
 namespace WinWam6
 {
@@ -99,7 +101,7 @@ namespace WinWam6
 
         private void cmdFindInsp_Click(object sender, RoutedEventArgs e)
         {
-            InspectionEdit fie = new InspectionEdit();
+            Inspection.InspectionEdit fie = new Inspection.InspectionEdit();
             InitalizeTab(fie);
         }
 
@@ -146,6 +148,12 @@ namespace WinWam6
             var unitConversionViewModel = new UnitConversionViewModel();
             InitalizeTab(unitConversionView);
 
+        }
+
+        private void cmdQuery_Click(object sender, RoutedEventArgs e)
+        {
+            var sqlViewer = new SQLViewer();
+            InitalizeTab(sqlViewer);
         }
 
         private void InitalizeTab(UIElement content)
@@ -212,6 +220,13 @@ namespace WinWam6
                 ActionPaneDock.Children.Add(((IMainTab)content).ActionPaneContent);
             }
         }
+
+        private void Ribbon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+
 
 
     }

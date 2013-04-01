@@ -48,8 +48,8 @@ namespace WinWam6.Business
             businessDetailViewAction.ActionSelected += ActionSelected;
 
             InitializeComponent();
-            
-            //mapPhysical.ShowMapFromAddress(curBus.PhysicalAddress.LocationString);
+
+            ctlCustom.CustomFields = lBus.Custom;
         }
 
 

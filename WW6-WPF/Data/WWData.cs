@@ -33,16 +33,16 @@ namespace WinWam6
 			gSysCn.Open();
 		}
 
-        static public bool DatabaseIsOpen()
-        {
-            if (gCn == null)
-            { return false; }
+		static public bool DatabaseIsOpen()
+		{
+			if (gCn == null)
+			{ return false; }
 
-            if (gCn.State == ConnectionState.Open)
-            { return true; }
-            else
-            {return false;}
-        }
+			if (gCn.State == ConnectionState.Open)
+			{ return true; }
+			else
+			{return false;}
+		}
 
 		static public DbDataReader GetSysReader(string sql)
 		{
@@ -71,6 +71,12 @@ namespace WinWam6
 			OleDbCommand cmd = new OleDbCommand(sql, WWD.gCn);
 			return cmd;
 		}
+
+        static public DbDataAdapter GetAdapter(string sql)
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter(sql,WWD.gCn);
+            return da;
+        }
 
 		static public DataTable GetTableSchema(string TableName)
 		{
@@ -549,7 +555,7 @@ namespace WinWam6
 		//If the row exists, does an UPDATE, otherwise does an INSERT
 		public bool Save()
 		{
-		    if (!IsDirty) return true;
+			if (!IsDirty) return true;
 
 			//First check to see if the row exists
 			string where = this.Where();

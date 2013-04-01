@@ -5,6 +5,7 @@ using System.Text;
 using System.Data.Common;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using WinWam6.Utility;
 
 namespace WinWam6.Inspection.PCS
 {
@@ -18,6 +19,7 @@ namespace WinWam6.Inspection.PCS
         private int mavError=0;
         private int tareSampleSize=0;
         private int finalTareSampleSize = 0;
+        private IMeasurementUnit units = new UnitPound();
 
         // Enumerations
         public enum PackageType {Standard, Random}
@@ -288,10 +290,20 @@ namespace WinWam6.Inspection.PCS
             set { lObj["Notes"] = value; NotifyPropertyChanged("Notes"); }
         }
 
-        public String NUnit
+        public String UnitsString
         {
             get { return lObj["NUnit"].ToString(); }
             set { lObj["NUnit"] = value; NotifyPropertyChanged("NUnit"); }
+        }
+
+        public IMeasurementUnit Units
+        {
+            get { return units; }
+            set 
+            { 
+                units = value;
+                UnitsString = units.FieldName;
+            }
         }
 
         public Int16 Pack_ID

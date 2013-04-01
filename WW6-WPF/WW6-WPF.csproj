@@ -88,9 +88,13 @@
     <Compile Include="Inspection\DEV\DEVInspectionViewAction.xaml.cs">
       <DependentUpon>DEVInspectionViewAction.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Inspection\InspectionEditAction.xaml.cs">
+      <DependentUpon>InspectionEditAction.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Inspection\InspectionHeaderView.xaml.cs">
       <DependentUpon>InspectionHeaderView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Inspection\PCS\MAVTables.cs" />
     <Compile Include="Inspection\PCS\PCSInpsectionViewModel.cs" />
     <Compile Include="Inspection\PCS\PCSInspectionView.xaml.cs">
       <DependentUpon>PCSInspectionView.xaml</DependentUpon>
@@ -98,10 +102,17 @@
     <Compile Include="Inspection\PCS\PCSInspectionViewAction.xaml.cs">
       <DependentUpon>PCSInspectionViewAction.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utility\LookupTable.cs" />
     <Compile Include="Utility\MapControl.xaml.cs">
       <DependentUpon>MapControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utility\PCSValueConverters.cs" />
+    <Compile Include="Utility\SQLViewer.xaml.cs">
+      <DependentUpon>SQLViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\SQLViewerAction.xaml.cs">
+      <DependentUpon>SQLViewerAction.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\UnitConversion.xaml.cs">
       <DependentUpon>UnitConversion.xaml</DependentUpon>
     </Compile>
@@ -172,6 +183,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Inspection\InspectionEditAction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Inspection\InspectionHeaderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -185,6 +200,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Utility\MapControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility\SQLViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Utility\SQLViewerAction.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -379,6 +402,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\16\search-thumb.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\32\emblem-question.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\emblem-question.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

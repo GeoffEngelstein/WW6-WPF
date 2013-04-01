@@ -21,7 +21,8 @@ using WinWam6.Inspection.QST;
 using WinWam6.Inspection.QSTD;
 
 
-namespace WinWam6
+
+namespace WinWam6.Inspection
 {
     /// <summary>
     /// Interaction logic for InspectionEdit.xaml
@@ -30,12 +31,15 @@ namespace WinWam6
     {
         public ObservableCollection<InspectionBase> inspectionList;
         public event EventHandler<MainTabEventArgs> CreateNewTab;
+        private InspectionEditAction inspectionEditAction = new InspectionEditAction();
 
         public InspectionEdit()
         {
             inspectionList = GetAllInspectionHeaders();
             InitializeComponent();
             tvInspEdit.ItemsSource = inspectionList;
+
+            inspectionEditAction.ActionSelected += ActionSelected;
         }
 
         private ObservableCollection<InspectionBase> GetAllInspectionHeaders()
@@ -97,14 +101,14 @@ namespace WinWam6
         {
             get { return "Search Inspections"; }
         }
-        public System.Windows.UIElement ActionPaneContent { get { return new StackPanel(); } }
+        public System.Windows.UIElement ActionPaneContent { get { return inspectionEditAction; } }
 
         public void TabRequested(object sender, MainTabEventArgs e)
         {
             CreateNewTab(this, e);
         }
 
-        private void cmdView_Click(object sender, RoutedEventArgs e)
+        private void ViewInspection()
         {
             InspectionBase curInspection = (InspectionBase)tvInspEdit.SelectedItem;
 
@@ -118,6 +122,24 @@ namespace WinWam6
                 case "D":
                     {
                         CreateNewTab(this, new MainTabEventArgs(MainTabEventArgs.TabType.DEV, curInspection.Insp_ID));
+                        break;
+                    }
+            }
+        }
+
+        private void ActionSelected(object sender, ActionEventArgs e)
+        {
+            string s = e.Action;
+
+            switch (s)
+            {
+                case "View Inspection":
+                    {
+                        ViewInspection();
+                        break;
+                    }
+                default:
+                    {
                         break;
                     }
             }

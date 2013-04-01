@@ -13,7 +13,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <ribbon:Ribbon x:Name="Ribbon">
+        <ribbon:Ribbon x:Name="Ribbon" SelectionChanged="Ribbon_SelectionChanged">
             <ribbon:RibbonTab x:Name="HomeTab" Header="Inspection">
                 <ribbon:RibbonGroup x:Name="Group1" Header="Clipboard">
                     <ribbon:RibbonButton Name="cmdCut"
@@ -251,7 +251,15 @@
                                          SmallImageSource="/WW6-WPF;component/Images/16/emblem-office.png" />
                 </ribbon:RibbonGroup>
             </ribbon:RibbonTab>
-            <ribbon:RibbonTab x:Name="UtilityTab" Header="Utilities" />
+            <ribbon:RibbonTab x:Name="UtilityTab" Header="Utilities">
+                <ribbon:RibbonGroup Header="Tools">
+                    <ribbon:RibbonButton Name="cmdQuery"
+                                         Click="cmdQuery_Click"
+                                         Label="Advanced Query"
+                                         LargeImageSource="/WW6-WPF;component/Images/32/emblem-question.png"
+                                         SmallImageSource="/WW6-WPF;component/Images/16/emblem-question.png" />
+                </ribbon:RibbonGroup>
+            </ribbon:RibbonTab>
         </ribbon:Ribbon>
 
         <Grid Name="grdLower" Grid.Row="2">

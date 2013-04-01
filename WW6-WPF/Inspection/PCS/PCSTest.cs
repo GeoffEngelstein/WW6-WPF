@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Data.Common;
 using System.ComponentModel;
+using WinWam6.Utility;
 
 namespace WinWam6.Inspection.PCS
 {
@@ -32,9 +33,11 @@ namespace WinWam6.Inspection.PCS
             set { lObj["Insp_ID"] = value; NotifyPropertyChanged("Insp_ID"); }
         }
 
-        public Single MAV
+        public double MAV
         {
-            get { return Single.Parse(lObj["MAV"].ToString()); }
+            //get { return Single.Parse(lObj["MAV"].ToString()); }
+            get { return Parent.Units.CalcMAV(NetWeight, MAVType.Normal); }
+            
             set { lObj["MAV"] = value; NotifyPropertyChanged("MAV"); }
         }
 

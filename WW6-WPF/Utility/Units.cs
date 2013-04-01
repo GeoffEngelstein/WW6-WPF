@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
+using WinWam6.Inspection.PCS;
 
 namespace WinWam6.Utility
 {
@@ -75,7 +76,19 @@ namespace WinWam6.Utility
     {
         public double CalcMAV(double netWeightIn, MAVType mavType)
         {
-            return 0;
+            switch (mavType)
+            {
+                case MAVType.Normal:
+                    {
+                        if (MAVTables.lbMAV.BelowMinimum(netWeightIn)) return (netWeightIn*0.1);
+                        if (netWeightIn > 54.4) return (netWeightIn*0.02);
+                        return (MAVTables.lbMAV.LookupValue(netWeightIn));
+                    }
+
+                default:
+                    return 0;
+            }
+
         }
         
         public string StandardVolumeCaption { get { return "lb"; } }
