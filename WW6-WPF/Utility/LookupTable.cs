@@ -43,7 +43,6 @@ namespace WinWam6.Utility
                         if (BelowMinimum(keyValue))
                         {
                             throw new ArgumentOutOfRangeException();
-                            return 0;
                         }
 
                         lookupValue = this.First().Value;
@@ -77,11 +76,9 @@ namespace WinWam6.Utility
                         }
                         //theoretically should never get here due to initial AboveMaximum check, but just in case.
                         throw new ArgumentOutOfRangeException();
-                        return 0;
                     }
                 default:
                     throw new InvalidEnumArgumentException();
-                    return 0;
             }
         }
 

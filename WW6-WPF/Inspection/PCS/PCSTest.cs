@@ -17,7 +17,7 @@ namespace WinWam6.Inspection.PCS
             Final
         }
 
-        private TableWrapper lObj;
+        private readonly TableWrapper lObj;
 
         public PCSDetail Parent { get; set; }
 
@@ -36,7 +36,7 @@ namespace WinWam6.Inspection.PCS
         public double MAV
         {
             //get { return Single.Parse(lObj["MAV"].ToString()); }
-            get { return Parent.Units.CalcMAV(NetWeight, MAVType.Normal); }
+            get { return Parent.Units.CalcMAV(NetWeight, PCSDetail.PCSMAVType.Normal); }
             
             set { lObj["MAV"] = value; NotifyPropertyChanged("MAV"); }
         }
@@ -79,12 +79,12 @@ namespace WinWam6.Inspection.PCS
 
         public double Error
         {
-            get { return (this.NetWeight - this.MarkedWeight); }
+            get { return (NetWeight - MarkedWeight); }
         }
 
         public decimal CostError
         {
-            get { return ((decimal)this.Error * this.Parent.CostPer); }
+            get { return ( (decimal)Error * Parent.CostPer); }
         }
 
         public PCSTareType TareType
@@ -94,6 +94,31 @@ namespace WinWam6.Inspection.PCS
                 if (Test > Parent.FinalTareSize) return PCSTareType.None;
                 if (Test > Parent.InitialTareSize) return PCSTareType.Final;
                 return PCSTareType.Initial;
+            }
+        }
+
+        public double Measured
+        {
+            get
+            {
+                double GrayTotal = 0;
+
+                if (Parent.GrayPct > 0)
+                {
+                    GrayTotal = MarkedWeight * (Parent.GrayPct / 100);
+                }
+
+                if (Parent.IsZeroTare())
+                return (GrossWeight + GrayTotal);
+
+                if (Parent.UseLineTare)
+                {
+                    return GrossWeight - Tare + GrayTotal;
+                }
+                else
+                {
+                    return GrossWeight - Parent.AverageTare;
+                }
             }
         }
 
@@ -127,9 +152,14 @@ namespace WinWam6.Inspection.PCS
             lObj.Load();
         }
 
+        public bool Save()
+        {
+            return lObj.Save();
+        }
+
         public void Dispose()
         {
-            this.Parent = null;
+            Parent = null;
         }
 
     }

@@ -79,6 +79,21 @@ namespace WinWam6.Inspection.PCS
             }
             pcsDetailLoaded = true;
         }
+
+        public bool Save()
+        {
+            bool result= true;
+            foreach (PCSDetail pd in pcsDetails)
+            {
+                if (!pd.Save())
+                    result = false;
+            }
+
+            if (!base.lObj.Save())
+                result = false;
+
+            return result;
+        }
     }
 
  

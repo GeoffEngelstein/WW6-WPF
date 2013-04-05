@@ -582,8 +582,21 @@ namespace WinWam6
 			{
 				sql = this.Insert();
 			}
+
+		    if (sql == string.Empty)
+		        return false;
+
 			DbCommand cmd = WWD.GetCommand(sql);
-			cmd.ExecuteNonQuery();
+		    try
+		    {
+                cmd.ExecuteNonQuery();
+		    }
+		    catch (Exception)
+		    {
+		        
+		        throw new ArgumentOutOfRangeException();
+		    }
+
 
 			return true;
 		}

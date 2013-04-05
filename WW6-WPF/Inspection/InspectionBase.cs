@@ -11,7 +11,7 @@ namespace WinWam6
 {
     public abstract class InspectionBase : INotifyPropertyChanged
     {
-        private TableWrapper lObj;
+        protected TableWrapper lObj;
         public enum InspectionType {PCS, DEV, UPC, QST, QSTD};
 
         protected TableWrapper Wrapper

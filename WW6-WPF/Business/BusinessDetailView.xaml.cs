@@ -24,9 +24,9 @@ namespace WinWam6.Business
     public partial class BusinessDetailView : UserControl, IMainTab
     {
         public Business curBus { get; set; }
-        private Business lBus;
+        private readonly Business lBus;
         public event EventHandler<MainTabEventArgs> CreateNewTab;
-        private BusinessDetailViewAction businessDetailViewAction = new BusinessDetailViewAction();
+        private readonly BusinessDetailViewAction businessDetailViewAction = new BusinessDetailViewAction();
 
         public BusinessDetailView()
         {
@@ -62,7 +62,7 @@ namespace WinWam6.Business
         }
         public string TabCaption
         {
-            get { return "Bus "+ this.curBus.Bus_ID; }
+            get { return "Bus "+ curBus.Bus_ID; }
         }
 
         private void ActionSelected(object sender, ActionEventArgs e)
@@ -71,7 +71,7 @@ namespace WinWam6.Business
             if ("Save" == s) curBus.Save();
         }
 
-        public System.Windows.UIElement ActionPaneContent { get { return businessDetailViewAction; } }
+        public UIElement ActionPaneContent { get { return businessDetailViewAction; } }
 
         public void TabRequested(object sender, MainTabEventArgs e)
         {

@@ -15,13 +15,13 @@ namespace WinWam6
         private string m_Zip;
         private string m_contact;
         private bool m_IsDirty;
-        private bool fieldMode = false;
-        private Field street1Field;
-        private Field street2Field;
-        private Field cityField;
-        private Field stateField;
-        private Field zipField;
-        private Field contactField;
+        private readonly bool fieldMode;
+        private readonly Field street1Field;
+        private readonly Field street2Field;
+        private readonly Field cityField;
+        private readonly Field stateField;
+        private readonly Field zipField;
+        private readonly Field contactField;
     
         public Address(string Street1, string Street2, string City, string State, string Zip, string Contact)
         {

@@ -1,16 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Data.Common;
 using System.Data;
 
@@ -19,7 +8,7 @@ namespace WinWam6.Utility
     /// <summary>
     /// Interaction logic for SQLViewer.xaml
     /// </summary>
-    public partial class SQLViewer : UserControl, IMainTab
+    public partial class SQLViewer : IMainTab
     {
         public SQLViewerAction sqlViewAction = new SQLViewerAction();
         public event EventHandler<MainTabEventArgs> CreateNewTab;
@@ -39,7 +28,7 @@ namespace WinWam6.Utility
         {
             get { return "Query"; }
         }
-        public System.Windows.UIElement ActionPaneContent { get { return sqlViewAction; } }
+        public UIElement ActionPaneContent { get { return sqlViewAction; } }
 
         private void ActionSelected(object sender, ActionEventArgs e)
         {
@@ -61,10 +50,20 @@ namespace WinWam6.Utility
 
         private void BindGridToQuery()
         {
-            DbDataReader dr = WWD.GetReader(txtQuery.Text);
-            DataTable dt = new DataTable();
-            dt.Load(dr);
-            grdQuery.ItemsSource = dt.AsDataView();
+            if (txtQuery.Text != string.Empty)
+            {
+                try
+                {
+                    DbDataReader dr = WWD.GetReader(txtQuery.Text);
+                    var dt = new DataTable();
+                    dt.Load(dr);
+                    grdQuery.ItemsSource = dt.AsDataView();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message,"Query Error");
+                }
+            }
         }
 
         public void TabRequested(object sender, MainTabEventArgs e)

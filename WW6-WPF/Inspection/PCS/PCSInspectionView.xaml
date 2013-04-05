@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:WinWam6"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:u="clr-namespace:WinWam6.Utility"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              d:DesignHeight="300"
              d:DesignWidth="800"
@@ -17,6 +18,7 @@
         <local:TareStateToColor x:Key="TareStateToColor" />
         <local:TareStateToImage x:Key="TareStateToImage" />
         <local:TareStateToToolTip x:Key="TareStateToToolTip" />
+        <u:PCSMeasurementUnits x:Key="Units" />
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -56,11 +58,13 @@
                         Margin="0,3,0,3"
                         Click="cmdCommodityUp_Click"
                         Content="&gt;" />
-                <TextBlock MinWidth="150"
-                           MaxWidth="150"
-                           Margin="6,0,0,0"
-                           Background="#FF15BFD1"
-                           Text="{Binding Path=Commodity}" />
+                <Label MinWidth="150"
+                       MaxWidth="150"
+                       Margin="6,0,0,0"
+                       HorizontalContentAlignment="Center"
+                       VerticalContentAlignment="Center"
+                       Background="#FF15BFD1"
+                       Content="{Binding Path=Commodity}" />
                 <TextBlock Margin="6,3,6,0">1 of 1</TextBlock>
             </StackPanel>
             <StackPanel Grid.Row="0"
@@ -126,7 +130,15 @@
 
                         <StackPanel Grid.Row="0" Grid.Column="1">
                             <TextBlock>Units:</TextBlock>
-                            <TextBox Name="cboUnits" Text="{Binding Path=NUnit}" />
+                            <ComboBox Name="cboUnits"
+                                      Height="25"
+                                      Margin="3"
+                                      HorizontalAlignment="Stretch"
+                                      VerticalAlignment="Center"
+                                      DisplayMemberPath="Name"
+                                      ItemsSource="{StaticResource Units}"
+                                      SelectedValue="{Binding Path=UnitsString}"
+                                      SelectedValuePath="FieldName" />
                         </StackPanel>
                         <StackPanel Grid.Row="1" Grid.Column="1">
                             <TextBlock>Lotsize:</TextBlock>
@@ -181,7 +193,9 @@
                                   BorderThickness="1"
                                   CanUserAddRows="False"
                                   GridLinesVisibility="Vertical"
-                                  ItemsSource="{Binding Path=PCSTests}">
+                                  ItemsSource="{Binding Path=PCSTests}"
+                                  SelectionMode="Single"
+                                  SelectionUnit="Cell">
                             <DataGrid.ColumnHeaderStyle>
                                 <Style TargetType="DataGridColumnHeader">
                                     <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -189,7 +203,7 @@
                                 </Style>
                             </DataGrid.ColumnHeaderStyle>
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn MinWidth="15">
+                                <DataGridTemplateColumn MinWidth="15" IsReadOnly="True">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <DockPanel>
@@ -198,7 +212,9 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
-                                <DataGridTextColumn Binding="{Binding Path=Test}" Header="Test #">
+                                <DataGridTextColumn Binding="{Binding Path=Test}"
+                                                    Header="Test #"
+                                                    IsReadOnly="True">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style>
                                             <Setter Property="Control.HorizontalAlignment" Value="Center" />
@@ -208,7 +224,8 @@
                                 <DataGridTextColumn MinWidth="75"
                                                     Binding="{Binding Path=MarkedWeight,
                                                                       StringFormat={}{0:F3}}"
-                                                    Header="Marked">
+                                                    Header="Marked"
+                                                    IsReadOnly="True">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style>
                                             <Setter Property="Control.HorizontalAlignment" Value="Right" />
@@ -260,7 +277,8 @@
                                 <DataGridTextColumn MinWidth="75"
                                                     Binding="{Binding Path=NetWeight,
                                                                       StringFormat={}{0:F3}}"
-                                                    Header="Net Wt">
+                                                    Header="Net Wt"
+                                                    IsReadOnly="True">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style>
                                             <Setter Property="Control.HorizontalAlignment" Value="Right" />
@@ -280,7 +298,8 @@
                                 <DataGridTextColumn MinWidth="75"
                                                     Binding="{Binding Path=MAV,
                                                                       StringFormat={}{0:F3}}"
-                                                    Header="MAV">
+                                                    Header="MAV"
+                                                    IsReadOnly="True">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style>
                                             <Setter Property="Control.HorizontalAlignment" Value="Right" />
@@ -290,7 +309,8 @@
                                 <DataGridTextColumn MinWidth="75"
                                                     Binding="{Binding Path=CostError,
                                                                       StringFormat={}{0:C}}"
-                                                    Header="Cost Error">
+                                                    Header="Cost Error"
+                                                    IsReadOnly="True">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style>
                                             <Setter Property="Control.HorizontalAlignment" Value="Right" />

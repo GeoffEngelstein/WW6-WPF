@@ -27,12 +27,12 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <StackPanel>
-        <Button Click="ButtonBase_OnClick" Tag="Save">Save Business</Button>
-        <Button Click="ButtonBase_OnClick" Tag="Print">Print Business</Button>
-        <Button Click="ButtonBase_OnClick" Tag="Add">Add new Business</Button>
-        <Button Click="ButtonBase_OnClick" Tag="Delete">Delete Business</Button>
-        <Button Click="ButtonBase_OnClick" Tag="Assign">Assign Inspectors</Button>
-        <Button Click="ButtonBase_OnClick" Tag="Custom">Business Custom Field Setup</Button>
-    </StackPanel>
+    <ToolBarTray Orientation="Vertical" HorizontalAlignment="Stretch"><ToolBar HorizontalAlignment="Stretch">
+        <Button Click="ButtonBase_OnClick" Tag="Save" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch">Save Business</Button>
+            <Button Click="ButtonBase_OnClick" Tag="Print" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch">Print Business</Button>
+            <Button Click="ButtonBase_OnClick" Tag="Add" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch">Add new Business</Button>
+            <Button Click="ButtonBase_OnClick" Tag="Delete" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch">Delete Business</Button>
+            <Button Click="ButtonBase_OnClick" Tag="Assign" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch">Assign Inspectors</Button>
+            <Button Click="ButtonBase_OnClick" Tag="Custom" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch">Business Custom Field Setup</Button>
+    </ToolBar></ToolBarTray>
 </UserControl>

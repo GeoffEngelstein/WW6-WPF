@@ -60,7 +60,13 @@ namespace WinWam6
             }
         }
 
- /*       static public List<Inspector> Inspectors()
+        static public double Truncate(double d, int places)
+        {
+            double factor = 10 ^ places;
+            return Math.Sign(d) * Math.Truncate(Math.Abs(d) * factor) / factor;
+        }
+
+        /*       static public List<Inspector> Inspectors()
         {
             DbDataReader dr = WWD.GetReader("Select insr_id from inspector order by insr_id_user");
             

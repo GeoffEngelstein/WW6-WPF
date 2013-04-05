@@ -578,12 +578,9 @@ namespace WinWam6.Business
         
         public bool Save()
         {
-
-            bool rtn;
-
             if (!IsDirty) return true;
 
-            rtn = lObj.Save();
+            bool rtn = lObj.Save();
 
             try
             {

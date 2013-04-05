@@ -95,6 +95,7 @@
       <DependentUpon>InspectionHeaderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Inspection\PCS\MAVTables.cs" />
+    <Compile Include="Inspection\PCS\PCSDetailMethods.cs" />
     <Compile Include="Inspection\PCS\PCSInpsectionViewModel.cs" />
     <Compile Include="Inspection\PCS\PCSInspectionView.xaml.cs">
       <DependentUpon>PCSInspectionView.xaml</DependentUpon>
@@ -102,6 +103,7 @@
     <Compile Include="Inspection\PCS\PCSInspectionViewAction.xaml.cs">
       <DependentUpon>PCSInspectionViewAction.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Inspection\PCS\RcRt.cs" />
     <Compile Include="Utility\LookupTable.cs" />
     <Compile Include="Utility\MapControl.xaml.cs">
       <DependentUpon>MapControl.xaml</DependentUpon>
@@ -131,7 +133,7 @@
       <DependentUpon>CustomFieldEntry.xaml</DependentUpon>
     </Compile>
     <Compile Include="Inspection\DEV\DeviceTest.cs" />
-    <Compile Include="Inspection\PCS\PCSDetail.cs" />
+    <Compile Include="Inspection\PCS\PCSDetailData.cs" />
     <Compile Include="Inspection\PCS\PCSTest.cs" />
     <Compile Include="Inspection\QSTD\QSTDInspection.cs" />
     <Compile Include="Inspection\QST\QSTInspection.cs" />

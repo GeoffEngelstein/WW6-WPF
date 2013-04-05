@@ -74,7 +74,19 @@ namespace WinWam6
 
         private void ActionSelected(object sender, ActionEventArgs e)
         {
-            string s = e.Action;
+            switch (e.Action)
+            {
+                case "Save Inspection":
+                    {
+                        pcsInspection.Save();
+                        break;
+                    }
+                default:
+                {
+                    break;
+                }
+
+            }
         }
 
         private void DetailChanged(object sender, PCSDetailChangeArgs e)

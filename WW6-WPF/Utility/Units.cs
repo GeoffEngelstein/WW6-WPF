@@ -7,11 +7,11 @@ using WinWam6.Inspection.PCS;
 
 namespace WinWam6.Utility
 {
-    public enum MAVType {Normal, USDAStd, USDAFluid, Mulch, PE, Manual}
+   
     
     public interface IMeasurementUnit
     {
-        double CalcMAV(double netWeightIn, MAVType mavType);
+        double CalcMAV(double netWeightIn, PCSDetail.PCSMAVType mavType);
         string StandardVolumeCaption { get; }
         string VolumeHeader { get; }
         bool UseVolumeFlag { get; }
@@ -25,23 +25,36 @@ namespace WinWam6.Utility
         bool IsUnitName(string checkString);
     }
 
-    class MeasurementUnits : Collection<IMeasurementUnit>
+    public class MeasurementUnits : Collection<IMeasurementUnit>
     {
        public MeasurementUnits() : base()
        {
-           this.Add(new UnitOunce());
-           this.Add(new UnitPound());
-           this.Add(new Unitkg());
-           this.Add(new Unitcm());
-           this.Add(new UnitInch());
-           this.Add(new Unitfoot());
-           this.Add(new Unitmeter());
+           Add(new UnitOunce());
+           Add(new UnitPound());
+           Add(new Unitkg());
+           Add(new Unitcm());
+           Add(new UnitInch());
+           Add(new Unitfoot());
+           Add(new Unitmeter());
        }
+    }
+
+    public class PCSMeasurementUnits : MeasurementUnits
+    {
+
+        public PCSMeasurementUnits() : base()
+        {
+            foreach (IMeasurementUnit im in this)
+            {
+                if (!im.AllowPCS)
+                    this.Remove(im);
+            }
+        }
     }
 
     class UnitOunce : IMeasurementUnit
     {
-                public double CalcMAV(double netWeightIn, MAVType mavType)
+        public double CalcMAV(double netWeightIn, PCSDetail.PCSMAVType mavType)
         {
             return 0;
         }
@@ -74,11 +87,11 @@ namespace WinWam6.Utility
 
     public class UnitPound : IMeasurementUnit
     {
-        public double CalcMAV(double netWeightIn, MAVType mavType)
+        public double CalcMAV(double netWeightIn, PCSDetail.PCSMAVType mavType)
         {
             switch (mavType)
             {
-                case MAVType.Normal:
+                case PCSDetail.PCSMAVType.Normal:
                     {
                         if (MAVTables.lbMAV.BelowMinimum(netWeightIn)) return (netWeightIn*0.1);
                         if (netWeightIn > 54.4) return (netWeightIn*0.02);
@@ -118,7 +131,7 @@ namespace WinWam6.Utility
 
     class Unitkg : IMeasurementUnit
     {
-        public double CalcMAV(double netWeightIn, MAVType mavType)
+        public double CalcMAV(double netWeightIn, PCSDetail.PCSMAVType mavType)
         {
             return 0;
         }
@@ -150,7 +163,7 @@ namespace WinWam6.Utility
 
     class UnitInch : IMeasurementUnit
     {
-        public double CalcMAV(double netWeightIn, MAVType mavType)
+        public double CalcMAV(double netWeightIn, PCSDetail.PCSMAVType mavType)
         {
             return 0;
         }
@@ -182,7 +195,7 @@ namespace WinWam6.Utility
 
     class Unitcm : IMeasurementUnit
     {
-        public double CalcMAV(double netWeightIn, MAVType mavType)
+        public double CalcMAV(double netWeightIn, PCSDetail.PCSMAVType mavType)
         {
             return 0;
         }
@@ -214,7 +227,7 @@ namespace WinWam6.Utility
 
     class Unitfoot : IMeasurementUnit
     {
-        public double CalcMAV(double netWeightIn, MAVType mavType)
+        public double CalcMAV(double netWeightIn, PCSDetail.PCSMAVType mavType)
         {
             return 0;
         }
@@ -246,7 +259,7 @@ namespace WinWam6.Utility
 
     class Unitmeter : IMeasurementUnit
     {
-        public double CalcMAV(double netWeightIn, MAVType mavType)
+        public double CalcMAV(double netWeightIn, PCSDetail.PCSMAVType mavType)
         {
             return 0;
         }

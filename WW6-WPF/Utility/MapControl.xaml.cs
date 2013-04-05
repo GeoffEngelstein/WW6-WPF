@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Globalization;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml.Linq;
 
 namespace WinWam6
@@ -18,7 +9,7 @@ namespace WinWam6
     /// <summary>
     /// Interaction logic for MapControl.xaml
     /// </summary>
-    public partial class MapControl : UserControl
+    public partial class MapControl
     {
         private string formattedAddress = "";
         private double latitude;
@@ -31,7 +22,7 @@ namespace WinWam6
 
         static MapControl()
         {
-            var metadata = new FrameworkPropertyMetadata(new PropertyChangedCallback(OnLocationChanged));
+            var metadata = new FrameworkPropertyMetadata(OnLocationChanged);
             LocationProperty = DependencyProperty.Register("Location", typeof(string), typeof(MapControl), metadata);
         }
 
@@ -73,7 +64,7 @@ namespace WinWam6
 
         private static void OnLocationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            MapControl mc = (MapControl) d;
+            var mc = (MapControl) d;
             mc.ShowMapFromAddress((string)e.NewValue);
         }
 
@@ -81,56 +72,74 @@ namespace WinWam6
         {
             string geocodeURL = @"http://maps.googleapis.com/maps/api/geocode/xml?address=" + Address + "&sensor=false";
             XDocument geoDoc = XDocument.Load(geocodeURL);
-            string ss = geoDoc.ToString();
-            string responseStatus = geoDoc.Element("GeocodeResponse").Element("status").Value;
-            if (responseStatus == "OK")
+
+            var xElement = geoDoc.Element("GeocodeResponse");
+            if (xElement != null)
             {
-                formattedAddress =
-                    (string) geoDoc.Element("GeocodeResponse").Element("result").Element("formatted_address").Value;
-
-                string slatitude =
-                    (string)
-                    geoDoc.Element("GeocodeResponse")
-                          .Element("result")
-                          .Element("geometry")
-                          .Element("location")
-                          .Element("lat")
-                          .Value;
-                string slongitude =
-                    (string)
-                    geoDoc.Element("GeocodeResponse")
-                          .Element("result")
-                          .Element("geometry")
-                          .Element("location")
-                          .Element("lng")
-                          .Value;
-
-                double d = 0;
-                if (double.TryParse(slatitude, out d))
+                var element = xElement.Element("status");
+                if (element != null)
                 {
-                    latitude = d;
-                }
-                if (double.TryParse(slongitude, out d))
-                {
-                    longitude = d;
-                }
+                    string responseStatus = element.Value;
+                    if (responseStatus == "OK")
+                    {
+                        var element3 = xElement.Element("result");
+                        if (element3 != null)
+                        {
+                            var element1 = element3.Element("formatted_address");
+                            if (element1 != null)
+                            {
+                                formattedAddress =
+                                    element1.Value;
+                            }
+                        }
 
-                string locationType =
-                    (string)
-                    geoDoc.Element("GeocodeResponse")
-                          .Element("result")
-                          .Element("geometry")
-                          .Element("location_type")
-                          .Value;
+                        var xElement1 = xElement.Element("result");
+                        if (xElement1 != null)
+                        {
+                            var element1 = xElement1.Element("geometry");
+                            if (element1 != null)
+                            {
+                                var xElement2 = element1.Element("location");
+                                if (xElement2 != null)
+                                {
+                                    var element2 = xElement2.Element("lat");
+                                    if (element2 != null)
+                                    {
+                                        string slatitude =
+                                            element2
+                                                .Value;
+                                        var xElement3 = xElement2.Element("lng");
+                                        if (xElement3 != null)
+                                        {
+                                            string slongitude =
+                                                    xElement3
+                                                        .Value;
+
+                                            double d;
+                                            if (double.TryParse(slatitude, out d))
+                                            {
+                                                latitude = d;
+                                            }
+                                            if (double.TryParse(slongitude, out d))
+                                            {
+                                                longitude = d;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
             ShowMapImage(Address);
         }
 
         private void ShowMapImage(string MyLoc)
         {
-            BitmapImage bmpImage = new BitmapImage();
+            var bmpImage = new BitmapImage();
 
-            string mapURL = "http://maps.googleapis.com/maps/api/staticmap?size=500x400&markers=size:mid%7Ccolor:red%7C" + MyLoc + "&zoom=" + zoom.ToString() + "&maptype=" + mapType + "&sensor=false";
+            string mapURL = "http://maps.googleapis.com/maps/api/staticmap?size=500x400&markers=size:mid%7Ccolor:red%7C" + MyLoc + "&zoom=" + zoom.ToString(CultureInfo.InvariantCulture) + "&maptype=" + mapType + "&sensor=false";
 
             bmpImage.BeginInit();
             bmpImage.UriSource = new Uri(mapURL);
@@ -143,7 +152,7 @@ namespace WinWam6
 
                 private void ShowMapUsingLatLng()
         {
-            BitmapImage bmpImage = new BitmapImage();
+            var bmpImage = new BitmapImage();
                     string mapURL = "http://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&" +
                                     "size=500x400&markers=size:mid%7Ccolor:red%7C" + location + "&zoom=" + zoom +
                                     "&maptype=" + mapType + "&sensor=false";
@@ -190,9 +199,6 @@ namespace WinWam6
             // the center point is done by 0.003 degs. 
             // Need to change based on the zoom
 
-            double diff;
-            double shift;
-
             if (latitude < 88)
             {
                 if (15 == zoom)
@@ -201,6 +207,8 @@ namespace WinWam6
                 }
                 else
                 {
+                    double diff;
+                    double shift;
                     if (zoom > 15)
                     {
                         diff = zoom - 15;
@@ -228,8 +236,6 @@ namespace WinWam6
             // the center point is done by 0.003 degs. 
             // Need to change based on the zoom
 
-            double diff;
-            double shift;
 
             if (latitude > -88)
             {
@@ -239,6 +245,8 @@ namespace WinWam6
                 }
                 else
                 {
+                    double diff;
+                    double shift; 
                     if (zoom > 15)
                     {
                         diff = zoom - 15;
@@ -266,8 +274,7 @@ namespace WinWam6
             // the center point is done by 0.003 degs. 
             // Need to change based on the zoom
 
-            double diff;
-            double shift;
+
 
             if (longitude > -178)
             {
@@ -277,6 +284,8 @@ namespace WinWam6
                 }
                 else
                 {
+                    double diff;
+                    double shift; 
                     if (zoom > 15)
                     {
                         diff = zoom - 15;
@@ -304,8 +313,7 @@ namespace WinWam6
             // the center point is done by 0.003 degs. 
             // Need to change based on the zoom
 
-            double diff;
-            double shift;
+
 
             if (longitude < 178)
             {
@@ -315,6 +323,8 @@ namespace WinWam6
                 }
                 else
                 {
+                    double diff;
+                    double shift; 
                     if (zoom > 15)
                     {
                         diff = zoom - 15;
