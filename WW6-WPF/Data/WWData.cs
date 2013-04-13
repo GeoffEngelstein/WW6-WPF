@@ -230,10 +230,7 @@ namespace WinWam6
 			{
 				return d;
 			}
-			else
-			{
-				return new DateTime(1900, 1, 1);
-			}
+		    return new DateTime(1900, 1, 1);
 		}
 
 

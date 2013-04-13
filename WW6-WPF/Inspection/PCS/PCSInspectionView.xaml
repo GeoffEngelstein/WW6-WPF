@@ -151,8 +151,8 @@
                         <GroupBox Grid.Row="0"
                                   Grid.RowSpan="2"
                                   Grid.Column="2"
-                                  BorderBrush="Black"
-                                  BorderThickness="1"
+                                  Height="Auto"
+                                  Margin="3"
                                   Header="Package Type">
                             <StackPanel Orientation="Vertical">
                                 <RadioButton Content="Standard Pack"
@@ -167,8 +167,137 @@
                                                                  Mode=TwoWay,
                                                                  Converter={StaticResource EnumConverter},
                                                                  ConverterParameter=Random}" />
-                                <xctk:WatermarkTextBox Watermark="Enter Info Here..." />
+
                             </StackPanel>
+                        </GroupBox>
+                        <StackPanel Grid.Row="2"
+                                    Grid.Column="2"
+                                    Orientation="Horizontal">
+                            <TextBlock Margin="3" VerticalAlignment="Center">Marked:</TextBlock>
+                            <TextBox Height="28"
+                                     MinWidth="100"
+                                     Margin="3"
+                                     VerticalAlignment="Center"
+                                     Text="{Binding Path=Marked}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Grid.Column="3">
+                            <TextBlock>Package Cost:</TextBlock>
+                            <xctk:CalculatorUpDown Text="{Binding Path=DisplayCost}" />
+                        </StackPanel>
+                        <GroupBox Grid.Row="1"
+                                  Grid.RowSpan="3"
+                                  Grid.Column="3"
+                                  Margin="3"
+                                  Header="Sampling Plan">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <RadioButton Grid.Row="0"
+                                             Content="Category A"
+                                             GroupName="InspCat1"
+                                             IsChecked="{Binding Path=InspCat,
+                                                                 Mode=TwoWay,
+                                                                 Converter={StaticResource EnumConverter},
+                                                                 ConverterParameter=CatA}" />
+                                <RadioButton Grid.Row="1"
+                                             Content="Category B"
+                                             GroupName="InspCat2"
+                                             IsChecked="{Binding Path=InspCat,
+                                                                 Mode=TwoWay,
+                                                                 Converter={StaticResource EnumConverter},
+                                                                 ConverterParameter=CatB}" />
+                                <RadioButton Grid.Row="2"
+                                             Content="Audit"
+                                             GroupName="InspCat2"
+                                             IsChecked="{Binding Path=InspCat,
+                                                                 Mode=TwoWay,
+                                                                 Converter={StaticResource EnumConverter},
+                                                                 ConverterParameter=Audit}" />
+                                <RadioButton Grid.Row="3"
+                                             Content="Single Commodity"
+                                             GroupName="InspCat3"
+                                             IsChecked="{Binding Path=InspCat,
+                                                                 Mode=TwoWay,
+                                                                 Converter={StaticResource EnumConverter},
+                                                                 ConverterParameter=SingleComm}" />
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Grid.Row="3"
+                                  Grid.RowSpan="5"
+                                  Grid.ColumnSpan="3"
+                                  Margin="3"
+                                  Header="Distributor">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="28" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <StackPanel Grid.Row="0"
+                                            Grid.Column="0"
+                                            Orientation="Horizontal">
+                                    <TextBlock Margin="30,0,3,0">Name:</TextBlock>
+                                    <TextBox MinWidth="300"
+                                             Margin="3"
+                                             Text="{Binding Path=DName}" />
+                                </StackPanel>
+
+                                <local:AddressView Grid.Row="1" DataContext="{Binding Path=Distributor}" />
+                            </Grid>
+                        </GroupBox>
+                        <GroupBox Grid.Row="4"
+                                  Grid.RowSpan="4"
+                                  Grid.Column="3"
+                                  Height="Auto"
+                                  Margin="3"
+                                  Header="MAV Type">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <RadioButton Grid.Row="0"
+                                             Content="Normal"
+                                             GroupName="MAV1"
+                                             IsChecked="{Binding Path=MavType,
+                                                                 Mode=TwoWay,
+                                                                 Converter={StaticResource EnumConverter},
+                                                                 ConverterParameter=Normal}" />
+                                <RadioButton Grid.Row="1"
+                                             Content="USDA Standard"
+                                             GroupName="MAV2"
+                                             IsChecked="{Binding Path=MavType,
+                                                                 Mode=TwoWay,
+                                                                 Converter={StaticResource EnumConverter},
+                                                                 ConverterParameter=USDAStd}" />
+                                <RadioButton Grid.Row="2"
+                                             Content="USDA Fluid"
+                                             GroupName="MAV3"
+                                             IsChecked="{Binding Path=MavType,
+                                                                 Mode=TwoWay,
+                                                                 Converter={StaticResource EnumConverter},
+                                                                 ConverterParameter=USDAFluid}" />
+                                <RadioButton Grid.Row="3"
+                                             Content="Bark Mulch"
+                                             GroupName="MAV4"
+                                             IsChecked="{Binding Path=MavType,
+                                                                 Mode=TwoWay,
+                                                                 Converter={StaticResource EnumConverter},
+                                                                 ConverterParameter=Mulch}" />
+                                <RadioButton Grid.Row="4"
+                                             Content="Polyethylene Sheeting"
+                                             GroupName="MAV5"
+                                             IsChecked="{Binding Path=MavType,
+                                                                 Mode=TwoWay,
+                                                                 Converter={StaticResource EnumConverter},
+                                                                 ConverterParameter=PE}" />
+                            </Grid>
                         </GroupBox>
                     </Grid>
                 </TabItem>

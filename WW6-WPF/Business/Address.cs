@@ -49,22 +49,11 @@ namespace WinWam6
         public Address(Field street1, Field street2, Field city, Field state, Field zip, Field contact)
         {
             street1Field = street1;
-            m_Street1 = street1.Value.ToString();
-            
             street2Field = street2;
-            m_Street2 = street2.Value.ToString();
-
             cityField = city;
-            m_City = city.Value.ToString();
-
             stateField = state;
-            m_State = state.Value.ToString();
-
             zipField = zip;
-            m_Zip = zip.Value.ToString();
-
             contactField = contact;
-            m_contact = contact.Value.ToString();
 
             fieldMode = true;
         }
@@ -73,7 +62,15 @@ namespace WinWam6
         {
             get
             {
-                return m_Street1;
+                if (fieldMode)
+                {
+                    return street1Field.Value.ToString();
+                }
+                else
+                {
+                    return m_Street1;
+                }
+                
             }
             set
             {
@@ -89,7 +86,14 @@ namespace WinWam6
         {
             get
             {
-                return m_Street2;
+                if (fieldMode)
+                {
+                    return street2Field.Value.ToString();
+                }
+                else
+                {
+                    return m_Street2;
+                }
             }
             set
             {
@@ -105,7 +109,14 @@ namespace WinWam6
         {
             get
             {
-                return m_City;
+                if (fieldMode)
+                {
+                    return cityField.Value.ToString();
+                }
+                else
+                {
+                    return m_City;
+                }
             }
             set
             {
@@ -121,7 +132,14 @@ namespace WinWam6
         {
             get
             {
-                return m_State;
+                if (fieldMode)
+                {
+                    return stateField.Value.ToString();
+                }
+                else
+                {
+                    return m_State;
+                }
             }
             set
             {
@@ -137,7 +155,14 @@ namespace WinWam6
         {
             get
             {
-                return m_Zip;
+                if (fieldMode)
+                {
+                    return zipField.Value.ToString();
+                }
+                else
+                {
+                    return m_Zip;
+                }
             }
             set
             {
@@ -151,7 +176,17 @@ namespace WinWam6
 
         public string Contact
         {
-            get { return m_contact; }
+            get
+            {
+                if (fieldMode)
+                {
+                    return contactField.Value.ToString();
+                }
+                else
+                {
+                    return m_contact;
+                }
+            }
             set { m_contact = value;
                 if (fieldMode) contactField.Value = value;
                 m_IsDirty = true;

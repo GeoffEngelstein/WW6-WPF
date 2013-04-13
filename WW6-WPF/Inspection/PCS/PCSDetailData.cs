@@ -27,6 +27,37 @@ namespace WinWam6.Inspection.PCS
         public enum PCSInspectionCategory {CatA, CatB, Audit, SingleComm}
         public enum PCSMAVType {Normal, USDAStd, USDAFluid, Mulch, PE}
 
+        // Constructors
+
+        public PCSDetail()
+        {
+            lObj = new TableWrapper("PackD");
+            Distributor = new Address(
+                lObj.Fields["DAd1"],
+                lObj.Fields["DAd2"],
+                lObj.Fields["DCity"],
+                lObj.Fields["DState"],
+                lObj.Fields["DZip"],
+                lObj.Fields["DName"]
+            );
+        }
+
+        public PCSDetail(string insp_ID, int pack_ID)
+        {
+            lObj = new TableWrapper("PackD");
+            Load(insp_ID, pack_ID);
+
+            Distributor = new Address(
+                lObj.Fields["DAd1"],
+                lObj.Fields["DAd2"],
+                lObj.Fields["DCity"],
+                lObj.Fields["DState"],
+                lObj.Fields["DZip"],
+                lObj.Fields["DName"]
+            );
+        }
+
+
         // Properties
 
         public ObservableCollection<PCSTest> PCSTests
@@ -75,23 +106,41 @@ namespace WinWam6.Inspection.PCS
             set { lObj["CostPer"] = value; NotifyPropertyChanged("CostPer"); }
         }
 
-        public String DAd1
+        public Decimal DisplayCost
         {
-            get { return lObj["DAd1"].ToString(); }
-            set { lObj["DAd1"] = value; NotifyPropertyChanged("DAd1"); }
+            get
+            {
+                if (PackType == PackageType.Standard)
+                {
+                    return CostPer * (decimal)Marked;
+                }
+                else
+                {
+                    return CostPer;
+                }
+            }
+
+            set
+            {
+                if (PackType == PackageType.Standard)
+                {
+                    if (Marked != 0)
+                    {
+                        CostPer = value / (decimal)Marked;
+                    }
+                    else
+                    {
+                        CostPer = 0;
+                    }
+                }
+                else
+                {
+                    CostPer = value;
+                }
+            }
         }
 
-        public String DAd2
-        {
-            get { return lObj["DAd2"].ToString(); }
-            set { lObj["DAd2"] = value; NotifyPropertyChanged("DAd2"); }
-        }
-
-        public String DCity
-        {
-            get { return lObj["DCity"].ToString(); }
-            set { lObj["DCity"] = value; NotifyPropertyChanged("DCity"); }
-        }
+        public Address Distributor { get; set; }
 
         public String DFax
         {
@@ -105,17 +154,6 @@ namespace WinWam6.Inspection.PCS
             set { lObj["DName"] = value; NotifyPropertyChanged("DName"); }
         }
 
-        public String DState
-        {
-            get { return lObj["DState"].ToString(); }
-            set { lObj["DState"] = value; NotifyPropertyChanged("DState"); }
-        }
-
-        public String DZip
-        {
-            get { return lObj["DZip"].ToString(); }
-            set { lObj["DZip"] = value; NotifyPropertyChanged("DZip"); }
-        }
 
         public int FinalTareSize
         {
@@ -238,7 +276,12 @@ namespace WinWam6.Inspection.PCS
                     foreach (var pcsTest in PCSTests)
                         pcsTest.MarkedWeight = value;
 
-                NotifyPropertyChanged("NetWt");
+                if (PackType == PackageType.Standard)
+                {
+                    //TODO Update the CostPer in some fashion?
+                }
+
+                NotifyPropertyChanged("Marked");
             }
         }
         
@@ -425,18 +468,6 @@ namespace WinWam6.Inspection.PCS
             set { lObj["VolTemp"] = value; NotifyPropertyChanged("VolTemp"); }
         }
 
-        // Constructors
-
-        public PCSDetail()
-        {
-            lObj = new TableWrapper("PackD");
-        }
-
-        public PCSDetail(string insp_ID, int pack_ID)
-        {
-            lObj = new TableWrapper("PackD");
-            Load(insp_ID, pack_ID);
-        }
 
         // Methods
 
