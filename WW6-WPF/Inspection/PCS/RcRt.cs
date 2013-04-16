@@ -19,18 +19,23 @@ namespace WinWam6.Inspection.PCS
 
         private RcRt()
         {
-            if (b10 == null)
+            LoadTables();
+        }
+
+        private void LoadTables()
+        {
+            if (b10.Count == 0)
             {
                 string sql = "select rcrt, b10, b30, a12, a24, a48 from AltTare2002 order by rcrt";
                 DbDataReader dr = WWD.GetSysReader(sql);
 
                 while (dr.Read())
                 {
-                    b10.Add(dr.GetFloat(0), dr.GetFloat(1));
-                    b30.Add(dr.GetFloat(0), dr.GetFloat(2));
-                    a12.Add(dr.GetFloat(0), dr.GetFloat(3));
-                    a24.Add(dr.GetFloat(0), dr.GetFloat(4));
-                    a48.Add(dr.GetFloat(0), dr.GetFloat(5));
+                    b10.Add(dr.GetFloat(0), dr.GetInt16(1));
+                    b30.Add(dr.GetFloat(0), dr.GetInt16(2));
+                    a12.Add(dr.GetFloat(0), dr.GetInt16(3));
+                    a24.Add(dr.GetFloat(0), dr.GetInt16(4));
+                    a48.Add(dr.GetFloat(0), dr.GetInt16(5));
                 }
                 dr.Close();
             }
@@ -43,6 +48,8 @@ namespace WinWam6.Inspection.PCS
 
         public int AlternateTare(double RcRt, int SampleSize, int InitialTare)
         {
+            LoadTables();
+            
             switch (SampleSize)
             {
                 case 10:

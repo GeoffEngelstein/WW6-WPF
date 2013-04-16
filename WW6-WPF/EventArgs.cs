@@ -35,4 +35,5 @@ namespace WinWam6
             DetailIndex = detailIndex;
         }
     }
+
 }

@@ -1,36 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data.OleDb;
 using System.Data.Common;
 using System.Data;
+using System.Linq;
 
 namespace WinWam6
 {
 	static class WWD
 	{
 
-		static public DateTime NullDate
+        static private readonly DateTime nullDate = new DateTime(1800, 1, 1);
+        static public DateTime NullDate
 		{
 			get { return nullDate; }
 		}
 
 		static private OleDbConnection gCn;
 		static private OleDbConnection gSysCn;
-		static private Dictionary<string, TableWrapper> TableWrapperCache = new Dictionary<string,TableWrapper>();
-		static private DateTime nullDate = new DateTime(1800, 1, 1);
 
-		static public void OpenDatabase()
+	    static public void OpenDatabase()
 		{
 
-			gCn = new OleDbConnection();
-			gCn.ConnectionString = "Provider=Microsoft.Jet.OleDb.4.0;Data Source=C:\\users\\geoff\\My Documents\\Visual Studio 2010\\Projects\\WW6-WPF\\ww6.mdb;Persist Security Info=False";
-			gCn.Open();
+			gCn = new OleDbConnection
+			{
+			    ConnectionString =
+			        "Provider=Microsoft.Jet.OleDb.4.0;Data Source=C:\\users\\geoff\\My Documents\\Visual Studio 2010\\Projects\\WW6-WPF\\ww6.mdb;Persist Security Info=False"
+			};
+	        gCn.Open();
 
-			gSysCn = new OleDbConnection();
-			gSysCn.ConnectionString = "Provider=Microsoft.Jet.OleDb.4.0;Data Source=C:\\users\\geoff\\My Documents\\Visual Studio 2010\\Projects\\WW6-WPF\\wamtbl.dat;Persist Security Info=False";
-			gSysCn.Open();
+			gSysCn = new OleDbConnection
+			{
+			    ConnectionString =
+			        "Provider=Microsoft.Jet.OleDb.4.0;Data Source=C:\\users\\geoff\\My Documents\\Visual Studio 2010\\Projects\\WW6-WPF\\wamtbl.dat;Persist Security Info=False"
+			};
+	        gSysCn.Open();
 		}
 
 		static public bool DatabaseIsOpen()
@@ -38,22 +42,20 @@ namespace WinWam6
 			if (gCn == null)
 			{ return false; }
 
-			if (gCn.State == ConnectionState.Open)
-			{ return true; }
-			else
-			{return false;}
+		    return (gCn.State == ConnectionState.Open);
+
 		}
 
 		static public DbDataReader GetSysReader(string sql)
 		{
-			OleDbCommand cmd = new OleDbCommand(sql, gSysCn);
+			var cmd = new OleDbCommand(sql, gSysCn);
 			OleDbDataReader rdr = cmd.ExecuteReader();
 			return rdr;
 		}
 
 		static public DbDataReader GetReader(string sql, bool KeyInfo = false)
 		{
-			OleDbCommand cmd = new OleDbCommand(sql, WWD.gCn);
+			var cmd = new OleDbCommand(sql, gCn);
 			if (KeyInfo)
 			{
 				OleDbDataReader rdr = cmd.ExecuteReader(CommandBehavior.KeyInfo);
@@ -68,13 +70,13 @@ namespace WinWam6
 
 		static public DbCommand GetCommand(string sql)
 		{
-			OleDbCommand cmd = new OleDbCommand(sql, WWD.gCn);
+			var cmd = new OleDbCommand(sql, gCn);
 			return cmd;
 		}
 
         static public DbDataAdapter GetAdapter(string sql)
         {
-            OleDbDataAdapter da = new OleDbDataAdapter(sql,WWD.gCn);
+            var da = new OleDbDataAdapter(sql,gCn);
             return da;
         }
 
@@ -85,23 +87,16 @@ namespace WinWam6
 
 		static public DataAdapter GetDataAdapter(string TableName)
 		{
-			OleDbDataAdapter da = new OleDbDataAdapter("select * from " + TableName, WWD.gCn);
-			OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+			var da = new OleDbDataAdapter("select * from " + TableName, gCn);
 
 			return da;
 		}
 
 		static public List<string> TableList()
 		{
-			List<string> TableList = new List<string>();
-			DataTable dt;
-
-			dt = gCn.GetSchema("Tables");
-			foreach (DataRow r in dt.Rows)
-			{
-				TableList.Add(r["TABLE_NAME"].ToString());
-			}
-			return TableList;
+		    DataTable dt = gCn.GetSchema("Tables");
+		    return (from DataRow r in dt.Rows
+		        select r["TABLE_NAME"].ToString()).ToList();
 		}
 
 		/// <summary>
@@ -112,11 +107,10 @@ namespace WinWam6
 		/// <returns></returns>
 		public static string GetStringNoNull(this DbDataReader rdr, int OrdinalIndex)
 		{
-			string s;
-			try
+		    try
 			{
-				s = rdr[OrdinalIndex].ToString();
-				return s;
+			    string s = rdr[OrdinalIndex].ToString();
+			    return s;
 			}
 			catch (InvalidCastException)
 			{
@@ -126,20 +120,16 @@ namespace WinWam6
 
 		public static int GetInt32NoNull(this DbDataReader rdr, int OrdinalIndex)
 		{
-			int s;
-			try
-			{
-				if (rdr[OrdinalIndex] != null)
+		    try
+		    {
+		        if (rdr[OrdinalIndex] != null)
 				{
-					s = rdr.GetInt32(OrdinalIndex);
-					return s;
+				    int s = rdr.GetInt32(OrdinalIndex);
+				    return s;
 				}
-				else
-				{
-					return 0;
-				}
-			}
-			catch (InvalidCastException)
+		        return 0;
+		    }
+		    catch (InvalidCastException)
 			{
 				return 0;
 			}
@@ -147,20 +137,16 @@ namespace WinWam6
 
 		public static int GetInt16NoNull(this DbDataReader rdr, int OrdinalIndex)
 		{
-			int s;
-			try
-			{
-				if (rdr[OrdinalIndex] != null)
+		    try
+		    {
+		        if (rdr[OrdinalIndex] != null)
 				{
-					s = rdr.GetInt16(OrdinalIndex);
-					return s;
+				    int s = rdr.GetInt16(OrdinalIndex);
+				    return s;
 				}
-				else
-				{
-					return 0;
-				}
-			}
-			catch (InvalidCastException)
+		        return 0;
+		    }
+		    catch (InvalidCastException)
 			{
 				return 0;
 			}
@@ -168,11 +154,10 @@ namespace WinWam6
 
 		public static bool GetBooleanNoNull(this DbDataReader rdr, int OrdinalIndex)
 		{
-			bool s;
-			try
+		    try
 			{
-				s = rdr.GetBoolean(OrdinalIndex);
-				return s;
+			    bool s = rdr.GetBoolean(OrdinalIndex);
+			    return s;
 			}
 			catch (InvalidCastException)
 			{
@@ -182,11 +167,10 @@ namespace WinWam6
 
 		public static double GetDoubleNoNull(this DbDataReader rdr, int OrdinalIndex)
 		{
-			double s;
-			try
+		    try
 			{
-				s = rdr.GetDouble(OrdinalIndex);
-				return s;
+			    double s = rdr.GetDouble(OrdinalIndex);
+			    return s;
 			}
 			catch (InvalidCastException)
 			{
@@ -196,11 +180,10 @@ namespace WinWam6
 
 		public static decimal GetDecimalNoNull(this DbDataReader rdr, int OrdinalIndex)
 		{
-			decimal s;
-			try
+		    try
 			{
-				s = rdr.GetDecimal(OrdinalIndex);
-				return s;
+			    decimal s = rdr.GetDecimal(OrdinalIndex);
+			    return s;
 			}
 			catch (InvalidCastException)
 			{
@@ -297,12 +280,25 @@ namespace WinWam6
 	//This section contains the classes that manages the Table Schemas and Update/Insert wrappers
 	
 	//This class encapsulates FIELD information
+    /// <summary>
+    /// Encapsulates information about a database field.
+    /// </summary>
+    /// <param name="Name">Field Name in database</param>
+    /// <param name="DataType">String field representing datatype. Based on return types from a Datatable</param>
+    /// <param name="Length">Length field for string datatypes</param>
+    /// <param name="Changed">Boolean. Represents whether the Field has ever changed since first read from the database.
+    /// Note that when a value is saved it checks to see if it matches the existing value. If it does, it does not save, and does not set CHANGED.</param>
+    /// <param name="IsKey">Boolean. Whether this field is part of the Primary Key. Used to fetch new rows and create the Update query</param>
+    /// <param name="RecentChange">Boolean. Whether the last time the field saved it changed. This can be used, for example, to only raise NotifyPropertyChanged if the value actually changes.</param>
+    /// <param name="Value">The actual stored value. Note that this is of type OBJECT and needs to be cast into the proper datatype.
+    /// When set, automatically trims to proper length, and validates against data type. Also sets Changed and RecentChange properties</param>
+    /// 
 	public class Field
 	{
-		private string m_name;
-		private string m_datatype;
-		private int m_length;
-		private bool m_iskey;
+		private readonly string m_name;
+		private readonly string m_datatype;
+		private readonly int m_length;
+		private readonly bool m_iskey;
 		private object m_value;
 
 		public string Name { get { return m_name; } }
@@ -310,35 +306,175 @@ namespace WinWam6
 		public int Length { get { return m_length; } }
 		public bool Changed { get; set; }
 		public bool IsKey { get { return m_iskey; } }
+        public bool RecentChange { get; set; }
+        private string valString = "";
+        private Int32 valInt32 = 0;
+        private Int16 valInt16 = 0;
+        private decimal valDecimal = 0;
+        private double valDouble = 0;
+        private Single valSingle = 0;
+        private DateTime? valDate;
+
+
 		public object Value
 		{
-			get { return m_value; }
+			get
+			{
+			    switch (DataType)
+			    {
+			        case "System.String":
+			            return valString;
+                    case "System.Double":
+			            return valDouble;
+                    case "System.Int16":
+			            return valInt16;
+                    case "System.Int32":
+			            return valInt32;
+                    case "System.Decimal":
+			            return valDecimal;
+                    case "System.Single":
+			            return valSingle;
+                    case "System.DateTime":
+			            return valDate;
+
+                    default:
+			            return m_value;
+			    }
+			}
 			set
 			{
-				object lval;
-				lval = value;
-				//TODO - Add more datatype checking
-				if (this.DataType == "System.String")
-				{
-					if (value == null) value = "";
-					if (value.ToString().Length > this.Length)
-					{
-						//Truncate to length
-						value = value.ToString().Substring(0, this.Length);
-					}
-				}
+			    //TODO - Add more datatype checking
+			    bool valChanged = false;
 
-				if ((this.DataType == "System.Int32") || (this.DataType == "System.Int16") || (this.DataType == "System.Decimal") || (this.DataType == "System.Double") || (this.DataType == "System.Single"))
-				{
-					double CheckVal;
-					if (!(double.TryParse(value.ToString(), out CheckVal))) value = 0;
-				}
-				// If the value has changed from the current value, then save it and mark us as dirty
-				if (m_value != value)
-				{
-					m_value = value;
-					this.Changed = true;
-				}
+                switch (DataType)
+                {
+                    case "System.String":
+                    {
+                        string checkString;
+
+                        checkString = (value as string);
+                        if (string.IsNullOrEmpty(checkString))
+                            checkString = string.Empty;
+                        if (checkString.Length > Length)
+                        {
+                            //Truncate to length
+                            valString = valString.Substring(0, Length);
+                        }
+                        if (valString != checkString)
+                        {
+                            valString = checkString;
+                            valChanged = true;
+                        }
+                        break;
+                    }
+
+                    case "System.Double":
+                        {
+                            double checkVal;
+                            if (!(double.TryParse(value.ToString(), out checkVal))) checkVal = 0;
+                            if (checkVal != valDouble)
+                            {
+                                valDouble = checkVal;
+                                valChanged = true;
+                            }
+                            break;
+                        }
+
+                    case "System.Int16":
+                        {
+                            Int16 checkVal;
+                            if (!(Int16.TryParse(value.ToString(), out checkVal))) checkVal = 0;
+                            if (checkVal != valInt16)
+                            {
+                                valInt16 = checkVal;
+                                valChanged = true;
+                            }
+                            break;
+                        }
+
+                    case "System.Int32":
+                        {
+                            Int32 checkVal;
+                            if (!(Int32.TryParse(value.ToString(), out checkVal))) checkVal = 0;
+                            if (checkVal != valInt32)
+                            {
+                                valInt32 = checkVal;
+                                valChanged = true;
+                            }
+                            break;
+                        }
+
+                    case "System.Decimal":
+                        {
+                            decimal checkVal;
+                            if (!(Decimal.TryParse(value.ToString(), out checkVal))) checkVal = 0;
+                            if (checkVal != valDecimal)
+                            {
+                                valDecimal = checkVal;
+                                valChanged = true;
+                            }
+                            break;
+                        }
+
+                    case "System.Single":
+                        {
+                            Single checkVal;
+                            if (!(Single.TryParse(value.ToString(), out checkVal))) checkVal = 0;
+                            if (checkVal != valSingle)
+                            {
+                                valSingle = checkVal;
+                                valChanged = true;
+                            }
+                            break;
+                        }
+
+                    case "System.DateTime":
+                        {
+                            DateTime tmpVal;
+                            DateTime? checkVal;
+                            if (!(DateTime.TryParse(value.ToString(), out tmpVal)))
+                            {
+                                checkVal = null;
+                            }
+                            else
+                            {
+                                checkVal = tmpVal;
+                            }
+
+                            if (checkVal.HasValue && valDate.HasValue)
+                            {
+                                if (checkVal.Value != valDate.Value)
+                                {
+                                    valDate = checkVal;
+                                    valChanged = true;
+                                }
+                            }
+                            else
+                            {
+                                // one or both is null, so update only if one or the other is null
+                                if (!checkVal.HasValue && !valDate.HasValue)
+                                {
+                                    valDate = checkVal;
+                                    valChanged = true;
+                                }
+                            }
+                            break;
+                        }
+
+                    default:
+                    {
+                        m_value = value;
+                        valChanged = true;
+                        break;
+                    }
+
+                }
+
+
+				// If the value has changed from the current value mark us as dirty
+			    if (valChanged) Changed = true;
+			    
+			    RecentChange = valChanged;
 			}
 		}
 
@@ -349,15 +485,15 @@ namespace WinWam6
 			m_datatype = DataType;
 			m_length = Length;
 			m_iskey = IsKey;
-			this.Changed = false;
+			Changed = false;
 		}
 	}
 
 	public class TableWrapper
 	{
 		//Private backing fields
-		private string m_name;
-		private Dictionary<string, Field> m_fields;
+		private readonly string m_name;
+		private readonly Dictionary<string, Field> m_fields;
 
 		//Properties
 		public string Name { get { return m_name; } }
@@ -366,9 +502,7 @@ namespace WinWam6
 		//Constructor
 		public TableWrapper(string Name)
 		{
-			Field f;
-
-			m_name = Name;
+		    m_name = Name;
 			m_fields = new Dictionary<string,Field>();
 
 			//Find the fields
@@ -394,11 +528,9 @@ namespace WinWam6
 				}
 				fIsKey = (bool)d["IsKey"];
 				
-				f = new Field(fName, fDataType, fLength, fIsKey);
-				f.Value = "";
-				f.Changed = false;
+				Field f = new Field(fName, fDataType, fLength, fIsKey) { Value = "", Changed = false };
 
-				this.Fields.Add(f.Name, f);     //Add it to the collection
+			    Fields.Add(f.Name, f);     //Add it to the collection
 			}
 			lTable.Dispose();
 
@@ -408,10 +540,10 @@ namespace WinWam6
 		public object this [string FieldName]
 		{
 			get
-			{ return this.Fields[FieldName].Value; }
+			{ return Fields[FieldName].Value; }
 			set
 			{
-				this.Fields[FieldName].Value = value;
+				Fields[FieldName].Value = value;
 			}
 		}
 
@@ -420,15 +552,13 @@ namespace WinWam6
 		// Update - Creates an UPDATE SQL string
 		public string Update()
 		{
-			string s; 
-			
-			bool FirstItem = true;
+		    bool FirstItem = true;
 			string lval;
 			string where = this.Where();   //where clause
 
-			s = "update " + this.Name + " set ";
+			string s = "update " + Name + " set ";
 			
-			foreach (System.Collections.Generic.KeyValuePair<string, Field> kv in this.Fields)
+			foreach (var kv in Fields)
 			{
 				if (kv.Value.Value.ToString().Length > 0)
 				{
@@ -460,25 +590,21 @@ namespace WinWam6
 				//For now, just kill the Update string
 				return "";
 			}
-			else
-			{
-				s = s + " where " + where;
-				return s;
-			}
+		    s = s + " where " + @where;
+		    return s;
 		}
 
 		//Insert - Creates an INSERT SQL string
 		public string Insert()
 		{
-			string s;   //Main SQL Query
-			string sv;  //Values
+		    string sv;  //Values
 			bool FirstItem = true;
 			string lval;
 
-			s = "insert into " + this.Name + " (";
+			string s = "insert into " + Name + " (";
 			sv = "values (";
 
-			foreach (System.Collections.Generic.KeyValuePair<string, Field> kv in this.Fields)
+			foreach (var kv in Fields)
 			{
 				if (kv.Value.Value.ToString().Length > 0)
 				{
@@ -507,7 +633,7 @@ namespace WinWam6
 
 		public void ClearChanged()
 		{
-			foreach (System.Collections.Generic.KeyValuePair<string, Field> kv in this.Fields)
+			foreach (var kv in Fields)
 			{
 				kv.Value.Changed = false;
 			}
@@ -519,7 +645,7 @@ namespace WinWam6
 			bool result = false;
 
 			//Create where clause
-			string where = this.Where();
+			string where = Where();
 
 			if (where.Length == 0)
 			{
@@ -529,16 +655,16 @@ namespace WinWam6
 
 			//Get the correct row
 
-			DbDataReader dr = WWD.GetReader("Select * from " + this.Name + " where " + where);
+			DbDataReader dr = WWD.GetReader("Select * from " + Name + " where " + where);
 
 			while (dr.Read())
 			{
 				//Should only be one row
-				foreach (System.Collections.Generic.KeyValuePair<string, Field> kv in this.Fields)
+				foreach (var kv in Fields)
 				{
 					kv.Value.Value = dr[kv.Value.Name];     //Load the field value
 				}
-				this.ClearChanged();        //Clear all the change flags to show we are unchanged.
+				ClearChanged();        //Clear all the change flags to show we are unchanged.
 				result = true;
 			}
 			dr.Close();
@@ -555,7 +681,7 @@ namespace WinWam6
 			if (!IsDirty) return true;
 
 			//First check to see if the row exists
-			string where = this.Where();
+			string where = Where();
 			if (where.Length == 0)
 			{
 				return false;  //No key fields - can't save
@@ -571,14 +697,7 @@ namespace WinWam6
 				found = true;
 			}
 
-			if (found)
-			{
-				sql = this.Update();
-			}
-			else
-			{
-				sql = this.Insert();
-			}
+			sql = found ? Update() : Insert();
 
 		    if (sql == string.Empty)
 		        return false;
@@ -603,14 +722,7 @@ namespace WinWam6
 		{
 			get
 			{
-				bool rtn = false;
-				foreach (System.Collections.Generic.KeyValuePair<string, Field> kv in this.Fields)
-				{
-					if (kv.Value.Changed)
-					{ rtn = true; break; }
-				}
-
-				return rtn;
+			    return Fields.Any(kv => kv.Value.Changed);
 			}
 		}
 
@@ -618,11 +730,11 @@ namespace WinWam6
 		{
 			string where = "";
 
-			foreach (System.Collections.Generic.KeyValuePair<string, Field> kv in this.Fields)
+			foreach (var kv in Fields)
 			{
-				if (kv.Value.Value.ToString().Length > 0)
+                if (kv.Value.IsKey)     //Add to the where clause if it is a key
 				{
-					if (kv.Value.IsKey)     //Add to the where clause if it is a key
+                    if (kv.Value.Value.ToString().Length > 0)
 					{
 						if (where.Length > 0) { where += " and "; }
 						where += kv.Value.Name + "=" + WWD.WrapField(kv.Value);
@@ -639,18 +751,14 @@ namespace WinWam6
 			// Loop through all the fields. For each field generate a get/set pair
 
 			string output = "";
-			string sType = "";  //Datatype string
-			string nullable = "";   //set to ? if Type needs to be marked as Nullable
+		    string nullable = "";   //set to ? if Type needs to be marked as Nullable
 
-			foreach (System.Collections.Generic.KeyValuePair<string, Field> kv in this.Fields)
+			foreach (var kv in Fields)
 			{
-				sType = kv.Value.DataType.Substring(7); //Strip System. from start of string
+				string sType = kv.Value.DataType.Substring(7);  //Datatype string
 				if (sType == "Boolean") sType = "bool";  //correct datatype for Boolean
 
-				if (sType == "DateTime")
-					{ nullable = "?"; }  //allow for nullable
-				else
-				{ nullable = ""; }
+				nullable = (sType == "DateTime") ? "?" : string.Empty;
 
 				output += "public " + sType + nullable + " " + kv.Value.Name + "\n\r{\n\r";
 
@@ -658,21 +766,21 @@ namespace WinWam6
 				{
 					case "String":
 						{
-							output += "\tget { return lObj[\"" + kv.Value.Name + "\"].ToString(); }\n\r";
+							output += "\tget { return lObj[\"" + kv.Value.Name + "\"] as string; }\n\r";
 							break;
 						}
 					case "DateTime":
 						{
-							output += "\tget { DateTime d; if (DateTime.TryParse(lObj[\"" + kv.Value.Name + "\"].ToString(), out d)) { return d; } else {return null;} }\n\r";
+							output += "\tget { return (lObj[\"" + kv.Value.Name + "\"] as DateTime?); }\n\r";
 							break;
 						}
 					default:
 						{
-							output += "\tget { return " + sType + ".Parse(lObj[\"" + kv.Value.Name + "\"].ToString()); }\n\r";
+							output += "\tget { return (" + sType + ")lObj[\"" + kv.Value.Name + "\"]; }\n\r";
 							break;
 						}
 				}
-				output += "\tset { lObj[\"" + kv.Value.Name + "\"] = value; NotifyPropertyChanged(\"" + kv.Value.Name + "\"); } \n\r\n\r}";
+				output += "\tset { lObj[\"" + kv.Value.Name + "\"] = value; if (lObj.Fields[\"" + kv.Value.Name + "\"].RecentChange) NotifyPropertyChanged(\"" + kv.Value.Name + "\"); } \n\r\n\r}";
 			}
 
 			return output;  

@@ -288,4 +288,37 @@ namespace WinWam6.Utility
             return alternateNames.Any(s => s == checkString.ToLower());
         }
     }
+
+    class UnitCount : IMeasurementUnit
+    {
+        public double CalcMAV(double netWeightIn, PCSDetail.PCSMAVType mavType)
+        {
+            return 0;
+        }
+
+        public string StandardVolumeCaption { get { return "ea"; } }
+        public string VolumeHeader { get { return "ea"; } }
+        public bool UseVolumeFlag { get { return true; } }
+        public string StandardVolumeUnits
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string Name { get { return "count"; } }
+        public string FieldName { get { return "ea"; } }
+        public double ConversionFactor { get { return (1); } }
+        public string Category { get { return "Count"; } }
+        public bool AllowPCS
+        {
+            get { return true; }
+        }
+
+        public bool IsUnitName(string checkString)
+        {
+            string[] alternateNames = { "count", "ea", "each", "ea." };
+
+            return alternateNames.Any(s => s == checkString.ToLower());
+        }
+    }
+
 }

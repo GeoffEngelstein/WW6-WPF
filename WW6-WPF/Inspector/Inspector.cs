@@ -18,84 +18,84 @@ namespace WinWam6
         public Int16 Exported
         {
 
-            get { return Int16.Parse(lObj["Exported"].ToString()); }
+            get { return (Int16)lObj["Exported"]; }
 
-            set { lObj["Exported"] = value; NotifyPropertyChanged("Exported"); }
+            set { lObj["Exported"] = value; if (lObj.Fields["Exported"].RecentChange) NotifyPropertyChanged("Exported"); }
 
 
         }
         public String Insr_First
         {
 
-            get { return lObj["Insr_First"].ToString(); }
+            get { return lObj["Insr_First"] as string; }
 
-            set { lObj["Insr_First"] = value; NotifyPropertyChanged("Insr_First"); }
+            set { lObj["Insr_First"] = value; if (lObj.Fields["Insr_First"].RecentChange) NotifyPropertyChanged("Insr_First"); }
 
 
         }
         public String Insr_ID
         {
 
-            get { return lObj["Insr_ID"].ToString(); }
+            get { return lObj["Insr_ID"] as string; }
 
+            set { lObj["Insr_ID"] = value; if (lObj.Fields["Insr_ID"].RecentChange) NotifyPropertyChanged("Insr_ID"); }
 
 
         }
         public String Insr_Last
         {
 
-            get { return lObj["Insr_Last"].ToString(); }
+            get { return lObj["Insr_Last"] as string; }
 
-            set { lObj["Insr_Last"] = value; NotifyPropertyChanged("Insr_Last"); }
+            set { lObj["Insr_Last"] = value; if (lObj.Fields["Insr_Last"].RecentChange) NotifyPropertyChanged("Insr_Last"); }
 
 
         }
         public DateTime? CreateDate
         {
 
-            get { DateTime d; if (DateTime.TryParse(lObj["CreateDate"].ToString(), out d)) { return d; } else { return null; } }
+            get { return (lObj["CreateDate"] as DateTime?); }
 
-            set { lObj["CreateDate"] = value; NotifyPropertyChanged("CreateDate"); }
+            set { lObj["CreateDate"] = value; if (lObj.Fields["CreateDate"].RecentChange) NotifyPropertyChanged("CreateDate"); }
 
 
         }
         public String CreateID
         {
 
-            get { return lObj["CreateID"].ToString(); }
+            get { return lObj["CreateID"] as string; }
 
-            set { lObj["CreateID"] = value; NotifyPropertyChanged("CreateID"); }
+            set { lObj["CreateID"] = value; if (lObj.Fields["CreateID"].RecentChange) NotifyPropertyChanged("CreateID"); }
 
 
         }
         public DateTime? ModifyDate
         {
 
-            get { DateTime d; if (DateTime.TryParse(lObj["ModifyDate"].ToString(), out d)) { return d; } else { return null; } }
+            get { return (lObj["ModifyDate"] as DateTime?); }
 
-            set { lObj["ModifyDate"] = value; NotifyPropertyChanged("ModifyDate"); }
+            set { lObj["ModifyDate"] = value; if (lObj.Fields["ModifyDate"].RecentChange) NotifyPropertyChanged("ModifyDate"); }
 
 
         }
         public String ModifyID
         {
 
-            get { return lObj["ModifyID"].ToString(); }
+            get { return lObj["ModifyID"] as string; }
 
-            set { lObj["ModifyID"] = value; NotifyPropertyChanged("ModifyID"); }
+            set { lObj["ModifyID"] = value; if (lObj.Fields["ModifyID"].RecentChange) NotifyPropertyChanged("ModifyID"); }
 
 
         }
         public String Insr_ID_User
         {
 
-            get { return lObj["Insr_ID_User"].ToString(); }
+            get { return lObj["Insr_ID_User"] as string; }
 
-            set { lObj["Insr_ID_User"] = value; NotifyPropertyChanged("Insr_ID_User"); }
+            set { lObj["Insr_ID_User"] = value; if (lObj.Fields["Insr_ID_User"].RecentChange) NotifyPropertyChanged("Insr_ID_User"); }
 
 
         }
-
         public InspectorCustom CustomFields { get { return m_custom; } }
         
         public bool IsDirty

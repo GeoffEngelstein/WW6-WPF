@@ -421,6 +421,8 @@ namespace WinWam6.Inspection.PCS
             set { lObj["SEL"] = value; NotifyPropertyChanged("SEL"); }
         }
 
+        public double StdDeviation { get; private set; }
+
         public Single StdTare
         {
             get { return Single.Parse(lObj["StdTare"].ToString()); }
@@ -450,6 +452,8 @@ namespace WinWam6.Inspection.PCS
             get { return totalTareFlag || ForceActTare || (InspCat == PCSInspectionCategory.Audit); }
         }
 
+        public bool UpdateInProcess { get; set; }
+
         public Single Vol1
         {
             get { return Single.Parse(lObj["Vol1"].ToString()); }
@@ -462,6 +466,10 @@ namespace WinWam6.Inspection.PCS
             set { lObj["Vol2"] = value; NotifyPropertyChanged("Vol2"); }
         }
 
+        public double VolumeMultiple
+        {
+            get { return volumeMultiple; }
+        }
         public Single VolTemp
         {
             get { return Single.Parse(lObj["VolTemp"].ToString()); }
@@ -493,6 +501,8 @@ namespace WinWam6.Inspection.PCS
                 pcsTest = new PCSTest();
                 pcsTest.Load(this.InspId, rdr.GetInt16NoNull(0), rdr.GetInt16NoNull(1));
                 pcsTest.Parent = this;
+                pcsTest.PCSTareUpdate += TareUpdated;
+                pcsTest.PCSUpdateRequired += FullUpdate;
                 pcsTests.Add(pcsTest);
             }
             pcsTestLoaded = true;

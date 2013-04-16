@@ -21,262 +21,266 @@ namespace WinWam6
 
         public Decimal AmtPaid
         {
-            get { return Decimal.Parse(lObj["AmtPaid"].ToString()); }
-            set { lObj["AmtPaid"] = value; NotifyPropertyChanged("AmtPaid"); }
+
+            get { return (Decimal)lObj["AmtPaid"]; }
+
+            set { lObj["AmtPaid"] = value; if (lObj.Fields["AmtPaid"].RecentChange) NotifyPropertyChanged("AmtPaid"); }
+
+
         }
         public String Bus_ID
         {
 
-            get { return lObj["Bus_ID"].ToString(); }
+            get { return lObj["Bus_ID"] as string; }
 
-            set { lObj["Bus_ID"] = value; NotifyPropertyChanged("Bus_ID"); }
+            set { lObj["Bus_ID"] = value; if (lObj.Fields["Bus_ID"].RecentChange) NotifyPropertyChanged("Bus_ID"); }
 
 
         }
         public DateTime? CreateDate
         {
 
-            get { DateTime d; if (DateTime.TryParse(lObj["CreateDate"].ToString(), out d)) { return d; } else { return null; } }
+            get { return (lObj["CreateDate"] as DateTime?); }
 
-            set { lObj["CreateDate"] = value; NotifyPropertyChanged("CreateDate"); }
+            set { lObj["CreateDate"] = value; if (lObj.Fields["CreateDate"].RecentChange) NotifyPropertyChanged("CreateDate"); }
 
 
         }
         public String CreateID
         {
 
-            get { return lObj["CreateID"].ToString(); }
+            get { return lObj["CreateID"] as string; }
 
-            set { lObj["CreateID"] = value; NotifyPropertyChanged("CreateID"); }
+            set { lObj["CreateID"] = value; if (lObj.Fields["CreateID"].RecentChange) NotifyPropertyChanged("CreateID"); }
 
 
         }
         public DateTime? DatePaid
         {
 
-            get { DateTime d; if (DateTime.TryParse(lObj["DatePaid"].ToString(), out d)) { return d; } else { return null; } }
+            get { return (lObj["DatePaid"] as DateTime?); }
 
-            set { lObj["DatePaid"] = value; NotifyPropertyChanged("DatePaid"); }
+            set { lObj["DatePaid"] = value; if (lObj.Fields["DatePaid"].RecentChange) NotifyPropertyChanged("DatePaid"); }
 
 
         }
         public Byte Exported
         {
 
-            get { return Byte.Parse(lObj["Exported"].ToString()); }
+            get { return (Byte)lObj["Exported"]; }
 
-            set { lObj["Exported"] = value; NotifyPropertyChanged("Exported"); }
+            set { lObj["Exported"] = value; if (lObj.Fields["Exported"].RecentChange) NotifyPropertyChanged("Exported"); }
 
 
         }
         public Single Failure
         {
 
-            get { return Single.Parse(lObj["Failure"].ToString()); }
+            get { return (Single)lObj["Failure"]; }
 
-            set { lObj["Failure"] = value; NotifyPropertyChanged("Failure"); }
+            set { lObj["Failure"] = value; if (lObj.Fields["Failure"].RecentChange) NotifyPropertyChanged("Failure"); }
 
 
         }
         public bool FeePaid
         {
 
-            get { return bool.Parse(lObj["FeePaid"].ToString()); }
+            get { return (bool)lObj["FeePaid"]; }
 
-            set { lObj["FeePaid"] = value; NotifyPropertyChanged("FeePaid"); }
+            set { lObj["FeePaid"] = value; if (lObj.Fields["FeePaid"].RecentChange) NotifyPropertyChanged("FeePaid"); }
 
 
         }
         public String FeeRef
         {
 
-            get { return lObj["FeeRef"].ToString(); }
+            get { return lObj["FeeRef"] as string; }
 
-            set { lObj["FeeRef"] = value; NotifyPropertyChanged("FeeRef"); }
+            set { lObj["FeeRef"] = value; if (lObj.Fields["FeeRef"].RecentChange) NotifyPropertyChanged("FeeRef"); }
 
 
         }
         public DateTime? Insp_Date
         {
 
-            get { DateTime d; if (DateTime.TryParse(lObj["Insp_Date"].ToString(), out d)) { return d; } else { return null; } }
+            get { return (lObj["Insp_Date"] as DateTime?); }
 
-            set { lObj["Insp_Date"] = value; NotifyPropertyChanged("Insp_Date"); }
+            set { lObj["Insp_Date"] = value; if (lObj.Fields["Insp_Date"].RecentChange) NotifyPropertyChanged("Insp_Date"); }
 
 
         }
         public String Insp_ID
         {
 
-            get { return lObj["Insp_ID"].ToString(); }
+            get { return lObj["Insp_ID"] as string; }
 
-            set { lObj["Insp_ID"] = value; NotifyPropertyChanged("Insp_ID"); }
+            set { lObj["Insp_ID"] = value; if (lObj.Fields["Insp_ID"].RecentChange) NotifyPropertyChanged("Insp_ID"); }
 
 
         }
         public String Insp_Reason
         {
 
-            get { return lObj["Insp_Reason"].ToString(); }
+            get { return lObj["Insp_Reason"] as string; }
 
-            set { lObj["Insp_Reason"] = value; NotifyPropertyChanged("Insp_Reason"); }
+            set { lObj["Insp_Reason"] = value; if (lObj.Fields["Insp_Reason"].RecentChange) NotifyPropertyChanged("Insp_Reason"); }
 
 
         }
         public Decimal InspFee
         {
 
-            get { return Decimal.Parse(lObj["InspFee"].ToString()); }
+            get { return (Decimal)lObj["InspFee"]; }
 
-            set { lObj["InspFee"] = value; NotifyPropertyChanged("InspFee"); }
+            set { lObj["InspFee"] = value; if (lObj.Fields["InspFee"].RecentChange) NotifyPropertyChanged("InspFee"); }
 
 
         }
         public String InspNote
         {
 
-            get { return lObj["InspNote"].ToString(); }
+            get { return lObj["InspNote"] as string; }
 
-            set { lObj["InspNote"] = value; NotifyPropertyChanged("InspNote"); }
+            set { lObj["InspNote"] = value; if (lObj.Fields["InspNote"].RecentChange) NotifyPropertyChanged("InspNote"); }
 
 
         }
         public String InspType
         {
 
-            get { return lObj["InspType"].ToString(); }
+            get { return lObj["InspType"] as string; }
 
-            set { lObj["InspType"] = value; NotifyPropertyChanged("InspType"); }
+            set { lObj["InspType"] = value; if (lObj.Fields["InspType"].RecentChange) NotifyPropertyChanged("InspType"); }
 
 
         }
         public String Insr_ID
         {
 
-            get { return lObj["Insr_ID"].ToString(); }
+            get { return lObj["Insr_ID"] as string; }
 
-            set { lObj["Insr_ID"] = value; NotifyPropertyChanged("Insr_ID"); }
+            set { lObj["Insr_ID"] = value; if (lObj.Fields["Insr_ID"].RecentChange) NotifyPropertyChanged("Insr_ID"); }
 
 
         }
         public Int16 ManSampleSize
         {
 
-            get { return Int16.Parse(lObj["ManSampleSize"].ToString()); }
+            get { return (Int16)lObj["ManSampleSize"]; }
 
-            set { lObj["ManSampleSize"] = value; NotifyPropertyChanged("ManSampleSize"); }
+            set { lObj["ManSampleSize"] = value; if (lObj.Fields["ManSampleSize"].RecentChange) NotifyPropertyChanged("ManSampleSize"); }
 
 
         }
         public DateTime? ModifyDate
         {
 
-            get { DateTime d; if (DateTime.TryParse(lObj["ModifyDate"].ToString(), out d)) { return d; } else { return null; } }
+            get { return (lObj["ModifyDate"] as DateTime?); }
 
-            set { lObj["ModifyDate"] = value; NotifyPropertyChanged("ModifyDate"); }
+            set { lObj["ModifyDate"] = value; if (lObj.Fields["ModifyDate"].RecentChange) NotifyPropertyChanged("ModifyDate"); }
 
 
         }
         public String ModifyID
         {
 
-            get { return lObj["ModifyID"].ToString(); }
+            get { return lObj["ModifyID"] as string; }
 
-            set { lObj["ModifyID"] = value; NotifyPropertyChanged("ModifyID"); }
+            set { lObj["ModifyID"] = value; if (lObj.Fields["ModifyID"].RecentChange) NotifyPropertyChanged("ModifyID"); }
 
 
         }
         public DateTime? NextInsp
         {
 
-            get { DateTime d; if (DateTime.TryParse(lObj["NextInsp"].ToString(), out d)) { return d; } else { return null; } }
+            get { return (lObj["NextInsp"] as DateTime?); }
 
-            set { lObj["NextInsp"] = value; NotifyPropertyChanged("NextInsp"); }
+            set { lObj["NextInsp"] = value; if (lObj.Fields["NextInsp"].RecentChange) NotifyPropertyChanged("NextInsp"); }
 
 
         }
         public Single OtherProdUsed
         {
 
-            get { return Single.Parse(lObj["OtherProdUsed"].ToString()); }
+            get { return (Single)lObj["OtherProdUsed"]; }
 
-            set { lObj["OtherProdUsed"] = value; NotifyPropertyChanged("OtherProdUsed"); }
+            set { lObj["OtherProdUsed"] = value; if (lObj.Fields["OtherProdUsed"].RecentChange) NotifyPropertyChanged("OtherProdUsed"); }
 
 
         }
         public Int16 Results
         {
 
-            get { return Int16.Parse(lObj["Results"].ToString()); }
+            get { return (Int16)lObj["Results"]; }
 
-            set { lObj["Results"] = value; NotifyPropertyChanged("Results"); }
+            set { lObj["Results"] = value; if (lObj.Fields["Results"].RecentChange) NotifyPropertyChanged("Results"); }
 
 
         }
         public Int16 SampleSize
         {
 
-            get { return Int16.Parse(lObj["SampleSize"].ToString()); }
+            get { return (Int16)lObj["SampleSize"]; }
 
-            set { lObj["SampleSize"] = value; NotifyPropertyChanged("SampleSize"); }
+            set { lObj["SampleSize"] = value; if (lObj.Fields["SampleSize"].RecentChange) NotifyPropertyChanged("SampleSize"); }
 
 
         }
         public Decimal TotInspFee
         {
 
-            get { return Decimal.Parse(lObj["TotInspFee"].ToString()); }
+            get { return (Decimal)lObj["TotInspFee"]; }
 
-            set { lObj["TotInspFee"] = value; NotifyPropertyChanged("TotInspFee"); }
+            set { lObj["TotInspFee"] = value; if (lObj.Fields["TotInspFee"].RecentChange) NotifyPropertyChanged("TotInspFee"); }
 
 
         }
         public Single TotProdUsed
         {
 
-            get { return Single.Parse(lObj["TotProdUsed"].ToString()); }
+            get { return (Single)lObj["TotProdUsed"]; }
 
-            set { lObj["TotProdUsed"] = value; NotifyPropertyChanged("TotProdUsed"); }
+            set { lObj["TotProdUsed"] = value; if (lObj.Fields["TotProdUsed"].RecentChange) NotifyPropertyChanged("TotProdUsed"); }
 
 
         }
         public String InspSig
         {
 
-            get { return lObj["InspSig"].ToString(); }
+            get { return lObj["InspSig"] as string; }
 
-            set { lObj["InspSig"] = value; NotifyPropertyChanged("InspSig"); }
+            set { lObj["InspSig"] = value; if (lObj.Fields["InspSig"].RecentChange) NotifyPropertyChanged("InspSig"); }
 
 
         }
         public String BusSig
         {
 
-            get { return lObj["BusSig"].ToString(); }
+            get { return lObj["BusSig"] as string; }
 
-            set { lObj["BusSig"] = value; NotifyPropertyChanged("BusSig"); }
+            set { lObj["BusSig"] = value; if (lObj.Fields["BusSig"].RecentChange) NotifyPropertyChanged("BusSig"); }
 
 
         }
         public String PrintedName
         {
 
-            get { return lObj["PrintedName"].ToString(); }
+            get { return lObj["PrintedName"] as string; }
 
-            set { lObj["PrintedName"] = value; NotifyPropertyChanged("PrintedName"); }
+            set { lObj["PrintedName"] = value; if (lObj.Fields["PrintedName"].RecentChange) NotifyPropertyChanged("PrintedName"); }
 
 
         }
         public Int16 OriginalSampleSize
         {
 
-            get { return Int16.Parse(lObj["OriginalSampleSize"].ToString()); }
+            get { return (Int16)lObj["OriginalSampleSize"]; }
 
-            set { lObj["OriginalSampleSize"] = value; NotifyPropertyChanged("OriginalSampleSize"); }
+            set { lObj["OriginalSampleSize"] = value; if (lObj.Fields["OriginalSampleSize"].RecentChange) NotifyPropertyChanged("OriginalSampleSize"); }
 
 
         }
-        
+       
         public abstract string TooltipText { get; }
            
         
